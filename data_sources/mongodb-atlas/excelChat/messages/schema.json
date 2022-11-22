@@ -1,0 +1,17 @@
+{
+    "properties": {
+        "_id": {
+            "bsonType": "objectId"
+        },
+        "createdBy": {
+            "bsonType": "string"
+        },
+        "isDeleted": {
+            "bsonType": "bool"
+        },
+        "message": {
+            "bsonType": "string"
+        }
+    },
+    "title": "message"
+}
