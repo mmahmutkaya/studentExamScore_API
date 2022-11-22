@@ -1,1 +1,52 @@
-[]
+[
+    {
+        "name": "userRegester",
+        "private": false,
+        "disable_arg_logs": true
+    },
+    {
+        "name": "login",
+        "private": false,
+        "disable_arg_logs": true
+    },
+    {
+        "name": "validateEmail",
+        "private": false,
+        "disable_arg_logs": true
+    },
+    {
+        "name": "maileKodGonder",
+        "private": false,
+        "disable_arg_logs": true
+    },
+    {
+        "name": "mailTeyit",
+        "private": false,
+        "disable_arg_logs": true
+    },
+    {
+        "name": "generateKod",
+        "private": false,
+        "disable_arg_logs": true
+    },
+    {
+        "name": "sendMail",
+        "private": false,
+        "disable_arg_logs": true
+    },
+    {
+        "name": "updateMessages",
+        "private": false,
+        "disable_arg_logs": true
+    },
+    {
+        "name": "defineMetrajNodes",
+        "private": false,
+        "disable_arg_logs": true
+    },
+    {
+        "name": "0_admin",
+        "private": false,
+        "disable_arg_logs": true
+    }
+]
