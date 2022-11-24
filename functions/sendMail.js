@@ -10,8 +10,8 @@ exports = function(email,konu,mesaj){
   const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
-          user: '360.taksim.360@gmail.com',
-          pass: 'kkiivcrjbsduexdy'
+          user: 'excel.edu.v1@gmail.com',
+          pass: 'Maka1453*1'
       }
   });
   
