@@ -18,7 +18,7 @@ exports = function(email,konu,mesaj){
   
   async function send() {
       const result = await transporter.sendMail({
-          from: '360.taksim.360@gmail.com',
+          from: 'excelEdu',
           to: email,
           subject: konu,
           text: mesaj
