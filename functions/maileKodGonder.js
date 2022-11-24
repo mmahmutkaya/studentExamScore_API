@@ -20,7 +20,7 @@ exports = async function (request, response) {
   // 2 - kullanıcının bilgilerini database den alalım ve mail adresi doğrulanmış mı bakalım, doğrulanmamışsa yeniKodu ekleyelim
   mailTeyitKod = context.functions.execute("generateKod", 6);
   try {
-    const collectionUsers = context.services.get("mongodb-atlas").db("excelChat").collection("users")
+    const collectionUsers = context.services.get("mongodb-atlas").db("studentExamScore").collection("users")
     const userArray = await collectionUsers.find({kullaniciMail:kullaniciMail}).toArray()
     if(userArray.length === 0) return ({hata:true,hataID:"001",hataYeri:"FONK // maileKodGonder",hataMesaj:"Mail adresi sistemde kayıtlı değil, yeni üyelik başvurusu yapabilirsiniz."})
     const user = userArray[0]

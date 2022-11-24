@@ -37,7 +37,7 @@ exports = async function (request, response) {
   let user;
 
   try {
-    const collectionUsers = context.services.get("mongodb-atlas").db("excelChat").collection("users")
+    const collectionUsers = context.services.get("mongodb-atlas").db("studentExamScore").collection("users")
     const userArray = await collectionUsers.find({kullaniciMail}).toArray()
     
     hataText = "gelen istekteki mail adresi sistemde kayıtlı değil"
@@ -86,7 +86,7 @@ exports = async function (request, response) {
     
     
     // database deki collection belirleyelim
-    const collectionMessages = context.services.get("mongodb-atlas").db("excelChat").collection("messages")
+    const collectionMessages = context.services.get("mongodb-atlas").db("studentExamScore").collection("messages")
     
     let gelenItems_sil = []
     let gelenItems_ekle = []
@@ -147,7 +147,7 @@ exports = async function (request, response) {
     }
 
     // DATABASEDEKİ VERİLERİ GÖNDERELİM
-    const collectionMessages = context.services.get("mongodb-atlas").db("excelChat").collection("messages");
+    const collectionMessages = context.services.get("mongodb-atlas").db("studentExamScore").collection("messages");
     const mongoReply = await collectionMessages.find(
       {isDeleted:false},
       {message:1,year:1,createdBy:1,createdAt: { $toDate: "$_id" }}

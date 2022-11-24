@@ -44,7 +44,7 @@ exports = async function (request, response) {
   }
   
   // 2 - bu kullanıcı kayıtlı mı diye sorgu yapıyoruz, kayıtlı ise hata dönüyoruz, değilse kayıt ediyoruz
-  const collectionUsers = context.services.get("mongodb-atlas").db("excelChat").collection("users")
+  const collectionUsers = context.services.get("mongodb-atlas").db("studentExamScore").collection("users")
   try {
     const userArray = await collectionUsers.find({kullaniciMail}).toArray()
     if(userArray.length > 0) return ({hata:true,hataYeri:"FONK // userRegester",hataMesaj:"Bu mail adresi sistemde kayıtlı, şifre yenilemek için giriş ekranından şifremi unuttum seçeneğini işaretleyebilirsiniz."})
