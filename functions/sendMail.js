@@ -10,7 +10,7 @@ exports = function(email,konu,mesaj){
   const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
-          user: 'excelEdu.Edu.v1@gmail.com',
+          user: 'excel.edu.v1@gmail.com',
           pass: 'bilxoukdqeypmwgk'
       }
   });
