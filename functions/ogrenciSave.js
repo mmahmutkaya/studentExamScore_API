@@ -78,9 +78,18 @@ exports = async function (request, response) {
   
 
   let zaman = Date.now()
-  let isMailAbsent = false
+  
+  let is_SiraNo_Absent = false
+  let is_OgrenciNo_Absent = false
+  let is_Mail_Absent = false
+  let is_Name_Absent = false
+  let is_SurName_Absent = false
+  let is_Branch_Absent = false
+
   let isMailViolation = false
-  let violationExcelRows = ""
+  
+  let absentExcelRows = []
+  let violationExcelRows = []
 
 
   // MONGO-5 - ÖĞRENCİ KAYIT
@@ -89,15 +98,25 @@ exports = async function (request, response) {
     // database deki collection belirleyelim
     const collectionUsers = context.services.get("mongodb-atlas").db("studentExamScore").collection("users")
     
-    let cameData = []
     await cameItems.map(item => {
       
       if (item.hasOwnProperty("mail")) {
         validateEmail = context.functions.execute("validateEmail", item.mail);
         if(!validateEmail) {
           isMailViolation = true
+          if (item.hasOwnProperty("satirNo")) violationExcelRows.push(item.siraNo)
+        }
+      } else {
+        isMailAbsent = true
+        if (item.hasOwnProperty("satirNo")) absentExcelRows.push(item.siraNo)
+      }
+      
+      if (!item.hasOwnProperty("mail")) {
+        validateEmail = context.functions.execute("validateEmail", item.mail);
+        if(!validateEmail) {
+          isMailViolation = true
           if (item.hasOwnProperty("satirNo")) {
-            violationExcelRows.push(item.satirNo)
+            violationExcelRows.push(item.siraNo)
           }
         }
       }
@@ -176,11 +195,10 @@ exports = async function (request, response) {
     
     
  
-    if (isMailViolation) return ({hata:true,hataYeri:"FONK // ogrenciSave // MONGO-5",hataMesaj: violationExcelRows +  " numaralı satırlardaki \"mail\" adreslerini kontrol ediniz."});
-    // if (yazmaYetkisiProblemi_define) return ({hata:true,hataYeri:"FONK // ogrenciSave // MONGO-5",hataMesaj:"İlgili alana keşif metraj kaydetme yetkiniz bulunmuyor."});
-
-
-
+    if (isMailAbsent) return ({hata:true,hataYeri:"FONK // ogrenciSave // MONGO-5",hataMesaj: absentExcelRows +  " numaralı kayıtlarda \"mail\" adresleri bulunamadı"});
+    if (isMailViolation) return ({hata:true,hataYeri:"FONK // ogrenciSave // MONGO-5",hataMesaj: violationExcelRows +  " numaralı kayıtlardaki \"mail\" adreslerinin doğruluğunu kontrol ediniz."});
+    
+    
     // // METRAJ SATIRI VARSA SİLİNMESİN
     // // Silinemeycek dolu MetrajNodes ları tespit etme
     // const collectionMetrajNodes = context.services.get("mongodb-atlas").db("studentExamScore").collection("metrajNodes")
