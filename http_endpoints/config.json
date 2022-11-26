@@ -44,7 +44,7 @@
         "return_type": "JSON"
     },
     {
-        "route": "/updateMessages",
+        "route": "/ogrenciSave",
         "http_method": "POST",
         "function_name": "updateMessages",
         "validation_method": "NO_VALIDATION",
