@@ -86,12 +86,12 @@ exports = async function (request, response) {
   let violation_Mail_ExcelRows = []
 
   
+  const collectionUsers = context.services.get("mongodb-atlas").db("studentExamScore").collection("users")
 
   // MONGO-5 - ÖĞRENCİ KAYIT
   FONK_ogrenciSave: try {
     
     // database deki collection belirleyelim
-    const collectionUsers = context.services.get("mongodb-atlas").db("studentExamScore").collection("users")
     
     await cameItems.map(item => {
       
@@ -181,7 +181,7 @@ exports = async function (request, response) {
     });
     
     
-    if (is_ogrenciNo_Violation) return ({hata:true,hataYeri:"FONK // ogrenciSave // MONGO-5",hataMesaj: violation_ogrenciNo_ExcelRows +  " numaralı kayıtlardaki \"mail\" adreslerinin doğruluğunu kontrol ediniz."});
+    if (is_ogrenciNo_Violation) return ({hata:true,hataYeri:"FONK // ogrenciSave // MONGO-5",hataMesaj: violation_ogrenciNo_ExcelRows +  " numaralı kayıtlardaki \"ogrenci numaralarının\" doğruluğunu kontrol ediniz."});
     if (is_mail_Violation) return ({hata:true,hataYeri:"FONK // ogrenciSave // MONGO-5",hataMesaj: violation_Mail_ExcelRows +  " numaralı kayıtlardaki \"mail\" adreslerinin doğruluğunu kontrol ediniz."});
     
     
