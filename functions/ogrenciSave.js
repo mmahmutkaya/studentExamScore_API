@@ -98,6 +98,13 @@ exports = async function (request, response) {
     // database deki collection belirleyelim
     const collectionUsers = context.services.get("mongodb-atlas").db("studentExamScore").collection("users")
     
+    // KONTROL - sira numaraları mevcut mu?
+    await cameItems.map(item => {
+      if (!item.hasOwnProperty("siraNo")) is_SiraNo_Absent = true
+    });
+    if (is_SiraNo_Absent) return ({hata:true,hataYeri:"FONK // ogrenciSave // MONGO-5",hataMesaj: "Sira numarası boş olan kayıtlar var, yönetici iletişime geçiniz."});
+    
+    
     await cameItems.map(item => {
       
       if (item.hasOwnProperty("mail")) {
