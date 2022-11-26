@@ -46,7 +46,7 @@
     {
         "route": "/ogrenciSave",
         "http_method": "POST",
-        "function_name": "updateMessages",
+        "function_name": "ogrenciSave",
         "validation_method": "NO_VALIDATION",
         "respond_result": true,
         "fetch_custom_user_data": false,
