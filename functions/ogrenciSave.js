@@ -86,7 +86,7 @@ exports = async function (request, response) {
   let is_SurName_Absent = false
   let is_Branch_Absent = false
 
-  let isMailViolation = false
+  let is_Mail_Violation = false
   
   let absentExcelRows = []
   let violationExcelRows = []
@@ -103,29 +103,20 @@ exports = async function (request, response) {
       if (item.hasOwnProperty("mail")) {
         validateEmail = context.functions.execute("validateEmail", item.mail);
         if(!validateEmail) {
-          isMailViolation = true
+          is_Mail_Violation = true
           if (item.hasOwnProperty("satirNo")) violationExcelRows.push(item.siraNo)
         }
       } else {
-        isMailAbsent = true
+        is_Mail_Absent = true
         if (item.hasOwnProperty("satirNo")) absentExcelRows.push(item.siraNo)
       }
+
       
-      if (!item.hasOwnProperty("mail")) {
-        validateEmail = context.functions.execute("validateEmail", item.mail);
-        if(!validateEmail) {
-          isMailViolation = true
-          if (item.hasOwnProperty("satirNo")) {
-            violationExcelRows.push(item.siraNo)
-          }
-        }
-      }
-      
-      if (typeof item.sira === "string") {
-        if (item.sira.length === 0) {
-          checkSira_Ekle = true
-        }
-      }
+      // if (typeof item.sira === "string") {
+      //   if (item.sira.length === 0) {
+      //     checkSira_Ekle = true
+      //   }
+      // }
         
 
 
@@ -195,8 +186,8 @@ exports = async function (request, response) {
     
     
  
-    if (isMailAbsent) return ({hata:true,hataYeri:"FONK // ogrenciSave // MONGO-5",hataMesaj: absentExcelRows +  " numaralı kayıtlarda \"mail\" adresleri bulunamadı"});
-    if (isMailViolation) return ({hata:true,hataYeri:"FONK // ogrenciSave // MONGO-5",hataMesaj: violationExcelRows +  " numaralı kayıtlardaki \"mail\" adreslerinin doğruluğunu kontrol ediniz."});
+    if (is_Mail_Absent) return ({hata:true,hataYeri:"FONK // ogrenciSave // MONGO-5",hataMesaj: absentExcelRows +  " numaralı kayıtlarda \"mail\" adresleri bulunamadı"});
+    if (is_Mail_Violation) return ({hata:true,hataYeri:"FONK // ogrenciSave // MONGO-5",hataMesaj: violationExcelRows +  " numaralı kayıtlardaki \"mail\" adreslerinin doğruluğunu kontrol ediniz."});
     
     
     // // METRAJ SATIRI VARSA SİLİNMESİN
