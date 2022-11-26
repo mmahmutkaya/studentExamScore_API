@@ -78,8 +78,9 @@ exports = async function (request, response) {
   
 
   let zaman = Date.now()
+  let isMailAbsent = false
   let isMailViolation = false
-  let violationExcelRow = 0
+  let violationExcelRows = ""
 
 
   // MONGO-5 - ÖĞRENCİ KAYIT
@@ -91,11 +92,23 @@ exports = async function (request, response) {
     let cameData = []
     await cameItems.map(item => {
       
-      validateEmail = context.functions.execute("validateEmail", item.mail);
-      if(!validateEmail) {
-        isMailViolation = true
-        violationExcelRow = item.satirNo
+      if (item.hasOwnProperty("mail")) {
+        validateEmail = context.functions.execute("validateEmail", item.mail);
+        if(!validateEmail) {
+          isMailViolation = true
+          if (item.hasOwnProperty("satirNo")) {
+            violationExcelRows.push(item.satirNo)
+          }
+        }
       }
+      
+      if (typeof item.sira === "string") {
+        if (item.sira.length === 0) {
+          checkSira_Ekle = true
+        }
+      }
+        
+
 
     
       // if (item.tur == "tanimla" && item.dbIslem === "ekle") {
@@ -163,7 +176,7 @@ exports = async function (request, response) {
     
     
  
-    if (isMailViolation) return ({hata:true,hataYeri:"FONK // ogrenciSave // MONGO-5",hataMesaj: violationExcelRow +  " numaralı satırdaki \"mail\" adresini kontrol ediniz."});
+    if (isMailViolation) return ({hata:true,hataYeri:"FONK // ogrenciSave // MONGO-5",hataMesaj: violationExcelRows +  " numaralı satırlardaki \"mail\" adreslerini kontrol ediniz."});
     // if (yazmaYetkisiProblemi_define) return ({hata:true,hataYeri:"FONK // ogrenciSave // MONGO-5",hataMesaj:"İlgili alana keşif metraj kaydetme yetkiniz bulunmuyor."});
 
 
