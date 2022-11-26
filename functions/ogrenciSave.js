@@ -88,12 +88,13 @@ exports = async function (request, response) {
   let is_name_Violation = false
   let violation_name_ExcelRows = []
 
+
   let is_surname_Violation = false
   let violation_surname_ExcelRows = []
 
   let is_branch_Violation = false
   const branchs = await context.services.get("mongodb-atlas").db("studentExamScore").collection("branchs").find({},{name:1,_id:false}).toArray()
-  return ({data:branchs})
+  return ({"data":branchs})
 
   let violation_branch_ExcelRows = []
 
