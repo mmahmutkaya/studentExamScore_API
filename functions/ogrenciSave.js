@@ -83,7 +83,18 @@ exports = async function (request, response) {
   let violation_ogrenciNo_ExcelRows = []
   
   let is_mail_Violation = false
-  let violation_Mail_ExcelRows = []
+  let violation_mail_ExcelRows = []
+
+  let is_name_Violation = false
+  let violation_name_ExcelRows = []
+
+  let is_surname_Violation = false
+  let violation_surname_ExcelRows = []
+
+  let is_branch_Violation = false
+  const branchs = await context.services.get("mongodb-atlas").db("studentExamScore").collection("branchs").find({},{name:1,_id:false}).toArray()
+  return branchs
+  let violation_branch_ExcelRows = []
 
   
   const collectionUsers = context.services.get("mongodb-atlas").db("studentExamScore").collection("users")
@@ -103,7 +114,17 @@ exports = async function (request, response) {
       validateEmail = context.functions.execute("validateEmail", item.mail);
       if(!validateEmail) {
         is_mail_Violation = true
-        violation_Mail_ExcelRows.push(item.siraNo)
+        violation_mail_ExcelRows.push(item.siraNo)
+      }
+
+      if(item.name.length < 2) {
+        is_name_Violation = true
+        violation_name_ExcelRows.push(item.siraNo)
+      }
+
+      if(item.surname.length < 2) {
+        is_surname_Violation = true
+        violation_surname_ExcelRows.push(item.siraNo)
       }
 
 
@@ -182,7 +203,9 @@ exports = async function (request, response) {
     
     
     if (is_ogrenciNo_Violation) return ({hata:true,hataYeri:"FONK // ogrenciSave // MONGO-5",hataMesaj: violation_ogrenciNo_ExcelRows +  " numaralı kayıtlardaki \"ogrenci numaraları\" 8 haneden oluşmuyor."});
-    if (is_mail_Violation) return ({hata:true,hataYeri:"FONK // ogrenciSave // MONGO-5",hataMesaj: violation_Mail_ExcelRows +  " numaralı kayıtlardaki \"mail\" adreslerinin doğruluğunu kontrol ediniz."});
+    if (is_mail_Violation) return ({hata:true,hataYeri:"FONK // ogrenciSave // MONGO-5",hataMesaj: violation_mail_ExcelRows +  " numaralı kayıtlardaki \"mail\" adreslerinin doğruluğunu kontrol ediniz."});
+    if (is_name_Violation) return ({hata:true,hataYeri:"FONK // ogrenciSave // MONGO-5",hataMesaj: violation_name_ExcelRows +  " numaralı kayıtlardaki \"mail\" adreslerinin doğruluğunu kontrol ediniz."});
+    if (is_surname_Violation) return ({hata:true,hataYeri:"FONK // ogrenciSave // MONGO-5",hataMesaj: violation_surname_ExcelRows +  " numaralı kayıtlardaki \"mail\" adreslerinin doğruluğunu kontrol ediniz."});
     
     
     // // METRAJ SATIRI VARSA SİLİNMESİN
