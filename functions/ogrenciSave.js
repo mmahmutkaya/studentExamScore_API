@@ -49,8 +49,7 @@ exports = async function (request, response) {
     hataText = "gelen istekteki geciciKey sistemdeki ile eşleşmiyor"
     if(geciciKey !== user.geciciKey.toString()) return ({hata:true,hataTanim:"geciciKod",hataYeri:"FONK // ogrenciSave",hataMesaj:"Tekrar giriş yapmanız gerekiyor, (" + hataText +")"})
     
-    hataText = "Öğrenci kayıt etmeye yetkiniz bulunmuyor"
-    if(!user.admin) return ({hata:true,hataTanim:"geciciKod",hataYeri:"FONK // ogrenciSave",hataMesaj:"Tekrar giriş yapmanız gerekiyor, (" + hataText +")"})
+    if(!user.admin) return ({hata:true,hataTanim:"geciciKod",hataYeri:"FONK // ogrenciSave",hataMesaj:"Öğrenci kayıt etmeye yetkiniz bulunmuyor."})
     
     // kontroller
     // if(tur == "tanimla" && !projeData.yetkiler.ihaleler[ihaleId].fonksiyonlar.defineMetrajNodes["okuma"].includes(kullaniciMail)) return ({hata:true,hataTanim:"yetki",hataYeri:"FONK // ogrenciSave",hataMesaj:"İlgili ihalenin mahal-poz eşleşmelerini görmeye yetkiniz bulunmuyor, ekranda veri varsa güncel olmayabilir."})
@@ -67,20 +66,6 @@ exports = async function (request, response) {
   
       
     
-  // MONGO-3 - versiyon tespiti
-  let versiyon
-  try {
-    const collectionVersiyonlar = context.services.get("mongodb-atlas").db("studentExamScore").collection("versiyonlar")
-    const versiyonArray = await collectionVersiyonlar.find({proje}).toArray()
-    versiyon = versiyonArray[0].guncelVersiyon
-    
-  } catch(err){
-    return ({hata:true,hataYeri:"FONK // addWbs // MONGO-3",hataMesaj:err.message})
-  }
-  
-  
-  
-  
   // MONGO-4a - gelen veri işlemleri - body kısmında veri var mı?
   let gelenItems
   
