@@ -79,16 +79,8 @@ exports = async function (request, response) {
 
   let zaman = Date.now()
   
-  let is_SiraNo_Absent = false
-  let is_OgrenciNo_Absent = false
-  let is_Mail_Absent = false
-  let is_Name_Absent = false
-  let is_SurName_Absent = false
-  let is_Branch_Absent = false
-
   let is_Mail_Violation = false
   
-  let absentExcelRows = []
   let violationExcelRows = []
 
 
@@ -98,24 +90,12 @@ exports = async function (request, response) {
     // database deki collection belirleyelim
     const collectionUsers = context.services.get("mongodb-atlas").db("studentExamScore").collection("users")
     
-    // KONTROL - sira numaraları mevcut mu?
-    await cameItems.map(item => {
-      if (!item.hasOwnProperty("siraNo")) is_SiraNo_Absent = true
-    });
-    if (is_SiraNo_Absent) return ({hata:true,hataYeri:"FONK // ogrenciSave // MONGO-5",hataMesaj: "Sira numarası boş olan kayıtlar var, yönetici iletişime geçiniz."});
-    
-    
     await cameItems.map(item => {
       
-      if (item.hasOwnProperty("mail")) {
-        validateEmail = context.functions.execute("validateEmail", item.mail);
-        if(!validateEmail) {
-          is_Mail_Violation = true
-          if (item.hasOwnProperty("satirNo")) violationExcelRows.push(item.siraNo)
-        }
-      } else {
-        is_Mail_Absent = true
-        if (item.hasOwnProperty("satirNo")) absentExcelRows.push(item.siraNo)
+      validateEmail = context.functions.execute("validateEmail", item.mail);
+      if(!validateEmail) {
+        is_Mail_Violation = true
+        violationExcelRows.push(item.siraNo)
       }
 
       
@@ -192,8 +172,6 @@ exports = async function (request, response) {
     });
     
     
- 
-    if (is_Mail_Absent) return ({hata:true,hataYeri:"FONK // ogrenciSave // MONGO-5",hataMesaj: absentExcelRows +  " numaralı kayıtlarda \"mail\" adresleri bulunamadı"});
     if (is_Mail_Violation) return ({hata:true,hataYeri:"FONK // ogrenciSave // MONGO-5",hataMesaj: violationExcelRows +  " numaralı kayıtlardaki \"mail\" adreslerinin doğruluğunu kontrol ediniz."});
     
     
