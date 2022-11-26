@@ -79,10 +79,13 @@ exports = async function (request, response) {
 
   let zaman = Date.now()
   
-  let is_Mail_Violation = false
+  let is_ogrenciNo_Violation = false
+  let violation_ogrenciNo_ExcelRows = []
   
-  let violationExcelRows = []
+  let is_mail_Violation = false
+  let violation_Mail_ExcelRows = []
 
+  
 
   // MONGO-5 - ÖĞRENCİ KAYIT
   FONK_ogrenciSave: try {
@@ -92,11 +95,17 @@ exports = async function (request, response) {
     
     await cameItems.map(item => {
       
+      if(item.ogrenciNo.length !== 8) {
+        is_ogrenciNo_Violation = true
+        violation_ogrenciNo_ExcelRows.push(item.siraNo)
+      }
+
       validateEmail = context.functions.execute("validateEmail", item.mail);
       if(!validateEmail) {
-        is_Mail_Violation = true
-        violationExcelRows.push(item.siraNo)
+        is_mail_Violation = true
+        violation_Mail_ExcelRows.push(item.siraNo)
       }
+
 
       
       // if (typeof item.sira === "string") {
@@ -172,7 +181,8 @@ exports = async function (request, response) {
     });
     
     
-    if (is_Mail_Violation) return ({hata:true,hataYeri:"FONK // ogrenciSave // MONGO-5",hataMesaj: violationExcelRows +  " numaralı kayıtlardaki \"mail\" adreslerinin doğruluğunu kontrol ediniz."});
+    if (is_ogrenciNo_Violation) return ({hata:true,hataYeri:"FONK // ogrenciSave // MONGO-5",hataMesaj: violation_ogrenciNo_ExcelRows +  " numaralı kayıtlardaki \"mail\" adreslerinin doğruluğunu kontrol ediniz."});
+    if (is_mail_Violation) return ({hata:true,hataYeri:"FONK // ogrenciSave // MONGO-5",hataMesaj: violation_Mail_ExcelRows +  " numaralı kayıtlardaki \"mail\" adreslerinin doğruluğunu kontrol ediniz."});
     
     
     // // METRAJ SATIRI VARSA SİLİNMESİN
