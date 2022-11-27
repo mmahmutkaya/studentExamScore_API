@@ -82,7 +82,7 @@ exports = async function (request, response) {
   try {
     
     const objArray = await collectionUsers.find({isOgrenci:true, isDeleted:false}).toArray()
-    return ({ok:true,mesaj:'Kayıt işlemi gerçekleştirildi.',data:objArray})
+    return ({ok:true,mesaj:'Veriler alındı.',data:objArray})
 
   } catch(err) {
     return ({hata:true,hataYeri:"FONK // ogrenciSave // MONGO-2",hataMesaj:err.message})
