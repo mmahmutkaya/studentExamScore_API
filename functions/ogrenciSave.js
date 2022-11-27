@@ -199,7 +199,9 @@ exports = async function (request, response) {
       return ({hata:true,hataYeri:"FONK // ogrenciSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + "\"soyisim\" bilgisi kontrol edilmeli."});
     }
     
-    if (is_ogrenciNo_Exist_Exist) {
+    
+    
+    if (is_ogrenciNo_Exist) {
       satirNumaralariArray = exist_ogrenciNo_ExcelRows
       satirNumaralariArray.length > 1 ? currentCondition = "kayıtlardaki" : currentCondition = "kayıttaki"
       return ({hata:true,hataYeri:"FONK // ogrenciSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + "\"soyisim\" bilgisi kontrol edilmeli."});
