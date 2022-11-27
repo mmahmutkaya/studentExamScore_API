@@ -104,7 +104,6 @@ exports = async function (request, response) {
   let is_name_Violation = false
   let violation_name_ExcelRows = []
 
-
   let is_surname_Violation = false
   let violation_surname_ExcelRows = []
 
@@ -130,7 +129,7 @@ exports = async function (request, response) {
         violation_ogrenciNo_ExcelRows.push(item.siraNo)
       }
 
-      if(!userArray.find(x=> x.ogrenciNo == item.ogrenciNo)) {
+      if(userArray.find(x=> x.ogrenciNo == item.ogrenciNo)) {
         is_ogrenciNo_Exist = true
         exist_ogrenciNo_ExcelRows.push(item.siraNo)
       }
@@ -143,7 +142,7 @@ exports = async function (request, response) {
         violation_mail_ExcelRows.push(item.siraNo)
       }
 
-      if(!userArray.find(x=> x.kullaniciMail == item.mail)) {
+      if(userArray.find(x=> x.kullaniciMail == item.mail)) {
         is_mail_Exist = true
         exist_mail_ExcelRows.push(item.siraNo)
       }
