@@ -112,8 +112,9 @@ exports = async function (request, response) {
   let is_mail_Exist = false
   let exist_mail_ExcelRows = []
 
-  let is_branch_Exist = false
-  let exist_branch_ExcelRows = []
+
+  let is_branch_Absent = false
+  let absent_branch_ExcelRows = []
 
   
 
@@ -157,9 +158,10 @@ exports = async function (request, response) {
         exist_mail_ExcelRows.push(item.siraNo)
       }
 
+
       if(!branchArray.find(x=> x.name == item.branch)) {
-        is_branch_Exist = true
-        exist_branch_ExcelRows.push(item.siraNo)
+        is_branch_Absent = true
+        absent_branch_ExcelRows.push(item.siraNo)
       }
 
 
@@ -204,22 +206,23 @@ exports = async function (request, response) {
     if (is_ogrenciNo_Exist) {
       satirNumaralariArray = exist_ogrenciNo_ExcelRows
       satirNumaralariArray.length > 1 ? currentCondition = "kayıtlardaki" : currentCondition = "kayıttaki"
-      return ({hata:true,hataYeri:"FONK // ogrenciSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + "\"soyisim\" bilgisi kontrol edilmeli."});
+      return ({hata:true,hataYeri:"FONK // ogrenciSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + "\"öğrenci numarası\" sistemde mevcut."});
     }
     
     if (is_mail_Exist) {
       satirNumaralariArray = exist_mail_ExcelRows
       satirNumaralariArray.length > 1 ? currentCondition = "kayıtlardaki" : currentCondition = "kayıttaki"
-      return ({hata:true,hataYeri:"FONK // ogrenciSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + "\"soyisim\" bilgisi kontrol edilmeli."});
+      return ({hata:true,hataYeri:"FONK // ogrenciSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + "\"mail adresi\" sistemde mevcut."});
     }
     
-    if (is_branch_Exist) {
-      satirNumaralariArray = exist_branch_ExcelRows
+    
+    if (!is_branch_Absent) {
+      satirNumaralariArray = absent_branch_ExcelRows
       satirNumaralariArray.length > 1 ? currentCondition = "kayıtlardaki" : currentCondition = "kayıttaki"
-      return ({hata:true,hataYeri:"FONK // ogrenciSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + "\"soyisim\" bilgisi kontrol edilmeli."});
+      return ({hata:true,hataYeri:"FONK // ogrenciSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + "\"şube\" sistemde mevcut değil."});
     }
     
-
+    
 
     // // METRAJ SATIRI VARSA SİLİNMESİN
     // // Silinemeycek dolu MetrajNodes ları tespit etme
