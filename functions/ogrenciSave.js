@@ -12,10 +12,10 @@ exports = async function (request, response) {
   let projeData
   
   const collectionUsers = context.services.get("mongodb-atlas").db("studentExamScore").collection("users")
-  const userArray = await collectionUsers.find({}).toArray()
+  const userArray = await collectionUsers.find({isDeleted:false}).toArray()
   
   const collectionBranchs = context.services.get("mongodb-atlas").db("studentExamScore").collection("branchs")
-  const branchArray = await collectionBranchs.find({}).toArray()
+  const branchArray = await collectionBranchs.find({isDeleted:false}).toArray()
   
   
   
@@ -176,6 +176,7 @@ exports = async function (request, response) {
         mailTeyit:false,
         uyelikOnay:true,
         geciciKey:"ufehbaflwkefube",
+        isDeleted:false,
         createdAt:zaman,
         createdBy:user.kullaniciMail
       })
