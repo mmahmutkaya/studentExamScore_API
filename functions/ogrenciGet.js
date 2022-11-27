@@ -14,11 +14,7 @@ exports = async function (request, response) {
   const collectionUsers = context.services.get("mongodb-atlas").db("studentExamScore").collection("users")
   const userArray = await collectionUsers.find({}).toArray()
   
-  const collectionBranchs = context.services.get("mongodb-atlas").db("studentExamScore").collection("branchs")
-  const branchArray = await collectionBranchs.find({}).toArray()
-  
-  
-  
+
   // MONGO-1 - Gelen Sorgu
   try {
     
@@ -45,7 +41,7 @@ exports = async function (request, response) {
   // MONGO-2 - kullanıcının bilgilerini database den alalım
   let user;
 
-  try {
+  AUTH_CHECK: try {
     
     hataText = "gelen istekteki mail adresi sistemde kayıtlı değil"
     user = await userArray.find(x => x.kullaniciMail == kullaniciMail)
@@ -58,8 +54,15 @@ exports = async function (request, response) {
     hataText = "gelen istekteki geciciKey sistemdeki ile eşleşmiyor"
     if(geciciKey !== user.geciciKey.toString()) return ({hata:true,hataTanim:"geciciKod",hataYeri:"FONK // ogrenciSave",hataMesaj:"Tekrar giriş yapmanız gerekiyor, (" + hataText +")"})
     
-    if(!user.hasOwnProperty("admin")) return ({hata:true,hataTanim:"geciciKod",hataYeri:"FONK // ogrenciSave",hataMesaj:"Öğrenci kayıt etmeye yetkiniz bulunmuyor."})
-    if(!user.admin) return ({hata:true,hataTanim:"geciciKod",hataYeri:"FONK // ogrenciSave",hataMesaj:"Öğrenci kayıt etmeye yetkiniz bulunmuyor."})
+    if(!user.hasOwnProperty("admin")) {
+      if(user.admin) break AUTH_CHECK
+    }
+    
+    if(!user.hasOwnProperty("isOgretmen")) {
+      if(user.isOgretmen) break AUTH_CHECK
+    }
+    
+    return ({hata:true,hataYeri:"FONK // ogrenciSave",hataMesaj:"Öğrenci kayıtlarını görmeye yetkiniz bulunmuyor."})
     
     // kontroller
     // if(tur == "tanimla" && !projeData.yetkiler.ihaleler[ihaleId].fonksiyonlar.defineMetrajNodes["okuma"].includes(kullaniciMail)) return ({hata:true,hataTanim:"yetki",hataYeri:"FONK // ogrenciSave",hataMesaj:"İlgili ihalenin mahal-poz eşleşmelerini görmeye yetkiniz bulunmuyor, ekranda veri varsa güncel olmayabilir."})

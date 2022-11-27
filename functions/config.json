@@ -52,5 +52,10 @@
     {
         "name": "ogrenciSave",
         "private": false
+    },
+    {
+        "name": "ogrenciGet",
+        "private": false,
+        "disable_arg_logs": true
     }
 ]
