@@ -11,7 +11,9 @@ exports = async function (request, response) {
   
   let projeData
   
-  
+  const collectionUsers = context.services.get("mongodb-atlas").db("studentExamScore").collection("users")
+  const collectionBranchs = context.services.get("mongodb-atlas").db("studentExamScore").collection("branchs")
+  const userArray = await collectionUsers.find({}).toArray()
   
   
   // MONGO-1 - Gelen Sorgu
@@ -41,13 +43,10 @@ exports = async function (request, response) {
   let user;
 
   try {
-    const collectionUsers = context.services.get("mongodb-atlas").db("studentExamScore").collection("users")
-    const userArray = await collectionUsers.find({kullaniciMail}).toArray()
     
     hataText = "gelen istekteki mail adresi sistemde kayıtlı değil"
-    if(userArray.length === 0) return ({hata:true,hataYeri:"FONK // ogrenciSave",hataMesaj:"Tekrar giriş yapmanız gerekiyor, (" + hataText +")"})
-    
-    user = userArray[0]
+    user = await userArray.find(x => x.kullaniciMail == kullaniciMail)
+    if(!user) return ({hata:true,hataYeri:"FONK // ogrenciSave",hataMesaj:"Tekrar giriş yapmanız gerekiyor, (" + hataText +")"})
     
     if(!user.mailTeyit) return ({hata:true,hataTanim:"mailTeyit",hataYeri:"FONK // ogrenciSave",hataMesaj:"Mail adresi henüz doğrulanmamış."})
     
@@ -93,8 +92,14 @@ exports = async function (request, response) {
   let is_ogrenciNo_Violation = false
   let violation_ogrenciNo_ExcelRows = []
   
+  let is_ogrenciNo_Exist = false
+  let exist_ogrenciNo_ExcelRows = []
+  
   let is_mail_Violation = false
   let violation_mail_ExcelRows = []
+  
+  let is_mail_Exist = false
+  let exist_mail_ExcelRows = []
 
   let is_name_Violation = false
   let violation_name_ExcelRows = []
@@ -104,7 +109,7 @@ exports = async function (request, response) {
   let violation_surname_ExcelRows = []
 
 
-  const branchObjects = await context.services.get("mongodb-atlas").db("studentExamScore").collection("branchs").find({},{name:1,_id:false}).toArray()
+  const branchObjects = await collectionBranchs.find({},{name:1,_id:false}).toArray()
   const branchArray = branchObjects.map(x =>{
     return x.name
   })
@@ -112,14 +117,11 @@ exports = async function (request, response) {
   let violation_branch_ExcelRows = []
 
   
-  const collectionUsers = context.services.get("mongodb-atlas").db("studentExamScore").collection("users")
 
 
-
-  // MONGO-5 - ÖĞRENCİ KAYIT
-  FONK_ogrenciSave: try {
+  // MONGO-5 - GELEN VERİ KONTROL
+  try {
     
-    // database deki collection belirleyelim
     
     await cameItems.map(item => {
       
@@ -128,16 +130,32 @@ exports = async function (request, response) {
         violation_ogrenciNo_ExcelRows.push(item.siraNo)
       }
 
+      if(!userArray.find(x=> x.ogrenciNo == item.ogrenciNo)) {
+        is_ogrenciNo_Exist = true
+        exist_ogrenciNo_ExcelRows.push(item.siraNo)
+      }
+
+
+
       validateEmail = context.functions.execute("validateEmail", item.mail);
       if(!validateEmail) {
         is_mail_Violation = true
         violation_mail_ExcelRows.push(item.siraNo)
       }
 
+      if(!userArray.find(x=> x.kullaniciMail == item.mail)) {
+        is_mail_Exist = true
+        exist_mail_ExcelRows.push(item.siraNo)
+      }
+
+
+
       if(item.name.length < 2) {
         is_name_Violation = true
         violation_name_ExcelRows.push(item.siraNo)
       }
+
+
 
       if(item.surname.length < 2) {
         is_surname_Violation = true
@@ -151,7 +169,6 @@ exports = async function (request, response) {
       }
 
 
-      
       // if (typeof item.sira === "string") {
       //   if (item.sira.length === 0) {
       //     checkSira_Ekle = true
@@ -159,77 +176,22 @@ exports = async function (request, response) {
       // }
         
 
-
-    
-      // if (item.tur == "tanimla" && item.dbIslem === "ekle") {
-        
-      //   // madem yazma yapıcaz yetki var mı? 
-      //   if(!projeData.yetkiler.ihaleler[ihaleId].fonksiyonlar.defineMetrajNodes["yazma"].includes(kullaniciMail)) {
-      //     yazmaYetkisiProblemi_define = true
-      //   }
-        
-      //   // genel olarak kayıt izni var mı?
-      //   if(!projeData.yetkiler.ihaleler[ihaleId].fonksiyonlar.defineMetrajNodes.isKayitYapilabilir) {
-      //     isKayitYapilabilirProblemi_define = true
-      //   }
-        
-
-      //   // if (typeof item.sira === "string") {
-      //   //   if (item.sira.length === 0) {
-      //   //     checkSira_Ekle = true
-      //   //   }
-      //   // }
-        
-      //   // if (typeof item.sira === "number") {
-      //   //   if (!item.sira > 0) {
-      //   //     checkSira_Ekle = true
-      //   //   }
-      //   // }
-
-      //   // if (typeof item.isim === "string") {
-      //   //   if (item.isim.length === 0) {
-      //   //     checkIsim_Ekle = true
-      //   //   }
-      //   // }
-        
-      //   // if (typeof item.isim === "string") {
-      //   //   if (item.isim === "...") {
-      //   //     checkIsim_Ekle = true
-      //   //   }
-      //   // }
-        
-      //   // if (typeof item.isim === "number") {
-      //   //   if (!item.isim > 0) {
-      //   //     checkIsim_Ekle = true
-      //   //   }
-      //   // }
-        
-        
-      //   cameItems_ekle.push({
-      //     ...item,
-      //     mahalId:new BSON.ObjectId(item.mahalId),
-      //     pozId:new BSON.ObjectId(item.pozId),
-      //     ihaleId:new BSON.ObjectId(ihaleId),
-      //     kesif:{mevcutVersiyonlar:[],nodeMetraj:0}, //silinemezler sorgusunda bu object properties var mı yok mu diye bakıyoruz
-      //     hakedisTalep:{mevcutVersiyonlar:[],nodeMetraj:0},  //silinemezler sorgusunda bu object properties var mı yok mu diye bakıyoruz
-      //     hakedisOnay:{mevcutVersiyonlar:[],nodeMetraj:0},  //silinemezler sorgusunda bu object properties var mı yok mu diye bakıyoruz
-      //     proje,
-      //     versiyon,
-      //     isDeleted:false,
-      //     createdAt:zaman,
-      //     createdBy:kullaniciMail,
-      //   });
-
-      // }
-      
     });
     
     
     if (is_ogrenciNo_Violation) return ({hata:true,hataYeri:"FONK // ogrenciSave // MONGO-5",hataMesaj: violation_ogrenciNo_ExcelRows +  " numaralı kayıtlardaki \"ogrenci numaraları\" 8 haneden oluşmuyor."});
+    if (is_ogrenciNo_Exist) return ({hata:true,hataYeri:"FONK // ogrenciSave // MONGO-5",hataMesaj: exist_ogrenciNo_ExcelRows +  " numaralı kayıtlardaki \"ogrenci numaraları\" sistemde kayıtlı."});
+    
     if (is_mail_Violation) return ({hata:true,hataYeri:"FONK // ogrenciSave // MONGO-5",hataMesaj: violation_mail_ExcelRows +  " numaralı kayıtlardaki \"mail\" adreslerinin doğruluğunu kontrol ediniz."});
+    if (is_mail_Exist) return ({hata:true,hataYeri:"FONK // ogrenciSave // MONGO-5",hataMesaj: exist_mail_ExcelRows +  " numaralı kayıtlardaki \"mail adresleri\" sistemde kayıtlı."});
+    
     if (is_name_Violation) return ({hata:true,hataYeri:"FONK // ogrenciSave // MONGO-5",hataMesaj: violation_name_ExcelRows +  " numaralı kayıtlardaki \"isim\" bilgilerinin doğruluğunu kontrol ediniz."});
+    
     if (is_surname_Violation) return ({hata:true,hataYeri:"FONK // ogrenciSave // MONGO-5",hataMesaj: violation_surname_ExcelRows +  " numaralı kayıtlardaki \"soyisim\" bilgilerinin doğruluğunu kontrol ediniz."});
+    
     if (is_branch_Violation) return ({hata:true,hataYeri:"FONK // ogrenciSave // MONGO-5",hataMesaj: violation_branch_ExcelRows +  " numaralı kayıtlardaki \"şube\" bilgileri, sistemdeki kayıtlı şubeler ile eşleşmiyor."});
+    
+    
     
     
     
