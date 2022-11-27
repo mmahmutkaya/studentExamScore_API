@@ -118,8 +118,10 @@ exports = async function (request, response) {
 
   
 
+  let cameItems_Add = []
 
   // MONGO-5 - GELEN VERİ KONTROL
+  
   try {
     
     await cameItems.map(item => {
@@ -164,13 +166,18 @@ exports = async function (request, response) {
         absent_branch_ExcelRows.push(item.siraNo)
       }
 
-
-      // if (typeof item.sira === "string") {
-      //   if (item.sira.length === 0) {
-      //     checkSira_Ekle = true
-      //   }
-      // }
-        
+      cameItems_Add.push({
+        ogrenciNo:item.ogrenciNo,
+        kullaniciMail:item.mail,
+        isOgrenci:true,
+        sifre:"ufehbaflwkefube",
+        mailTeyitKod:"ufehbaflwkefube",
+        mailTeyit:false,
+        uyelikOnay:true,
+        geciciKey:"ufehbaflwkefube",
+        createdAt:zaman,
+        createdBy:user.kullaniciMail
+      })
 
     });
     
@@ -223,7 +230,27 @@ exports = async function (request, response) {
     }
     
     
+    let bulk = []
+    
+    // DATABASE - silme - "tanimla"
+    if (cameItems_Add.length) {
+      await cameItems_Add.map(item =>{
+        bulk.push({
+          updateOne: {
+            filter: {kullaniciMail:item.kullaniciMail,ogrenciNo:item.ogrenciNo},
+            update: { $set: {...item}}, // içeriği yukarıda ayarlandı
+            upsert: true
+          }
+        });
+      });
+    }
+    await collectionUsers.bulkWrite(bulk, { ordered: false });
+    
+    
 
+
+
+    
     // // METRAJ SATIRI VARSA SİLİNMESİN
     // // Silinemeycek dolu MetrajNodes ları tespit etme
     // const collectionMetrajNodes = context.services.get("mongodb-atlas").db("studentExamScore").collection("metrajNodes")
