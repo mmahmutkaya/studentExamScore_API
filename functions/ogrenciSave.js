@@ -216,7 +216,7 @@ exports = async function (request, response) {
     }
     
     
-    if (!is_branch_Absent) {
+    if (is_branch_Absent) {
       satirNumaralariArray = absent_branch_ExcelRows
       satirNumaralariArray.length > 1 ? currentCondition = "kayıtlardaki" : currentCondition = "kayıttaki"
       return ({hata:true,hataYeri:"FONK // ogrenciSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + "\"şube\" sistemde mevcut değil."});
