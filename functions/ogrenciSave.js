@@ -247,6 +247,7 @@ exports = async function (request, response) {
     await collectionUsers.bulkWrite(bulk, { ordered: false });
     
     
+    return ({ok:true,mesaj:'Kayıt işlemi gerçekleştirildi.'})
 
 
 
