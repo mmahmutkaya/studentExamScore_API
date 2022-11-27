@@ -121,25 +121,40 @@ exports = async function (request, response) {
   // MONGO-5 - GELEN VERİ KONTROL
   try {
     
-    
     await cameItems.map(item => {
+      
       
       if(item.ogrenciNo.length !== 8) {
         is_ogrenciNo_Violation = true
         violation_ogrenciNo_ExcelRows.push(item.siraNo)
       }
 
-      if(userArray.find(x=> x.ogrenciNo == item.ogrenciNo)) {
-        is_ogrenciNo_Exist = true
-        exist_ogrenciNo_ExcelRows.push(item.siraNo)
-      }
-
-
-
       validateEmail = context.functions.execute("validateEmail", item.mail);
       if(!validateEmail) {
         is_mail_Violation = true
         violation_mail_ExcelRows.push(item.siraNo)
+      }
+
+      if(item.name.length < 2) {
+        is_name_Violation = true
+        violation_name_ExcelRows.push(item.siraNo)
+      }
+
+      if(item.surname.length < 2) {
+        is_surname_Violation = true
+        violation_surname_ExcelRows.push(item.siraNo)
+      }
+      
+      if(!branchArray.find(x=> x == item.branch)) {
+        is_branch_Violation = true
+        violation_branch_ExcelRows.push(item.siraNo)
+      }
+
+
+
+      if(userArray.find(x=> x.ogrenciNo == item.ogrenciNo)) {
+        is_ogrenciNo_Exist = true
+        exist_ogrenciNo_ExcelRows.push(item.siraNo)
       }
 
       if(userArray.find(x=> x.kullaniciMail == item.mail)) {
@@ -149,23 +164,7 @@ exports = async function (request, response) {
 
 
 
-      if(item.name.length < 2) {
-        is_name_Violation = true
-        violation_name_ExcelRows.push(item.siraNo)
-      }
 
-
-
-      if(item.surname.length < 2) {
-        is_surname_Violation = true
-        violation_surname_ExcelRows.push(item.siraNo)
-      }
-      
-      
-      if(!branchArray.find(x=> x == item.branch)) {
-        is_branch_Violation = true
-        violation_branch_ExcelRows.push(item.siraNo)
-      }
 
 
       // if (typeof item.sira === "string") {
@@ -177,22 +176,34 @@ exports = async function (request, response) {
 
     });
     
+    let satirNumaralariArray = []
+    let currentCondition = ""
     
-    if (is_ogrenciNo_Violation) return ({hata:true,hataYeri:"FONK // ogrenciSave // MONGO-5",hataMesaj: violation_ogrenciNo_ExcelRows +  " numaralı kayıtlardaki \"ogrenci numaraları\" 8 haneden oluşmuyor."});
+    satirNumaralariArray = violation_ogrenciNo_ExcelRows
+    satirNumaralariArray.length > 1 ? currentCondition = "kayıtlardaki" : currentCondition = "kayıttaki"
+    if (is_ogrenciNo_Violation) return ({hata:true,hataYeri:"FONK // ogrenciSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + "\" ogrenci numarası\" 8 haneden oluşmuyor."});
+    //
+    satirNumaralariArray = violation_mail_ExcelRows
+    satirNumaralariArray.length > 1 ? currentCondition = "kayıtlardaki" : currentCondition = "kayıttaki"
+    if (is_mail_Violation) return ({hata:true,hataYeri:"FONK // ogrenciSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + "\" mail adresi\" bilgisi kontrol edilmeli."});
+    //
+    satirNumaralariArray = violation_name_ExcelRows
+    satirNumaralariArray.length > 1 ? currentCondition = "kayıtlardaki" : currentCondition = "kayıttaki"
+    if (is_name_Violation) return ({hata:true,hataYeri:"FONK // ogrenciSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + "\" isim\" bilgisi kontrol edilmeli."});
+    //
+    satirNumaralariArray = violation_surname_ExcelRows
+    satirNumaralariArray.length > 1 ? currentCondition = "kayıtlardaki" : currentCondition = "kayıttaki"
+    if (is_surname_Violation) return ({hata:true,hataYeri:"FONK // ogrenciSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + "\" soyisim\" bilgisi kontrol edilmeli."});
+    //
+    satirNumaralariArray = violation_branch_ExcelRows
+    satirNumaralariArray.length > 1 ? currentCondition = "kayıtlardaki" : currentCondition = "kayıttaki"
+    if (is_branch_Violation) return ({hata:true,hataYeri:"FONK // ogrenciSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + " yazılan \"şube\" , sistemdeki kayıtlı şubeler ile eşleşmiyor."});
+    
+    
     if (is_ogrenciNo_Exist) return ({hata:true,hataYeri:"FONK // ogrenciSave // MONGO-5",hataMesaj: exist_ogrenciNo_ExcelRows +  " numaralı kayıtlardaki \"ogrenci numaraları\" sistemde kayıtlı."});
-    
-    if (is_mail_Violation) return ({hata:true,hataYeri:"FONK // ogrenciSave // MONGO-5",hataMesaj: violation_mail_ExcelRows +  " numaralı kayıtlardaki \"mail\" adreslerinin doğruluğunu kontrol ediniz."});
+    if (is_ogrenciNo_Exist) return ({hata:true,hataYeri:"FONK // ogrenciSave // MONGO-5",hataMesaj: exist_ogrenciNo_ExcelRows +  " numaralı kayıtlardaki \"ogrenci numaraları\" sistemde kayıtlı."});
+    if (is_mail_Exist) return ({hata:true,hataYeri:"FONK // ogrenciSave // MONGO-5",hataMesaj: exist_ogrenciNo_ExcelRows +  " numaralı kayıtlardaki \"ogrenci numaraları\" sistemde kayıtlı."});
     if (is_mail_Exist) return ({hata:true,hataYeri:"FONK // ogrenciSave // MONGO-5",hataMesaj: exist_mail_ExcelRows +  " numaralı kayıtlardaki \"mail adresleri\" sistemde kayıtlı."});
-    
-    if (is_name_Violation) return ({hata:true,hataYeri:"FONK // ogrenciSave // MONGO-5",hataMesaj: violation_name_ExcelRows +  " numaralı kayıtlardaki \"isim\" bilgilerinin doğruluğunu kontrol ediniz."});
-    
-    if (is_surname_Violation) return ({hata:true,hataYeri:"FONK // ogrenciSave // MONGO-5",hataMesaj: violation_surname_ExcelRows +  " numaralı kayıtlardaki \"soyisim\" bilgilerinin doğruluğunu kontrol ediniz."});
-    
-    if (is_branch_Violation) return ({hata:true,hataYeri:"FONK // ogrenciSave // MONGO-5",hataMesaj: violation_branch_ExcelRows +  " numaralı kayıtlardaki \"şube\" bilgileri, sistemdeki kayıtlı şubeler ile eşleşmiyor."});
-    
-    
-    
-    
     
     // // METRAJ SATIRI VARSA SİLİNMESİN
     // // Silinemeycek dolu MetrajNodes ları tespit etme
