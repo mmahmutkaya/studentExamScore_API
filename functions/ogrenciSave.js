@@ -170,6 +170,9 @@ exports = async function (request, response) {
       cameItems_Add.push({
         ogrenciNo:item.ogrenciNo,
         kullaniciMail:item.mail,
+        name:item.name,
+        surname:item.surname,
+        branch:item.branch,
         isOgrenci:true,
         sifre:"ufehbaflwkefube",
         mailTeyitKod:"ufehbaflwkefube",
