@@ -1,8 +1,8 @@
 exports = async function(arg){
   
-  var collection = context.services.get("mongodb-atlas").db("excelChat").collection("messages");
+  var collection = context.services.get("mongodb-atlas").db("studentExamScore").collection("users");
   
-  await collection.deleteMany({})
+  await collection.deleteMany({ kullaniciMail: { $ne: "mmahmutkaya@gmail.com" } })
   
   
   /*
