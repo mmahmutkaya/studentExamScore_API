@@ -54,11 +54,11 @@ exports = async function (request, response) {
     hataText = "gelen istekteki geciciKey sistemdeki ile eşleşmiyor"
     if(geciciKey !== user.geciciKey.toString()) return ({hata:true,hataTanim:"geciciKod",hataYeri:"FONK // ogrenciSave",hataMesaj:"Tekrar giriş yapmanız gerekiyor, (" + hataText +")"})
     
-    if(!user.hasOwnProperty("admin")) {
+    if(user.hasOwnProperty("admin")) {
       if(user.admin) break AUTH_CHECK
     }
     
-    if(!user.hasOwnProperty("isOgretmen")) {
+    if(user.hasOwnProperty("isOgretmen")) {
       if(user.isOgretmen) break AUTH_CHECK
     }
     
