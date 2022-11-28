@@ -39,8 +39,26 @@ exports = async function (request, response) {
     var text = "\"şifremi unuttum\"";
     if(sifre !== user.sifre ) return ({hata:true,hataTanim:"sifreEslesme",hataYeri:"FONK // login",hataMesaj:"Hatalı şifre, şifrenizi unuttuysanız " + text  + " linkine tıklayınız."})
     const geciciKey = Date.now()
+    
+    let admin = false
+    if (user.hasOwnProperty("admin")) {
+      if (user.admin) userAdmin = true
+    }
+    
+    let isOgrenci = false
+    if (user.hasOwnProperty("isOgrenci")) {
+      if (user.isOgrenci) isOgrenci = true
+    }
+    
+    let isOgretmen = false
+    if (user.hasOwnProperty("isOgretmen")) {
+      if (user.isOgretmen) isOgretmen = true
+    }
+    
     collectionUsers.updateOne({"_id":user._id},{ $set: { geciciKey: geciciKey } })
-    return ({ok:true,mesaj:"Giriş yapıldı",geciciKey:geciciKey})
+    
+    return ({ok:true,mesaj:"Giriş yapıldı",geciciKey,admin,isOgretmen,isOgrenci })
+    
   } catch(err) {
     return ({hata:true,hataYeri:"FONK // login // MONGO-2",hataMesaj:err.message})
   }
