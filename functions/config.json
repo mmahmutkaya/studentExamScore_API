@@ -61,5 +61,14 @@
     {
         "name": "sifreDegistir",
         "private": false
+    },
+    {
+        "name": "ogretmenGet",
+        "private": false,
+        "disable_arg_logs": true
+    },
+    {
+        "name": "ogretmenSave",
+        "private": false
     }
 ]

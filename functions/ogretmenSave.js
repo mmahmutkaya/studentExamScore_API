@@ -14,28 +14,25 @@ exports = async function (request, response) {
   const collectionUsers = context.services.get("mongodb-atlas").db("studentExamScore").collection("users")
   const userArray = await collectionUsers.find({isDeleted:false}).toArray()
   
-  const collectionBranchs = context.services.get("mongodb-atlas").db("studentExamScore").collection("branchs")
-  const branchArray = await collectionBranchs.find({isDeleted:false}).toArray()
-  
-  
-  
+
+
   // MONGO-1 - Gelen Sorgu
   try {
     
     hataText = "\"gelen istekte mail adresi bulunamadı\""
-    if(!objHeader.hasOwnProperty('Kullanici-Mail')) return ({hata:true,hataYeri:"FONK // ogrenciSave",hataMesaj:"Tekrar giriş yapmanız gerekiyor, (" + hataText +")"})
+    if(!objHeader.hasOwnProperty('Kullanici-Mail')) return ({hata:true,hataYeri:"FONK // ogretmenSave",hataMesaj:"Tekrar giriş yapmanız gerekiyor, (" + hataText +")"})
     kullaniciMail = objHeader["Kullanici-Mail"][0];
     validateEmail = context.functions.execute("validateEmail", kullaniciMail);
     hataText = "gelen istekteki mail adresi hatalı"
-    if(validateEmail == null) return ({hata:true,hataYeri:"FONK // ogrenciSave",hataMesaj:"Tekrar giriş yapmanız gerekiyor, (" + hataText +")"})
+    if(validateEmail == null) return ({hata:true,hataYeri:"FONK // ogretmenSave",hataMesaj:"Tekrar giriş yapmanız gerekiyor, (" + hataText +")"})
     
     hataText = "\"gelen istekte geciciKey bulunamadı\""
-    if(!objHeader.hasOwnProperty('Gecici-Key')) return ({hata:true,hataYeri:"FONK // ogrenciSave",hataMesaj:"Tekrar giriş yapmanız gerekiyor, (" + hataText +")"})
+    if(!objHeader.hasOwnProperty('Gecici-Key')) return ({hata:true,hataYeri:"FONK // ogretmenSave",hataMesaj:"Tekrar giriş yapmanız gerekiyor, (" + hataText +")"})
     geciciKey = objHeader["Gecici-Key"][0];
     
 
   } catch (err){
-    return ({hata:true,hataYeri:"FONK // ogrenciSave // MONGO-1",hataMesaj:err.message})
+    return ({hata:true,hataYeri:"FONK // ogretmenSave // MONGO-1",hataMesaj:err.message})
   }
   
   
@@ -49,37 +46,37 @@ exports = async function (request, response) {
     
     hataText = "gelen istekteki mail adresi sistemde kayıtlı değil"
     user = await userArray.find(x => x.kullaniciMail == kullaniciMail)
-    if(!user) return ({hata:true,hataYeri:"FONK // ogrenciGet",hataMesaj:"Tekrar giriş yapmanız gerekiyor, (" + hataText +")"})
+    if(!user) return ({hata:true,hataYeri:"FONK // ogretmenSave",hataMesaj:"Tekrar giriş yapmanız gerekiyor, (" + hataText +")"})
     
-    if(!user.mailTeyit) return ({hata:true,hataTanim:"mailTeyit",hataYeri:"FONK // ogrenciGet",hataMesaj:"Mail adresi henüz doğrulanmamış."})
+    if(!user.mailTeyit) return ({hata:true,hataTanim:"mailTeyit",hataYeri:"FONK // ogretmenSave",hataMesaj:"Mail adresi henüz doğrulanmamış."})
     
-    if(!user.uyelikOnay) return ({hata:true,hataTanim:"uyelikOnay",hataYeri:"FONK // ogrenciGet",hataMesaj:"Üyeliğiniz onay bekliyor."})
+    if(!user.uyelikOnay) return ({hata:true,hataTanim:"uyelikOnay",hataYeri:"FONK // ogretmenSave",hataMesaj:"Üyeliğiniz onay bekliyor."})
     
     hataText = "gelen istekteki geciciKey sistemdeki ile eşleşmiyor"
-    if(geciciKey !== user.geciciKey.toString()) return ({hata:true,hataTanim:"geciciKod",hataYeri:"FONK // ogrenciGet",hataMesaj:"Tekrar giriş yapmanız gerekiyor, (" + hataText +")"})
+    if(geciciKey !== user.geciciKey.toString()) return ({hata:true,hataTanim:"geciciKod",hataYeri:"FONK // ogretmenSave",hataMesaj:"Tekrar giriş yapmanız gerekiyor, (" + hataText +")"})
     
     if(user.hasOwnProperty("admin")) {
       if(user.admin) break AUTH_CHECK
     }
     
-    // öğretmene öğrenci kaydetme hakkı vermedik - ya da verelim, silme hakkı vermeyelim, iş paylaşılmış olur
-    if(user.hasOwnProperty("isOgretmen")) {
-      if(user.isOgretmen) break AUTH_CHECK
-    }
+    // // öğretmene öğretmen kaydetme hakkı verelim, silme hakkı vermeyelim, iş paylaşımı olur
+    // if(user.hasOwnProperty("isOgretmen")) {
+    //   if(user.isOgretmen) break AUTH_CHECK
+    // }
     
-    return ({hata:true,hataYeri:"FONK // ogrenciGet",hataMesaj:"Öğrenci kaydetmeeye yetkiniz bulunmuyor."})
+    return ({hata:true,hataYeri:"FONK // ogretmenSave",hataMesaj:"Öğretmen kaydetmeye yetkiniz bulunmuyor."})
     
     // kontroller
-    // if(tur == "tanimla" && !projeData.yetkiler.ihaleler[ihaleId].fonksiyonlar.defineMetrajNodes["okuma"].includes(kullaniciMail)) return ({hata:true,hataTanim:"yetki",hataYeri:"FONK // ogrenciGet",hataMesaj:"İlgili ihalenin mahal-poz eşleşmelerini görmeye yetkiniz bulunmuyor, ekranda veri varsa güncel olmayabilir."})
-    // if(tur !== "tanimla" && !projeData.yetkiler.ihaleler[ihaleId].fonksiyonlar.updateMetrajNodesByPozId[tur].okuma.includes(kullaniciMail)) return ({hata:true,hataTanim:"yetki",hataYeri:"FONK // ogrenciGet",hataMesaj:"İlgili pozun \"" + tur + "\" metrajlarını görmeye yetkiniz bulunmuyor, ekranda veri varsa güncel olmayabilir."})
-    // if(tur !== "tanimla" && !projeData.yetkiler.ihaleler[ihaleId].fonksiyonlar.updateMetrajNodesByPozId[tur].guncelNo > 0) return ({hata:true,hataTanim:"yetki",hataYeri:"FONK // ogrenciGet",hataMesaj:"İlgili iş paketi \""+ tur +"\" metrajı girmek için kapalı durumda, program sorumlusu ile iletişime geçebilirsiniz."})
+    // if(tur == "tanimla" && !projeData.yetkiler.ihaleler[ihaleId].fonksiyonlar.defineMetrajNodes["okuma"].includes(kullaniciMail)) return ({hata:true,hataTanim:"yetki",hataYeri:"FONK // ogretmenSave",hataMesaj:"İlgili ihalenin mahal-poz eşleşmelerini görmeye yetkiniz bulunmuyor, ekranda veri varsa güncel olmayabilir."})
+    // if(tur !== "tanimla" && !projeData.yetkiler.ihaleler[ihaleId].fonksiyonlar.updateMetrajNodesByPozId[tur].okuma.includes(kullaniciMail)) return ({hata:true,hataTanim:"yetki",hataYeri:"FONK // ogretmenSave",hataMesaj:"İlgili pozun \"" + tur + "\" metrajlarını görmeye yetkiniz bulunmuyor, ekranda veri varsa güncel olmayabilir."})
+    // if(tur !== "tanimla" && !projeData.yetkiler.ihaleler[ihaleId].fonksiyonlar.updateMetrajNodesByPozId[tur].guncelNo > 0) return ({hata:true,hataTanim:"yetki",hataYeri:"FONK // ogretmenSave",hataMesaj:"İlgili iş paketi \""+ tur +"\" metrajı girmek için kapalı durumda, program sorumlusu ile iletişime geçebilirsiniz."})
     // if (tur !== "tanimla") {
     //   guncelNo = projeData.yetkiler.ihaleler[ihaleId].fonksiyonlar.updateMetrajNodesByPozId[tur].guncelNo
     // }
 
 
   } catch(err) {
-    return ({hata:true,hataYeri:"FONK // ogrenciGet // MONGO-2",hataMesaj:err.message})
+    return ({hata:true,hataYeri:"FONK // ogretmenSave // MONGO-2",hataMesaj:err.message})
   }
   
   
@@ -93,14 +90,10 @@ exports = async function (request, response) {
   try{
     cameItems = JSON.parse(request.body.text());
   } catch(err){
-    return ({hata:true,hataYeri:"FONK // ogrenciSave // MONGO-3",hataMesaj:"Gelen sorguda gövde(body) verisi yok ya da hatalı, MONGO --> " + err.message})
+    return ({hata:true,hataYeri:"FONK // ogretmenSave // MONGO-3",hataMesaj:"Gelen sorguda gövde(body) verisi yok ya da hatalı, MONGO --> " + err.message})
   }
     
   
-
-
-
-
 
 
 
@@ -109,8 +102,8 @@ exports = async function (request, response) {
 
   let zaman = Date.now()
   
-  let is_ogrenciNo_Violation = false
-  let violation_ogrenciNo_ExcelRows = []
+  let is_ogretmenNo_Violation = false
+  let violation_ogretmenNo_ExcelRows = []
   
   let is_mail_Violation = false
   let violation_mail_ExcelRows = []
@@ -123,17 +116,14 @@ exports = async function (request, response) {
 
 
 
-  let is_ogrenciNo_Exist = false
-  let exist_ogrenciNo_ExcelRows = []
+  let is_ogretmenNo_Exist = false
+  let exist_ogretmenNo_ExcelRows = []
   
   let is_mail_Exist = false
   let exist_mail_ExcelRows = []
 
 
-  let is_branch_Absent = false
-  let absent_branch_ExcelRows = []
 
-  
   let cameItems_Add = []
 
   
@@ -141,10 +131,9 @@ exports = async function (request, response) {
     
     await cameItems.map(item => {
       
-      
-      if(item.ogrenciNo.length !== 8) {
-        is_ogrenciNo_Violation = true
-        violation_ogrenciNo_ExcelRows.push(item.siraNo)
+      if(item.ogretmenNo.length < 1) {
+        is_ogretmenNo_Violation = true
+        violation_ogretmenNo_ExcelRows.push(item.siraNo)
       }
 
       validateEmail = context.functions.execute("validateEmail", item.mail);
@@ -165,9 +154,9 @@ exports = async function (request, response) {
       
 
 
-      if(userArray.find(x=> x.ogrenciNo == item.ogrenciNo)) {
-        is_ogrenciNo_Exist = true
-        exist_ogrenciNo_ExcelRows.push(item.siraNo)
+      if(userArray.find(x=> x.ogretmenNo == item.ogretmenNo)) {
+        is_ogretmenNo_Exist = true
+        exist_ogretmenNo_ExcelRows.push(item.siraNo)
       }
 
       if(userArray.find(x=> x.kullaniciMail == item.mail)) {
@@ -176,18 +165,13 @@ exports = async function (request, response) {
       }
 
 
-      if(!branchArray.find(x=> x.name == item.branch)) {
-        is_branch_Absent = true
-        absent_branch_ExcelRows.push(item.siraNo)
-      }
-
       cameItems_Add.push({
-        ogrenciNo:item.ogrenciNo,
+        ogretmenNo:item.ogretmenNo,
         kullaniciMail:item.mail,
         name:item.name,
         surname:item.surname,
         branch:item.branch,
-        isOgrenci:true,
+        isOgretmen:true,
         sifre:"degisecek_gecici",
         mailTeyitKod:"degisecek_gecici",
         mailTeyit:false,
@@ -203,51 +187,44 @@ exports = async function (request, response) {
     let satirNumaralariArray = []
     let currentCondition = ""
     
-    if (is_ogrenciNo_Violation) {
-      satirNumaralariArray = violation_ogrenciNo_ExcelRows
+    if (is_ogretmenNo_Violation) {
+      satirNumaralariArray = violation_ogretmenNo_ExcelRows
       satirNumaralariArray.length > 1 ? currentCondition = "kayıtlardaki" : currentCondition = "kayıttaki"
-      return ({hata:true,hataYeri:"FONK // ogrenciSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + " \"ogrenci numarası\" 8 haneden oluşmuyor."});
+      return ({hata:true,hataYeri:"FONK // ogretmenSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + " \"öğretmen numarası\" kontrol edilmeli."});
     }
     //
     if (is_mail_Violation) {
       satirNumaralariArray = violation_mail_ExcelRows
       satirNumaralariArray.length > 1 ? currentCondition = "kayıtlardaki" : currentCondition = "kayıttaki"
-      return ({hata:true,hataYeri:"FONK // ogrenciSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + " \"mail adresi\" bilgisi kontrol edilmeli."});
+      return ({hata:true,hataYeri:"FONK // ogretmenSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + " \"mail adresi\" bilgisi kontrol edilmeli."});
     }
     //
     if (is_name_Violation) {
       satirNumaralariArray = violation_name_ExcelRows
       satirNumaralariArray.length > 1 ? currentCondition = "kayıtlardaki" : currentCondition = "kayıttaki"
-      return ({hata:true,hataYeri:"FONK // ogrenciSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + " \"isim\" bilgisi kontrol edilmeli."});
+      return ({hata:true,hataYeri:"FONK // ogretmenSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + " \"isim\" bilgisi kontrol edilmeli."});
     }
     //
     if (is_surname_Violation) {
       satirNumaralariArray = violation_surname_ExcelRows
       satirNumaralariArray.length > 1 ? currentCondition = "kayıtlardaki" : currentCondition = "kayıttaki"
-      return ({hata:true,hataYeri:"FONK // ogrenciSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + " \"soyisim\" bilgisi kontrol edilmeli."});
+      return ({hata:true,hataYeri:"FONK // ogretmenSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + " \"soyisim\" bilgisi kontrol edilmeli."});
     }
     
     
     
-    if (is_ogrenciNo_Exist) {
-      satirNumaralariArray = exist_ogrenciNo_ExcelRows
+    if (is_ogretmenNo_Exist) {
+      satirNumaralariArray = exist_ogretmenNo_ExcelRows
       satirNumaralariArray.length > 1 ? currentCondition = "kayıtlardaki" : currentCondition = "kayıttaki"
-      return ({hata:true,hataYeri:"FONK // ogrenciSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + " \"öğrenci numarası\" sistemde mevcut."});
+      return ({hata:true,hataYeri:"FONK // ogretmenSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + " \"öğrenci numarası\" sistemde mevcut."});
     }
     
     if (is_mail_Exist) {
       satirNumaralariArray = exist_mail_ExcelRows
       satirNumaralariArray.length > 1 ? currentCondition = "kayıtlardaki" : currentCondition = "kayıttaki"
-      return ({hata:true,hataYeri:"FONK // ogrenciSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + " \"mail adresi\" sistemde mevcut."});
+      return ({hata:true,hataYeri:"FONK // ogretmenSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + " \"mail adresi\" sistemde mevcut."});
     }
     
-    
-    
-    if (is_branch_Absent) {
-      satirNumaralariArray = absent_branch_ExcelRows
-      satirNumaralariArray.length > 1 ? currentCondition = "kayıtlardaki" : currentCondition = "kayıttaki"
-      return ({hata:true,hataYeri:"FONK // ogrenciSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + " \"şube\" bilgisi sistemde mevcut değil."});
-    }
     
     
     let bulk = []
@@ -257,7 +234,7 @@ exports = async function (request, response) {
       await cameItems_Add.map(item =>{
         bulk.push({
           updateOne: {
-            filter: {kullaniciMail:item.kullaniciMail,ogrenciNo:item.ogrenciNo},
+            filter: {kullaniciMail:item.kullaniciMail,ogretmenNo:item.ogretmenNo},
             update: { $set: {...item}}, // içeriği yukarıda ayarlandı
             upsert: true
           }
@@ -267,7 +244,7 @@ exports = async function (request, response) {
     await collectionUsers.bulkWrite(bulk, { ordered: false });
     
     
-    return ({ok:true,mesaj:'Öğrenciler sisteme kaydedildi.'})
+    return ({ok:true,mesaj:'Öğretmenler sisteme kaydedildi.'})
 
 
 
@@ -300,7 +277,7 @@ exports = async function (request, response) {
     
     // if (silinemezler.length) {
     //   const silinemez = await collectionMetrajNodes.findOne({mahalId:new BSON.ObjectId(silinemezler[0].mahalId),pozId:new BSON.ObjectId(silinemezler[0].pozId)})
-    //   return ({hata:true,hataYeri:"FONK // ogrenciSave",hataMesaj:silinemez.pozNo + " - numaralı poz ile " + silinemez.mahalParentName + " - " + silinemez.mahalKod + " nolu mahalin eşleştirmesini kaldırmak için öncelikle bu eşleşmeye ait mevcut metrajları silmelisiniz."}) 
+    //   return ({hata:true,hataYeri:"FONK // ogretmenSave",hataMesaj:silinemez.pozNo + " - numaralı poz ile " + silinemez.mahalParentName + " - " + silinemez.mahalKod + " nolu mahalin eşleştirmesini kaldırmak için öncelikle bu eşleşmeye ait mevcut metrajları silmelisiniz."}) 
     // }
 
 
@@ -353,7 +330,7 @@ exports = async function (request, response) {
     // await collection.bulkWrite(bulk, { ordered: false });
     
   } catch(err){
-    return ({hata:true,hataYeri:"FONK // ogrenciSave // MONGO-4",hataMesaj:err.message});
+    return ({hata:true,hataYeri:"FONK // ogretmenSave // MONGO-4",hataMesaj:err.message});
   }
     
 };
