@@ -41,8 +41,8 @@ exports = async function (request, response) {
     const geciciKey = Date.now()
     
     let isAdmin = false
-    if (user.hasOwnProperty("admin")) {
-      if (user.admin) isAdmin = true
+    if (user.hasOwnProperty("isAdmin")) {
+      if (user.isAdmin) isAdmin = true
     }
     
     let isOgrenci = false
