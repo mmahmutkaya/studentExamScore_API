@@ -90,7 +90,7 @@
     {
         "route": "/ogretmenSave",
         "http_method": "POST",
-        "function_name": "ogrenciSave",
+        "function_name": "ogretmenSave",
         "validation_method": "NO_VALIDATION",
         "respond_result": true,
         "fetch_custom_user_data": false,
