@@ -40,9 +40,9 @@ exports = async function (request, response) {
     if(sifre !== user.sifre ) return ({hata:true,hataTanim:"sifreEslesme",hataYeri:"FONK // login",hataMesaj:"Hatalı şifre, şifrenizi unuttuysanız " + text  + " linkine tıklayınız."})
     const geciciKey = Date.now()
     
-    let admin = false
+    let isAdmin = false
     if (user.hasOwnProperty("admin")) {
-      if (user.admin) userAdmin = true
+      if (user.admin) isAdmin = true
     }
     
     let isOgrenci = false
@@ -57,7 +57,7 @@ exports = async function (request, response) {
     
     collectionUsers.updateOne({"_id":user._id},{ $set: { geciciKey: geciciKey } })
     
-    return ({ok:true,mesaj:"Giriş yapıldı",geciciKey,admin,isOgretmen,isOgrenci })
+    return ({ok:true,mesaj:"Giriş yapıldı",geciciKey,isAdmin,isOgretmen,isOgrenci })
     
   } catch(err) {
     return ({hata:true,hataYeri:"FONK // login // MONGO-2",hataMesaj:err.message})
