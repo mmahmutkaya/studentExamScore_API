@@ -74,5 +74,10 @@
     {
         "name": "dersSave",
         "private": false
+    },
+    {
+        "name": "dersGet",
+        "private": false,
+        "disable_arg_logs": true
     }
 ]
