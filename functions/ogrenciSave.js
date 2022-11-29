@@ -189,16 +189,18 @@ exports = async function (request, response) {
       geciciUser = cameItems_Add.find(x=> x.ogrenciNo == item.ogrenciNo)
       if(geciciUser) {
         is_ogrenciNo_Exist_inCame = true
-        exist_ogrenciNo_ExcelRows_inCame.push(item.siraNo)
         exist_ogrenciNo_ExcelRows_inCame.push(geciciUser.siraNo)
+        exist_ogrenciNo_ExcelRows_inCame.push(item.siraNo)
+        exist_ogrenciNo_ExcelRows_inCame.push("---")
       }
       
       geciciUser = null
       geciciUser = cameItems_Add.find(x=> x.kullaniciMail == item.mail)
       if(geciciUser) {
         is_mail_Exist_inCame = true
-        exist_mail_ExcelRows_inCame.push(item.siraNo)
         exist_mail_ExcelRows_inCame.push(geciciUser.siraNo)
+        exist_mail_ExcelRows_inCame.push(item.siraNo)
+        exist_mail_ExcelRows_inCame.push("---")
       }
 
       
