@@ -142,6 +142,7 @@ exports = async function (request, response) {
 
   
   let cameItems_Add = []
+  let geciciUser = {}
 
   
   try {
@@ -184,16 +185,19 @@ exports = async function (request, response) {
 
 
 
-      if(cameItems_Add.find(x=> x.ogrenciNo == item.ogrenciNo)) {
+
+      geciciUser = cameItems_Add.find(x=> x.ogrenciNo == item.ogrenciNo)
+      if(geciciUser) {
         is_ogrenciNo_Exist_inCame = true
         exist_ogrenciNo_ExcelRows_inCame.push(item.siraNo)
-        exist_ogrenciNo_ExcelRows_inCame.push(x.siraNo)
+        exist_ogrenciNo_ExcelRows_inCame.push(geciciUser.siraNo)
       }
 
-      if(cameItems_Add.find(x=> x.kullaniciMail == item.mail)) {
+      geciciUser = cameItems_Add.find(x=> x.kullaniciMail == item.mail)
+      if(geciciUser) {
         is_mail_Exist_inCame = true
         exist_mail_ExcelRows_inCame.push(item.siraNo)
-        exist_mail_ExcelRows_inCame.push(x.siraNo)
+        exist_mail_ExcelRows_inCame.push(geciciUser.siraNo)
       }
 
 
@@ -204,6 +208,7 @@ exports = async function (request, response) {
       }
 
       cameItems_Add.push({
+        siraNo:item.siraNo,
         ogrenciNo:item.ogrenciNo,
         kullaniciMail:item.mail,
         name:item.name,
