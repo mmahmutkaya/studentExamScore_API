@@ -130,6 +130,13 @@ exports = async function (request, response) {
   let exist_mail_ExcelRows = []
 
 
+  let is_ogrenciNo_Exist_inCame = false
+  let exist_ogrenciNo_ExcelRows_inCame = []
+  
+  let is_mail_Exist_inCame = false
+  let exist_mail_ExcelRows_inCame = []
+
+
   let is_branch_Absent = false
   let absent_branch_ExcelRows = []
 
@@ -174,6 +181,21 @@ exports = async function (request, response) {
         is_mail_Exist = true
         exist_mail_ExcelRows.push(item.siraNo)
       }
+
+
+
+      if(cameItems_Add.find(x=> x.ogrenciNo == item.ogrenciNo)) {
+        is_ogrenciNo_Exist_inCame = true
+        exist_ogrenciNo_ExcelRows_inCame.push(item.siraNo)
+        exist_ogrenciNo_ExcelRows_inCame.push(x.siraNo)
+      }
+
+      if(cameItems_Add.find(x=> x.kullaniciMail == item.mail)) {
+        is_mail_Exist_inCame = true
+        exist_mail_ExcelRows_inCame.push(item.siraNo)
+        exist_mail_ExcelRows_inCame.push(x.siraNo)
+      }
+
 
 
       if(!branchArray.find(x=> x.name == item.branch)) {
@@ -239,6 +261,20 @@ exports = async function (request, response) {
       satirNumaralariArray = exist_mail_ExcelRows
       satirNumaralariArray.length > 1 ? currentCondition = "kayıtlardaki" : currentCondition = "kayıttaki"
       return ({hata:true,hataYeri:"FONK // ogrenciSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + " \"mail adresi\" sistemde mevcut."});
+    }
+    
+    
+    
+    if (is_ogrenciNo_Exist_inCame) {
+      satirNumaralariArray = exist_ogrenciNo_ExcelRows_inCame
+      satirNumaralariArray.length > 1 ? currentCondition = "kayıtlardaki" : currentCondition = "kayıttaki"
+      return ({hata:true,hataYeri:"FONK // ogrenciSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + " \"öğrenci numarası\" bilgilerinde mükerrerlik var, kontrol ediniz."});
+    }
+    
+    if (is_mail_Exist_inCame) {
+      satirNumaralariArray = exist_mail_ExcelRows_inCame
+      satirNumaralariArray.length > 1 ? currentCondition = "kayıtlardaki" : currentCondition = "kayıttaki"
+      return ({hata:true,hataYeri:"FONK // ogrenciSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + " \"mail adresi\" bilgilerinde mükerrerlik var, kontrol ediniz."});
     }
     
     
