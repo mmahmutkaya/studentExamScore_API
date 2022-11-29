@@ -142,6 +142,7 @@ exports = async function (request, response) {
 
   
   let cameItems_Add = []
+  let geciciUser = null
 
   
   try {
@@ -184,14 +185,15 @@ exports = async function (request, response) {
 
 
       
-
+      geciciUser = null
       geciciUser = cameItems_Add.find(x=> x.ogrenciNo == item.ogrenciNo)
       if(geciciUser) {
         is_ogrenciNo_Exist_inCame = true
         exist_ogrenciNo_ExcelRows_inCame.push(item.siraNo)
         exist_ogrenciNo_ExcelRows_inCame.push(geciciUser.siraNo)
       }
-
+      
+      geciciUser = null
       geciciUser = cameItems_Add.find(x=> x.kullaniciMail == item.mail)
       if(geciciUser) {
         is_mail_Exist_inCame = true
@@ -205,6 +207,8 @@ exports = async function (request, response) {
         is_branch_Absent = true
         absent_branch_ExcelRows.push(item.siraNo)
       }
+
+
 
       cameItems_Add.push({
         siraNo:item.siraNo,
@@ -228,27 +232,25 @@ exports = async function (request, response) {
     
     
     
-    let geciciUser = null
-    
-    await cameItems_Add.map(item => {
+    // await cameItems.map(item => {
       
-      geciciUser = null
-      geciciUser = cameItems_Add.find(x=> x.ogrenciNo == item.ogrenciNo)
-      if(geciciUser) {
-        is_ogrenciNo_Exist_inCame = true
-        exist_ogrenciNo_ExcelRows_inCame.push(item.siraNo)
-        exist_ogrenciNo_ExcelRows_inCame.push(geciciUser.siraNo)
-      }
+    //   geciciUser = null
+    //   geciciUser = cameItems_Add.find(x=> x.ogrenciNo == item.ogrenciNo)
+    //   if(geciciUser) {
+    //     is_ogrenciNo_Exist_inCame = true
+    //     exist_ogrenciNo_ExcelRows_inCame.push(item.siraNo)
+    //     exist_ogrenciNo_ExcelRows_inCame.push(geciciUser.siraNo)
+    //   }
       
-      geciciUser = null
-      geciciUser = cameItems_Add.find(x=> x.kullaniciMail == item.mail)
-      if(geciciUser) {
-        is_mail_Exist_inCame = true
-        exist_mail_ExcelRows_inCame.push(item.siraNo)
-        exist_mail_ExcelRows_inCame.push(geciciUser.siraNo)
-      }
+    //   geciciUser = null
+    //   geciciUser = cameItems_Add.find(x=> x.kullaniciMail == item.mail)
+    //   if(geciciUser) {
+    //     is_mail_Exist_inCame = true
+    //     exist_mail_ExcelRows_inCame.push(item.siraNo)
+    //     exist_mail_ExcelRows_inCame.push(geciciUser.siraNo)
+    //   }
       
-    });
+    // });
         
     
     
