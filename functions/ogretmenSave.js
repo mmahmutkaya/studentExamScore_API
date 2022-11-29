@@ -197,11 +197,8 @@ exports = async function (request, response) {
 
       
 
-
-
-
-
       cameItems_Add.push({
+        siraNo:item.siraNo,
         ogretmenNo:item.ogretmenNo,
         kullaniciMail:item.mail,
         name:item.name,
