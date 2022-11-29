@@ -142,7 +142,6 @@ exports = async function (request, response) {
 
   
   let cameItems_Add = []
-  let geciciUser = null
 
   
   try {
@@ -201,8 +200,6 @@ exports = async function (request, response) {
       }
 
       
-      geciciUser = null
-      
 
       if(!branchArray.find(x=> x.name == item.branch)) {
         is_branch_Absent = true
@@ -228,6 +225,37 @@ exports = async function (request, response) {
       })
 
     });
+    
+    
+    
+    let geciciUser = null
+    
+    await cameItems_Add.map(item => {
+      
+      geciciUser = null
+      geciciUser = cameItems_Add.find(x=> x.ogrenciNo == item.ogrenciNo)
+      if(geciciUser) {
+        is_ogrenciNo_Exist_inCame = true
+        exist_ogrenciNo_ExcelRows_inCame.push(item.siraNo)
+        exist_ogrenciNo_ExcelRows_inCame.push(geciciUser.siraNo)
+      }
+      
+      geciciUser = null
+      geciciUser = cameItems_Add.find(x=> x.kullaniciMail == item.mail)
+      if(geciciUser) {
+        is_mail_Exist_inCame = true
+        exist_mail_ExcelRows_inCame.push(item.siraNo)
+        exist_mail_ExcelRows_inCame.push(geciciUser.siraNo)
+      }
+      
+    });
+        
+    
+    
+    
+    
+    
+    
     
     let satirNumaralariArray = []
     let currentCondition = ""
@@ -291,6 +319,16 @@ exports = async function (request, response) {
       satirNumaralariArray.length > 1 ? currentCondition = "kayıtlardaki" : currentCondition = "kayıttaki"
       return ({hata:true,hataYeri:"FONK // ogrenciSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + " \"şube\" bilgisi sistemde mevcut değil."});
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     let bulk = []
