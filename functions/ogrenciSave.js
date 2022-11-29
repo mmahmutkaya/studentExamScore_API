@@ -184,7 +184,7 @@ exports = async function (request, response) {
       }
 
 
-
+      
 
       geciciUser = cameItems_Add.find(x=> x.ogrenciNo == item.ogrenciNo)
       if(geciciUser) {
@@ -200,7 +200,9 @@ exports = async function (request, response) {
         exist_mail_ExcelRows_inCame.push(geciciUser.siraNo)
       }
 
-
+      
+      geciciUser = {}
+      
 
       if(!branchArray.find(x=> x.name == item.branch)) {
         is_branch_Absent = true
