@@ -142,7 +142,7 @@ exports = async function (request, response) {
 
   
   let cameItems_Add = []
-  let geciciUser = {}
+  let geciciUser = null
 
   
   try {
@@ -201,7 +201,7 @@ exports = async function (request, response) {
       }
 
       
-      geciciUser = {}
+      geciciUser = null
       
 
       if(!branchArray.find(x=> x.name == item.branch)) {
