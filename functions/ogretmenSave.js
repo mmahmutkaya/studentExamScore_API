@@ -124,13 +124,23 @@ exports = async function (request, response) {
   let exist_mail_ExcelRows = []
 
 
+  let is_ogretmenNo_Exist_inCame = false
+  let exist_ogretmenNo_ExcelRows_inCame = []
+  
+  let is_mail_Exist_inCame = false
+  let exist_mail_ExcelRows_inCame = []
+
+
 
   let cameItems_Add = []
-
+  let geciciUser = null
+  
   
   try {
     
     await cameItems.map(item => {
+      
+      
       
       if(item.ogretmenNo.length < 1) {
         is_ogretmenNo_Violation = true
@@ -153,8 +163,8 @@ exports = async function (request, response) {
         violation_surname_ExcelRows.push(item.siraNo)
       }
       
-
-
+      
+      
       if(userArray.find(x=> x.ogretmenNo == item.ogretmenNo)) {
         is_ogretmenNo_Exist = true
         exist_ogretmenNo_ExcelRows.push(item.siraNo)
@@ -164,6 +174,31 @@ exports = async function (request, response) {
         is_mail_Exist = true
         exist_mail_ExcelRows.push(item.siraNo)
       }
+      
+      
+      
+      
+      geciciUser = null
+      geciciUser = cameItems_Add.find(x=> x.ogretmenNo == item.ogretmenNo)
+      if(geciciUser) {
+        is_ogrenciNo_Exist_inCame = true
+        exist_ogretmenNo_ExcelRows_inCame.push(item.siraNo)
+        exist_ogretmenNo_ExcelRows_inCame.push(geciciUser.siraNo)
+      }
+      
+      
+      geciciUser = null
+      geciciUser = cameItems_Add.find(x=> x.kullaniciMail == item.mail)
+      if(geciciUser) {
+        is_mail_Exist_inCame = true
+        exist_mail_ExcelRows_inCame.push(item.siraNo)
+        exist_mail_ExcelRows_inCame.push(geciciUser.siraNo)
+      }
+
+      
+
+
+
 
 
       cameItems_Add.push({
@@ -225,6 +260,21 @@ exports = async function (request, response) {
       satirNumaralariArray.length > 1 ? currentCondition = "kayıtlardaki" : currentCondition = "kayıttaki"
       return ({hata:true,hataYeri:"FONK // ogretmenSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + " \"mail adresi\" sistemde mevcut."});
     }
+    
+    
+    if (is_ogretmenNo_Exist_inCame) {
+      satirNumaralariArray = exist_ogretmenNo_ExcelRows_inCame
+      satirNumaralariArray.length > 1 ? currentCondition = "kayıtlardaki" : currentCondition = "kayıttaki"
+      return ({hata:true,hataYeri:"FONK // ogrenciSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + " \"öğrenci numarası\" bilgilerinde mükerrerlik var, kontrol ediniz."});
+    }
+    
+    if (is_mail_Exist_inCame) {
+      satirNumaralariArray = exist_mail_ExcelRows_inCame
+      satirNumaralariArray.length > 1 ? currentCondition = "kayıtlardaki" : currentCondition = "kayıttaki"
+      return ({hata:true,hataYeri:"FONK // ogrenciSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + " \"mail adresi\" bilgilerinde mükerrerlik var, kontrol ediniz."});
+    }
+    
+    
     
     
     
