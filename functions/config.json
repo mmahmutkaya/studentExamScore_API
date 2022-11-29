@@ -70,5 +70,9 @@
     {
         "name": "ogretmenSave",
         "private": false
+    },
+    {
+        "name": "dersSave",
+        "private": false
     }
 ]
