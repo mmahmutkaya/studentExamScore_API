@@ -317,7 +317,7 @@ exports = async function (request, response) {
       await cameItems_Add.map(item =>{
         bulk.push({
           updateOne: {
-            filter: {},
+            filter: {fullName:item.fullName},
             update: { $set: {...item}}, // içeriği yukarıda ayarlandı
             upsert: true
           }
