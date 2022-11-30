@@ -212,12 +212,12 @@ exports = async function (request, response) {
 
       // ABSENT - IN DB
       
-      if(branchArray.find(x=> x.name == item.branchName)) {
+      if(!branchArray.find(x=> x.name == item.branchName)) {
         is_branchName_Absent = true
         absent_branchName_ExcelRows.push(item.siraNo)
       }
       
-      if(ogretmenArray.find(x=> x.kullaniciMail == item.ogretmenMail)) {
+      if(!ogretmenArray.find(x=> x.kullaniciMail == item.ogretmenMail)) {
         is_ogretmenMail_Absent = true
         absent_ogretmenMail_ExcelRows.push(item.siraNo)
       }
