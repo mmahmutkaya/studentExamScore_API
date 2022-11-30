@@ -116,11 +116,11 @@ exports = async function (request, response) {
   // let is_mail_Violation = false
   // let violation_mail_ExcelRows = []
   
-  // let is_name_Violation = false
-  // let violation_name_ExcelRows = []
+  let is_year_Violation = false
+  let violation_year_ExcelRows = []
 
-  // let is_surname_Violation = false
-  // let violation_surname_ExcelRows = []
+  let is_name_Violation = false
+  let violation_name_ExcelRows = []
 
 
   
@@ -168,15 +168,15 @@ exports = async function (request, response) {
       //   violation_mail_ExcelRows.push(item.siraNo)
       // }
 
-      // if(item.name.length < 2) {
-      //   is_name_Violation = true
-      //   violation_name_ExcelRows.push(item.siraNo)
-      // }
+      if(item.year.length < 5) {
+        is_year_Violation = true
+        violation_name_ExcelRows.push(item.siraNo)
+      }
 
-      // if(item.surname.length < 2) {
-      //   is_surname_Violation = true
-      //   violation_surname_ExcelRows.push(item.siraNo)
-      // }
+      if(item.name.length < 2) {
+        is_surname_Violation = true
+        violation_surname_ExcelRows.push(item.siraNo)
+      }
       
       
       
@@ -256,13 +256,21 @@ exports = async function (request, response) {
     //   satirNumaralariArray.length > 1 ? currentCondition = "kayıtlardaki" : currentCondition = "kayıttaki"
     //   return ({hata:true,hataYeri:"FONK // dersSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + " \"mail adresi\" bilgisi kontrol edilmeli."});
     // }
-    // //
-    // if (is_name_Violation) {
-    //   satirNumaralariArray = violation_name_ExcelRows
-    //   satirNumaralariArray.length > 1 ? currentCondition = "kayıtlardaki" : currentCondition = "kayıttaki"
-    //   return ({hata:true,hataYeri:"FONK // dersSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + " \"isim\" bilgisi kontrol edilmeli."});
-    // }
+    
+    if (is_year_Violation) {
+      satirNumaralariArray = violation_year_ExcelRows
+      satirNumaralariArray.length > 1 ? currentCondition = "kayıtlardaki" : currentCondition = "kayıttaki"
+      return ({hata:true,hataYeri:"FONK // dersSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + " \"yıl\" bilgisi kontrol edilmeli."});
+    }
 
+    if (is_name_Violation) {
+      satirNumaralariArray = violation_name_ExcelRows
+      satirNumaralariArray.length > 1 ? currentCondition = "kayıtlardaki" : currentCondition = "kayıttaki"
+      return ({hata:true,hataYeri:"FONK // dersSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + " \"ders isim\" bilgisi kontrol edilmeli."});
+    }
+
+    
+    
     
     // EXIST - IN DB
     
