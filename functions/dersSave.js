@@ -170,12 +170,12 @@ exports = async function (request, response) {
 
       if(item.year.length < 5) {
         is_year_Violation = true
-        violation_name_ExcelRows.push(item.siraNo)
+        violation_year_ExcelRows.push(item.siraNo)
       }
 
       if(item.name.length < 2) {
-        is_surname_Violation = true
-        violation_surname_ExcelRows.push(item.siraNo)
+        is_name_Violation = true
+        violation_name_ExcelRows.push(item.siraNo)
       }
       
       
