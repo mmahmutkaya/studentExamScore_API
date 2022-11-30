@@ -33,9 +33,8 @@ exports = async function (request, response) {
     geciciKey = objHeader["Gecici-Key"][0];
     
     // Is-Derslerim Sorgusu
-    hataText = "\"gelen istekte geciciKey bulunamadı\""
     if(objHeader.hasOwnProperty('Is-Derslerim')) {
-      if (objHeader["Is-Derslerim"][0] = "True") {
+      if (objHeader["Is-Derslerim"][0] = true) {
         isDerslerim = true
       }
     }
