@@ -98,7 +98,7 @@ exports = async function (request, response) {
     }
     
     // yukarıda bitmezsse burda bitecek - tüm dersler göderilecek
-      const objArray = await collectionLessons.find({isDeleted:false}).toArray()
+    const objArray = await collectionLessons.find({isDeleted:false}).toArray()
     return ({ok:true,mesaj:'Veriler alındı.',data:objArray})
 
     
