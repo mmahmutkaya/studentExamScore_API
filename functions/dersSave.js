@@ -13,7 +13,7 @@ exports = async function (request, response) {
   
   const collectionUsers = context.services.get("mongodb-atlas").db("studentExamScore").collection("users")
   const userArray = await collectionUsers.find({isDeleted:false}).toArray()
-  const ogretmenArray = await userArray.map(x=> x.isOgretmen == true)
+  const ogretmenArray = await userArray.filter(x=> x.isOgretmen == true)
   
   const collectionLessons = context.services.get("mongodb-atlas").db("studentExamScore").collection("lessons")
   const lessonArray = await collectionLessons.find({isDeleted:false},{fullName:1,_id:false}).toArray()
