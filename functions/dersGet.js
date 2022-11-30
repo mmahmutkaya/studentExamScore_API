@@ -1,32 +1,96 @@
-// This function is the endpoint's request handler.
-exports = function({ query, headers, body}, response) {
-    // Data can be extracted from the request as follows:
+exports = async function (request, response) {
+  
+  objHeader = request.headers
+  
+  //fonksiyon global değişkenleri
+  let hataText;
+  
+  // 1 - Gelen HEADER bilgilerinin analizi yapılıyor
+  let kullaniciMail;
+  let geciciKey;
+  
+  let projeData
+  
+  const collectionUsers = context.services.get("mongodb-atlas").db("studentExamScore").collection("users")
+  const userArray = await collectionUsers.find({}).toArray()
+  
+  const collectionLessons = context.services.get("mongodb-atlas").db("studentExamScore").collection("lessons")
 
-    // Query params, e.g. '?arg1=hello&arg2=world' => {arg1: "hello", arg2: "world"}
-    const {arg1, arg2} = query;
 
-    // Headers, e.g. {"Content-Type": ["application/json"]}
-    const contentTypes = headers["Content-Type"];
+  // MONGO-1 - Gelen Sorgu
+  try {
+    
+    hataText = "\"gelen istekte mail adresi bulunamadı\""
+    if(!objHeader.hasOwnProperty('Kullanici-Mail')) return ({hata:true,hataYeri:"FONK // ogretmenGet",hataMesaj:"Tekrar giriş yapmanız gerekiyor, (" + hataText +")"})
+    kullaniciMail = objHeader["Kullanici-Mail"][0];
+    validateEmail = context.functions.execute("validateEmail", kullaniciMail);
+    hataText = "gelen istekteki mail adresi hatalı"
+    if(validateEmail == null) return ({hata:true,hataYeri:"FONK // ogretmenGet",hataMesaj:"Tekrar giriş yapmanız gerekiyor, (" + hataText +")"})
+    
+    hataText = "\"gelen istekte geciciKey bulunamadı\""
+    if(!objHeader.hasOwnProperty('Gecici-Key')) return ({hata:true,hataYeri:"FONK // ogretmenGet",hataMesaj:"Tekrar giriş yapmanız gerekiyor, (" + hataText +")"})
+    geciciKey = objHeader["Gecici-Key"][0];
+    
 
-    // Raw request body (if the client sent one).
-    // This is a binary object that can be accessed as a string using .text()
-    const reqBody = body;
+  } catch (err){
+    return ({hata:true,hataYeri:"FONK // ogretmenGet // MONGO-1",hataMesaj:err.message})
+  }
+  
+  
+  
+  
+  
+  // MONGO-2 - AUTH_CHECK
+  let user;
 
-    console.log("arg1, arg2: ", arg1, arg2);
-    console.log("Content-Type:", JSON.stringify(contentTypes));
-    console.log("Request body:", reqBody);
+  AUTH_CHECK: try {
+    
+    hataText = "gelen istekteki mail adresi sistemde kayıtlı değil"
+    user = await userArray.find(x => x.kullaniciMail == kullaniciMail)
+    if(!user) return ({hata:true,hataYeri:"FONK // ogretmenGet",hataMesaj:"Tekrar giriş yapmanız gerekiyor, (" + hataText +")"})
+    
+    if(!user.mailTeyit) return ({hata:true,hataTanim:"mailTeyit",hataYeri:"FONK // ogretmenGet",hataMesaj:"Mail adresi henüz doğrulanmamış."})
+    
+    if(!user.uyelikOnay) return ({hata:true,hataTanim:"uyelikOnay",hataYeri:"FONK // ogretmenGet",hataMesaj:"Üyeliğiniz onay bekliyor."})
+    
+    hataText = "gelen istekteki geciciKey sistemdeki ile eşleşmiyor"
+    if(geciciKey !== user.geciciKey.toString()) return ({hata:true,hataTanim:"geciciKod",hataYeri:"FONK // ogretmenGet",hataMesaj:"Tekrar giriş yapmanız gerekiyor, (" + hataText +")"})
+    
+    if(user.hasOwnProperty("isAdmin")) {
+      if(user.isAdmin) break AUTH_CHECK
+    }
+    
+    if(user.hasOwnProperty("isOgretmen")) {
+      if(user.isOgretmen) break AUTH_CHECK
+    }
+    
+    return ({hata:true,hataYeri:"FONK // ogretmenGet",hataMesaj:"Kayıtlı dersleri görmeye yetkiniz bulunmuyor."})
+    
+    // kontroller
+    // if(tur == "tanimla" && !projeData.yetkiler.ihaleler[ihaleId].fonksiyonlar.defineMetrajNodes["okuma"].includes(kullaniciMail)) return ({hata:true,hataTanim:"yetki",hataYeri:"FONK // ogretmenGet",hataMesaj:"İlgili ihalenin mahal-poz eşleşmelerini görmeye yetkiniz bulunmuyor, ekranda veri varsa güncel olmayabilir."})
+    // if(tur !== "tanimla" && !projeData.yetkiler.ihaleler[ihaleId].fonksiyonlar.updateMetrajNodesByPozId[tur].okuma.includes(kullaniciMail)) return ({hata:true,hataTanim:"yetki",hataYeri:"FONK // ogretmenGet",hataMesaj:"İlgili pozun \"" + tur + "\" metrajlarını görmeye yetkiniz bulunmuyor, ekranda veri varsa güncel olmayabilir."})
+    // if(tur !== "tanimla" && !projeData.yetkiler.ihaleler[ihaleId].fonksiyonlar.updateMetrajNodesByPozId[tur].guncelNo > 0) return ({hata:true,hataTanim:"yetki",hataYeri:"FONK // ogretmenGet",hataMesaj:"İlgili iş paketi \""+ tur +"\" metrajı girmek için kapalı durumda, program sorumlusu ile iletişime geçebilirsiniz."})
+    // if (tur !== "tanimla") {
+    //   guncelNo = projeData.yetkiler.ihaleler[ihaleId].fonksiyonlar.updateMetrajNodesByPozId[tur].guncelNo
+    // }
 
-    // You can use 'context' to interact with other application features.
-    // Accessing a value:
-    // var x = context.values.get("value_name");
 
-    // Querying a mongodb service:
-    // const doc = context.services.get("mongodb-atlas").db("dbname").collection("coll_name").findOne();
+  } catch(err) {
+    return ({hata:true,hataYeri:"FONK // ogretmenGet // MONGO-2",hataMesaj:err.message})
+  }
+  
+  
+  // MONGO-3 - GET DATA FROM DB
+  try {
+    
+    const objArray = await collectionLessons.find({isDeleted:false}).toArray()
+    return ({ok:true,mesaj:'Veriler alındı.',data:objArray})
 
-    // Calling a function:
-    // const result = context.functions.execute("function_name", arg1, arg2);
+  } catch(err) {
+    return ({hata:true,hataYeri:"FONK // ogretmenGet // MONGO-3",hataMesaj:err.message})
+  }      
+  
 
-    // The return value of the function is sent as the response back to the client
-    // when the "Respond with Result" setting is set.
-    return  "Hello World!";
+ 
+    
 };
