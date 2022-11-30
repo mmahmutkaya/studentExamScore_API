@@ -8,6 +8,7 @@ exports = async function (request, response) {
   // 1 - Gelen HEADER bilgilerinin analizi yapılıyor
   let kullaniciMail;
   let geciciKey;
+  let isDerslerim
   
   let projeData
   
@@ -31,6 +32,14 @@ exports = async function (request, response) {
     if(!objHeader.hasOwnProperty('Gecici-Key')) return ({hata:true,hataYeri:"FONK // ogretmenGet",hataMesaj:"Tekrar giriş yapmanız gerekiyor, (" + hataText +")"})
     geciciKey = objHeader["Gecici-Key"][0];
     
+    // Is-Derslerim Sorgusu
+    hataText = "\"gelen istekte geciciKey bulunamadı\""
+    if(objHeader.hasOwnProperty('Is-Derslerim')) {
+      if (objHeader["Is-Derslerim"][0] = "True") {
+        isDerslerim = true
+      }
+    }
+
 
   } catch (err){
     return ({hata:true,hataYeri:"FONK // ogretmenGet // MONGO-1",hataMesaj:err.message})
@@ -83,8 +92,17 @@ exports = async function (request, response) {
   // MONGO-3 - GET DATA FROM DB
   try {
     
-    const objArray = await collectionLessons.find({isDeleted:false}).toArray()
+    // burda da bitebilir
+    if (isDerslerim) {
+      const objArray = await collectionLessons.find({isDeleted:false}).toArray()
+      return ({ok:true,mesaj:'Veriler alındı.',data:objArray})
+    }
+    
+    // yukarıda bitmezsse burda bitecek - tüm dersler göderilecek
+    const objArray = await collectionLessons.find({isDeleted:false, ogretmenMail:kullaniciMail}).toArray()
     return ({ok:true,mesaj:'Veriler alındı.',data:objArray})
+
+    
 
   } catch(err) {
     return ({hata:true,hataYeri:"FONK // ogretmenGet // MONGO-3",hataMesaj:err.message})
