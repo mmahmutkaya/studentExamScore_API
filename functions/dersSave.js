@@ -168,7 +168,7 @@ exports = async function (request, response) {
       //   violation_mail_ExcelRows.push(item.siraNo)
       // }
 
-      if(item.year.length < 5) {
+      if(item.year.length !== 9) {
         is_year_Violation = true
         violation_year_ExcelRows.push(item.siraNo)
       }
@@ -185,7 +185,7 @@ exports = async function (request, response) {
       
       // EXIST - IN DB
       
-      itemFullName = item.year + "-" + item.name + "-" + item.ogretmenMail + "-" + item.branchName
+      itemFullName = item.year + "-" + item.name + "-" + item.branchName + "-" + item.ogretmenMail
       if(lessonArray.find(x=> x.fullName == itemFullName)) {
         is_fullName_Exist = true
         exist_fullName_ExcelRows.push(item.siraNo)
@@ -260,7 +260,7 @@ exports = async function (request, response) {
     if (is_year_Violation) {
       satirNumaralariArray = violation_year_ExcelRows
       satirNumaralariArray.length > 1 ? currentCondition = "kayıtlardaki" : currentCondition = "kayıttaki"
-      return ({hata:true,hataYeri:"FONK // dersSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + " \"yıl\" bilgisi kontrol edilmeli."});
+      return ({hata:true,hataYeri:"FONK // dersSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + " \"yıl\" bilgisi kontrol edilmeli, örn: \"2022-2023\""});
     }
 
     if (is_name_Violation) {
