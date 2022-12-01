@@ -102,9 +102,6 @@ exports = async function (request, response) {
 
 
 
-
-
-
   // MONGO-4 - SAVE DATABASE
 
   let zaman = Date.now()
@@ -120,6 +117,9 @@ exports = async function (request, response) {
 
   let is_surname_Violation = false
   let violation_surname_ExcelRows = []
+
+  let is_year_Violation = false
+  let violation_year_ExcelRows = []
 
 
 
@@ -171,6 +171,11 @@ exports = async function (request, response) {
         violation_surname_ExcelRows.push(item.siraNo)
       }
       
+      if(item.year.length !== 9) {
+        is_year_Violation = true
+        violation_year_ExcelRows.push(item.siraNo)
+      }
+      
 
 
       if(userArray.find(x=> x.ogrenciNo == item.ogrenciNo)) {
@@ -219,6 +224,7 @@ exports = async function (request, response) {
         name:item.name,
         surname:item.surname,
         branch:item.branch,
+        year:item.year,
         isOgrenci:true,
         sifre:"degisecek_gecici",
         mailTeyitKod:"degisecek_gecici",
@@ -286,6 +292,12 @@ exports = async function (request, response) {
       satirNumaralariArray = violation_surname_ExcelRows
       satirNumaralariArray.length > 1 ? currentCondition = "kayıtlardaki" : currentCondition = "kayıttaki"
       return ({hata:true,hataYeri:"FONK // ogrenciSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + " \"soyisim\" bilgisi kontrol edilmeli."});
+    }
+    //
+    if (is_year_Violation) {
+      satirNumaralariArray = violation_year_ExcelRows
+      satirNumaralariArray.length > 1 ? currentCondition = "kayıtlardaki" : currentCondition = "kayıttaki"
+      return ({hata:true,hataYeri:"FONK // ogrenciSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + " \"sene\" bilgisi kontrol edilmeli."});
     }
     
     
