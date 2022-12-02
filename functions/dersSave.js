@@ -349,7 +349,7 @@ exports = async function (request, response) {
     if (lessonsToStudents.length) {
       await lessonsToStudents.map(item =>{
         bulk2.push({
-          updateOne: {
+          update: {
             filter: {year:item.year,isOgrenci:true,branch:item.branchName},
             update: { $push: { lessons: {...item} }}, // içeriği yukarıda ayarlandı
             upsert: true
@@ -358,7 +358,7 @@ exports = async function (request, response) {
       });
     }
     
-    await collectionUsers.bulkWrite(bulk, { ordered: false });
+    await collectionUsers.bulkWrite(bulk2, { ordered: false });
     
     
     return ({ok:true,mesaj:'Dersler sisteme kaydedildi.'})
