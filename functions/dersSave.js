@@ -149,7 +149,8 @@ exports = async function (request, response) {
 
 
 
-  let cameItems_Add = []
+  let cameItems_Add = [] 
+  let lessonsToStudents = []
   let itemFullName = null
   let loopObj = null
   
@@ -243,6 +244,22 @@ exports = async function (request, response) {
         
       })
 
+      lessonsToStudents.push({
+        year:item.year,
+        branchName:item.branchName,
+        fullName:itemFullName,
+        
+        note1:0,
+        note2:0,
+        note3:0,
+        note4:0,
+        note6:0,
+        
+        isDeleted:false,
+        createdAt:zaman,
+        createdBy:user.kullaniciMail
+      })
+
     });
     
     let satirNumaralariArray = []
@@ -324,7 +341,24 @@ exports = async function (request, response) {
         });
       });
     }
+    
     await collectionLessons.bulkWrite(bulk, { ordered: false });
+    
+    bulk = []
+    
+    if (lessonsToStudents.length) {
+      await lessonsToStudents.map(item =>{
+        bulk.push({
+          updateOne: {
+            filter: {year:item.year,isOgrenci:true,branch:item.branchName},
+            update: { $push: { lessons: {...item} }}, // içeriği yukarıda ayarlandı
+            upsert: true
+          }
+        });
+      });
+    }
+    
+    await collectionUsers.bulkWrite(bulk, { ordered: false });
     
     
     return ({ok:true,mesaj:'Dersler sisteme kaydedildi.'})
