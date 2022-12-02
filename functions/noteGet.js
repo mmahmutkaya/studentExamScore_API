@@ -87,7 +87,7 @@ exports = async function (request, response) {
   try {
     
     // yukarıda bitmezsse burda bitecek - tüm dersler göderilecek
-    const objArray = await collectionUsers.find({ "lessons": { fullName: fullname, isDeleted:false} } ).toArray()
+    const objArray = await collectionUsers.find( { 'lessons.fullName': fullName }  ).toArray()
     return ({ok:true,mesaj:'Veriler alındı.',data:objArray})
 
     
