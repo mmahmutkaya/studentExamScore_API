@@ -79,5 +79,15 @@
         "name": "dersGet",
         "private": false,
         "disable_arg_logs": true
+    },
+    {
+        "name": "noteGet",
+        "private": false,
+        "disable_arg_logs": true
+    },
+    {
+        "name": "noteSave",
+        "private": false,
+        "disable_arg_logs": true
     }
 ]
