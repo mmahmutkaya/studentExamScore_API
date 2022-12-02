@@ -344,11 +344,11 @@ exports = async function (request, response) {
     
     await collectionLessons.bulkWrite(bulk, { ordered: false });
     
-    bulk = []
+    bulk2 = []
     
     if (lessonsToStudents.length) {
       await lessonsToStudents.map(item =>{
-        bulk.push({
+        bulk2.push({
           updateOne: {
             filter: {year:item.year,isOgrenci:true,branch:item.branchName},
             update: { $push: { lessons: {...item} }}, // içeriği yukarıda ayarlandı
