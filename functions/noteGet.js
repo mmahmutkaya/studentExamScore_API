@@ -9,6 +9,8 @@ exports = async function (request, response) {
   let kullaniciMail;
   let geciciKey;
   let fullName;
+  let branch;
+  let year;
 
   let projeData
   
@@ -33,6 +35,14 @@ exports = async function (request, response) {
     hataText = "\"gelen istekte \"ders fullName\" bulunamadı\""
     if(!objHeader.hasOwnProperty('Fullname')) return ({hata:true,hataYeri:"FONK // noteGet",hataMesaj:"Program yöneticisi ile iletişime geçmeniz gerekmektedir, (" + hataText +")"})
     fullName = objHeader["Fullname"][0];
+    
+    hataText = "\"gelen istekte \"şube adı\" bulunamadı\""
+    if(!objHeader.hasOwnProperty('Branch')) return ({hata:true,hataYeri:"FONK // noteGet",hataMesaj:"Program yöneticisi ile iletişime geçmeniz gerekmektedir, (" + hataText +")"})
+    branch = objHeader["Branch"][0];
+    
+    hataText = "\"gelen istekte \"sene\" bilgisi bulunamadı\""
+    if(!objHeader.hasOwnProperty('Year')) return ({hata:true,hataYeri:"FONK // noteGet",hataMesaj:"Program yöneticisi ile iletişime geçmeniz gerekmektedir, (" + hataText +")"})
+    year = objHeader["Year"][0];
     
 
   } catch (err){
@@ -86,11 +96,10 @@ exports = async function (request, response) {
   // MONGO-3 - GET DATA FROM DB
   try {
     
-    // "shapes.color": "red"
-    
+
     // yukarıda bitmezsse burda bitecek - tüm dersler göderilecek
-    // const objArray = await collectionUsers.find({ "lessons": { $elemMatch: { fullName: fullName } } }  ).toArray()
-    const objArray = await collectionUsers.find({ "lessons.fullName": fullName } ,{_id: 0, ogrenciNo:1, name:1, surname:1, lessons: {$elemMatch: { fullName: fullName }} } ).toArray()
+    // const objArray = await collectionUsers.find({ "lessons.fullName": fullName } ,{_id: 0, ogrenciNo:1, name:1, surname:1, lessons: {$elemMatch: { fullName: fullName }} } ).toArray()
+    const objArray = await collectionUsers.find({ branch,year } ,{_id: 0, ogrenciNo:1, name:1, surname:1, lessons: {$elemMatch: { fullName: fullName }} } ).toArray()
     return ({ok:true,mesaj:'Veriler alındı.',data:objArray})
 
     
