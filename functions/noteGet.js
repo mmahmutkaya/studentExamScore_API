@@ -87,13 +87,13 @@ exports = async function (request, response) {
   try {
     
     // yukarıda bitmezsse burda bitecek - tüm dersler göderilecek
-    const objArray = await collectionUsers.find({ "lessons": { $elemMatch: { fullname: fullname } } }  ).toArray()
+    const objArray = await collectionUsers.find({ "lessons": { $elemMatch: { fullName: fullName } } }  ).toArray()
     return ({ok:true,mesaj:'Veriler alındı.',data:objArray})
 
     
 
   } catch(err) {
-    return ({hata:true,hataYeri:"FONK // noteGet // MONGO-3",hataMesaj:err.message})
+    return ({hata:true,hataYeri:"FONK // noteGet // MONGO-3",hataMesaj:err.message}) 
   }      
   
 
