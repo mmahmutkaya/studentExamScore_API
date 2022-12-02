@@ -90,7 +90,7 @@ exports = async function (request, response) {
     
     // yukarıda bitmezsse burda bitecek - tüm dersler göderilecek
     // const objArray = await collectionUsers.find({ "lessons": { $elemMatch: { fullName: fullName } } }  ).toArray()
-    const objArray = await collectionUsers.find({ "lessons.fullName": fullName } ,{_id: 0, shapes: {$elemMatch: { fullName: fullName }} } ).toArray()
+    const objArray = await collectionUsers.find({ "lessons.fullName": fullName } ,{_id: 0, lessons: {$elemMatch: { fullName: fullName }} } ).toArray()
     return ({ok:true,mesaj:'Veriler alındı.',data:objArray})
 
     
