@@ -380,7 +380,7 @@ exports = async function (request, response) {
           updateMany: {
             filter: {year:item.year,isOgrenci:true,branch:item.branchName},
             // update: {  $set:  { [`lessons.${item.fullName}`] : {...item}  }}, // içeriği yukarıda ayarlandı
-            update: {  $set:  { [`lessons.${item.fullName}`] : {"merhaba":1}  }}, // içeriği yukarıda ayarlandı
+            update: {  $set:  { "lessons.${item.fullName}": {"merhaba":1}  }}, // içeriği yukarıda ayarlandı
             upsert: true
           }
         });
