@@ -379,7 +379,7 @@ exports = async function (request, response) {
         bulk2.push({
           updateMany: {
             filter: {year:item.year,isOgrenci:true,branch:item.branchName},
-            update: {  $set:  {"lessons.[item.fullName]" : {...item}}  }, // içeriği yukarıda ayarlandı
+            update: {  $set:  {"lessons[item.fullName]" : item}  }, // içeriği yukarıda ayarlandı
             upsert: true
           }
         });
