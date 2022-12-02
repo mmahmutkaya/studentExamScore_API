@@ -349,7 +349,7 @@ exports = async function (request, response) {
     if (lessonsToStudents.length) {
       await lessonsToStudents.map(item =>{
         bulk2.push({
-          update: {
+          updateMany: {
             filter: {year:item.year,isOgrenci:true,branch:item.branchName},
             update: { $push: { lessons: {...item} }}, // içeriği yukarıda ayarlandı
             upsert: true
