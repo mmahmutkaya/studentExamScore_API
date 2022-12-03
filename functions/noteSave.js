@@ -38,19 +38,19 @@ exports = async function (request, response) {
     
     
     hataText = "\"gelen istekte \"ders fullName\" bulunamadı\""
-    if(!objHeader.hasOwnProperty('Fullname')) return ({hata:true,hataYeri:"FONK // noteGet",hataMesaj:"Program yöneticisi ile iletişime geçmeniz gerekmektedir, (" + hataText +")"})
+    if(!objHeader.hasOwnProperty('Fullname')) return ({hata:true,hataYeri:"FONK // noteSave",hataMesaj:"Program yöneticisi ile iletişime geçmeniz gerekmektedir, (" + hataText +")"})
     fullName = objHeader["Fullname"][0];
     ///
     isLesson = await collectionLessons.findOne({fullName})
     hataText = "\"gelen istekteki \"ders\" sistemde bulunamadı\""
-    if(!isLesson) return ({hata:true,hataYeri:"FONK // noteGet",hataMesaj:"Program yöneticisi ile iletişime geçmeniz gerekmektedir, (" + hataText +")"})
+    if(!isLesson) return ({hata:true,hataYeri:"FONK // noteSave",hataMesaj:"Program yöneticisi ile iletişime geçmeniz gerekmektedir, (" + hataText +")"})
 
     hataText = "\"gelen istekte \"şube adı\" bulunamadı\""
-    if(!objHeader.hasOwnProperty('Branch')) return ({hata:true,hataYeri:"FONK // noteGet",hataMesaj:"Program yöneticisi ile iletişime geçmeniz gerekmektedir, (" + hataText +")"})
+    if(!objHeader.hasOwnProperty('Branch')) return ({hata:true,hataYeri:"FONK // noteSave",hataMesaj:"Program yöneticisi ile iletişime geçmeniz gerekmektedir, (" + hataText +")"})
     branch = objHeader["Branch"][0];
     
     hataText = "\"gelen istekte \"sene\" bilgisi bulunamadı\""
-    if(!objHeader.hasOwnProperty('Year')) return ({hata:true,hataYeri:"FONK // noteGet",hataMesaj:"Program yöneticisi ile iletişime geçmeniz gerekmektedir, (" + hataText +")"})
+    if(!objHeader.hasOwnProperty('Year')) return ({hata:true,hataYeri:"FONK // noteSave",hataMesaj:"Program yöneticisi ile iletişime geçmeniz gerekmektedir, (" + hataText +")"})
     year = objHeader["Year"][0];
     
   } catch (err){
@@ -169,10 +169,10 @@ exports = async function (request, response) {
     await cameItems.map(item => {
       
       
-      if(typeof parseFloat(item.A_quiz1) !== "number") {
-        is_A_quiz1_Violation = true
-        violation_A_quiz1_ExcelRows.push(item.siraNo)
-      }
+      // if(parseFloat(item.A_quiz1) !== "number") {
+      //   is_A_quiz1_Violation = true
+      //   violation_A_quiz1_ExcelRows.push(item.siraNo)
+      // }
 
       // validateEmail = context.functions.execute("validateEmail", item.mail);
       // if(!validateEmail) {
@@ -240,7 +240,7 @@ exports = async function (request, response) {
         branch,
         fullName,
 
-        A_quiz1 : item.A_quiz1,
+        A_quiz1 : parseFloat(item.A_quiz1),
         A_quiz2 : item.A_quiz2,
         A_quiz3 : item.A_quiz3,
         A_ara1 : item.A_ara1,
@@ -291,14 +291,14 @@ exports = async function (request, response) {
     
     
 
-    let satirNumaralariArray = []
-    let currentCondition = ""
+    // let satirNumaralariArray = []
+    // let currentCondition = ""
     
-    if (is_A_quiz1_Violation) {
-      satirNumaralariArray = violation_A_quiz1_ExcelRows
-      satirNumaralariArray.length > 1 ? currentCondition = "kayıtlardaki" : currentCondition = "kayıttaki"
-      return ({hata:true,hataYeri:"FONK // noteSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + " \"ogrenci numarası\" kontrol edilmeli."});
-    }
+    // if (is_A_quiz1_Violation) {
+    //   satirNumaralariArray = violation_A_quiz1_ExcelRows
+    //   satirNumaralariArray.length > 1 ? currentCondition = "kayıtlardaki" : currentCondition = "kayıttaki"
+    //   return ({hata:true,hataYeri:"FONK // noteSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + " \"ogrenci numarası\" kontrol edilmeli."});
+    // }
 
     
     
@@ -339,30 +339,9 @@ exports = async function (request, response) {
     
     
     
-    
-    
-    
-    
-    
-            // update: { $set: { "lessons.$[fullName]" :item.studentLessonObject } }, // içeriği yukarıda ayarlandı
-            
-            // update: { $set : { "degrees.$[degree].gradcampaign" : 1 } },
-    
-    
+
     
     let bulk = []
-    
-    // if (cameItems_Add.length) {
-    //   await cameItems_Add.map(item =>{
-    //     bulk.push({
-    //       updateOne: {
-    //         filter: { ogrenciNo : item.ogrenciNo },
-    //         update: { $set: { "lessons.$[elem]": item.studentLessonObject }  },
-    //         arrayFilters : [{"elem.fullName" : fullName }],
-    //       }
-    //     });
-    //   });
-    // }
     
     if (cameItems_Add.length) {
       await cameItems_Add.map(item =>{
