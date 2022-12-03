@@ -345,8 +345,8 @@ exports = async function (request, response) {
           updateOne: {
             filter: { ogrenciNo : item.ogrenciNo },
             update: { $set: { "lessons.$[elem]": item.studentLessonObject }  },
-            arrayFilters : [{"elem.fullName" : fullName }]
-            // upsert: true //addtoSet de yok galiba
+            arrayFilters : [{"elem.fullName" : fullName }],
+            upsert: true
           }
         });
       });
