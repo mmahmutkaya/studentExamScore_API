@@ -342,7 +342,7 @@ exports = async function (request, response) {
         bulk.push({
           updateOne: {
             filter: { "lessons.fullName" : fullName},
-            update: { $set: { "lesson.${fullName}" :item.studentLessonObject } }, // içeriği yukarıda ayarlandı
+            update: { $set: { "lessons.${fullName}" :item.studentLessonObject } }, // içeriği yukarıda ayarlandı
             upsert: true
           }
         });
