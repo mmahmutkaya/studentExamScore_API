@@ -99,7 +99,7 @@ exports = async function (request, response) {
 
     // yukarıda bitmezsse burda bitecek - tüm dersler göderilecek
     // const objArray = await collectionUsers.find({ "lessons.fullName": fullName } ,{_id: 0, ogrenciNo:1, name:1, surname:1, lessons: {$elemMatch: { fullName: fullName }} } ).toArray()
-    const objArray = await collectionUsers.find({ branch,year } ,{_id: 0, ogrenciNo:1, name:1, surname:1, lessons: {$elemMatch: { fullName: fullName }} } ).toArray()
+    const objArray = await collectionUsers.find({ fullName } ,{_id: 0, ogrenciNo:1, name:1, surname:1, lessons: {$elemMatch: { fullName: fullName }} } ).toArray()
     return ({ok:true,mesaj:'Veriler alındı.',data:objArray})
 
     
