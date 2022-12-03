@@ -37,9 +37,10 @@ exports = async function (request, response) {
     
     hataText = "\"gelen istekte \"ders fullName\" bulunamadı\""
     if(!objHeader.hasOwnProperty('Fullname')) return ({hata:true,hataYeri:"FONK // noteGet",hataMesaj:"Program yöneticisi ile iletişime geçmeniz gerekmektedir, (" + hataText +")"})
+    fullName = objHeader["Fullname"][0];
+    ///
     hataText = "gelen istekteki \"ders\" sistemde bulunamadı"
     if(!collectionLessons.findOne({fullName})) return ({hata:true,hataYeri:"FONK // noteGet",hataMesaj:"Program yöneticisi ile iletişime geçmeniz gerekmektedir, (" + hataText +")"})
-    fullName = objHeader["Fullname"][0];
     
     hataText = "\"gelen istekte \"şube adı\" bulunamadı\""
     if(!objHeader.hasOwnProperty('Branch')) return ({hata:true,hataYeri:"FONK // noteGet",hataMesaj:"Program yöneticisi ile iletişime geçmeniz gerekmektedir, (" + hataText +")"})
