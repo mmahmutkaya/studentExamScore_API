@@ -338,7 +338,6 @@ exports = async function (request, response) {
     
     let bulk = []
     
-    // DATABASE - silme - "tanimla"
     if (cameItems_Add.length) {
       await cameItems_Add.map(item =>{
         bulk.push({
@@ -346,7 +345,6 @@ exports = async function (request, response) {
             filter: { ogrenciNo : item.ogrenciNo },
             update: { $set: { "lessons.$[elem]": item.studentLessonObject }  },
             arrayFilters : [{"elem.fullName" : fullName }],
-            upsert: true
           }
         });
       });
