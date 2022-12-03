@@ -42,7 +42,7 @@ exports = async function (request, response) {
     fullName = objHeader["Fullname"][0];
     ///
     isLesson = await collectionLessons.findOne({fullName})
-    hataText = "gelen istekteki \"ders\" sistemde bulunamadı"
+    hataText = "\"gelen istekteki \"ders\" sistemde bulunamadı\""
     if(!isLesson) return ({hata:true,hataYeri:"FONK // noteGet",hataMesaj:"Program yöneticisi ile iletişime geçmeniz gerekmektedir, (" + hataText +")"})
     
     return isLesson
