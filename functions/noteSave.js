@@ -338,17 +338,32 @@ exports = async function (request, response) {
     
     let bulk = []
     
+    // if (cameItems_Add.length) {
+    //   await cameItems_Add.map(item =>{
+    //     bulk.push({
+    //       updateOne: {
+    //         filter: { ogrenciNo : item.ogrenciNo },
+    //         update: { $set: { "lessons.$[elem]": item.studentLessonObject }  },
+    //         arrayFilters : [{"elem.fullName" : fullName }],
+    //       }
+    //     });
+    //   });
+    // }
+    
     if (cameItems_Add.length) {
       await cameItems_Add.map(item =>{
         bulk.push({
           updateOne: {
             filter: { ogrenciNo : item.ogrenciNo },
-            update: { $set: { "lessons.$[elem]": item.studentLessonObject }  },
+            update: { $addToSet: { "lessons.$[elem]": item.studentLessonObject }  },
             arrayFilters : [{"elem.fullName" : fullName }],
           }
         });
       });
     }
+    
+    
+    
     await collectionUsers.bulkWrite(bulk, { ordered: false });
     
     
