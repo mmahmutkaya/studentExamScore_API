@@ -381,7 +381,7 @@ exports = async function (request, response) {
             filter: {year:item.year,isOgrenci:true,branch:item.branchName},
             // update: {  $set:  { [`lessons.${item.fullName}`] : {...item}  }}, // içeriği yukarıda ayarlandı
             update: { $push: { lessons: {...item} }}, // içeriği yukarıda ayarlandı
-            upsert: true
+            upsert: false
           }
         });
       });
