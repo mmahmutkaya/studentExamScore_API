@@ -159,7 +159,7 @@ exports = async function (request, response) {
     await cameItems.map(item => {
       
       
-      if(typeof item.A_quiz1 !== "number") {
+      if(typeof parseFloat(item.A_quiz1) !== "number") {
         is_A_quiz1_Violation = true
         violation_A_quiz1_ExcelRows.push(item.siraNo)
       }
@@ -284,7 +284,7 @@ exports = async function (request, response) {
     if (is_A_quiz1_Violation) {
       satirNumaralariArray = violation_A_quiz1_ExcelRows
       satirNumaralariArray.length > 1 ? currentCondition = "kayıtlardaki" : currentCondition = "kayıttaki"
-      return ({hata:true,hataYeri:"FONK // noteSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + " \"ogrenci numarası\" 8 haneden oluşmuyor."});
+      return ({hata:true,hataYeri:"FONK // noteSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + " \"ogrenci numarası\" kontrol edilmeli."});
     }
 
     
