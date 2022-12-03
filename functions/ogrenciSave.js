@@ -17,6 +17,8 @@ exports = async function (request, response) {
   const collectionBranchs = context.services.get("mongodb-atlas").db("studentExamScore").collection("branchs")
   const branchArray = await collectionBranchs.find({isDeleted:false}).toArray()
   
+  const collectionLessons = context.services.get("mongodb-atlas").db("studentExamScore").collection("lessons")
+  const lessonArray = await collectionLessons.find({isDeleted:false}).toArray()
   
   
   // MONGO-1 - Gelen Sorgu
@@ -142,6 +144,7 @@ exports = async function (request, response) {
 
   
   let cameItems_Add = []
+  let yearBranchs = []
   let geciciUser = null
 
   
@@ -215,9 +218,11 @@ exports = async function (request, response) {
         absent_branch_ExcelRows.push(item.siraNo)
       }
 
-
+      
+      // gecici_lessonArray = lessonArray.filter({x=> x.year == item.year && x.branch == item.branch })
 
       cameItems_Add.push({
+        
         siraNo:item.siraNo,
         ogrenciNo:item.ogrenciNo,
         kullaniciMail:item.mail,
@@ -234,11 +239,26 @@ exports = async function (request, response) {
         isDeleted:false,
         createdAt:zaman,
         createdBy:user.kullaniciMail
+        
+        // if (gecici_lessonArray) {
+        //   gecici_lessonArray.map(x=> {
+            
+        //   })
+        // }
+
       })
+      
+      
+      if(!yearBranchs.find(x=> x.year = item.year && x.branch == item.branch)) {
+        yearbranchs.push()
+      }
 
     });
     
     
+    
+    
+
     
     // await cameItems.map(item => {
       
