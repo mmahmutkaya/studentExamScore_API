@@ -169,10 +169,10 @@ exports = async function (request, response) {
     await cameItems.map(item => {
       
       
-      // if(parseFloat(item.A_quiz1) !== "number") {
-      //   is_A_quiz1_Violation = true
-      //   violation_A_quiz1_ExcelRows.push(item.siraNo)
-      // }
+      if(isNaN(parseFloat(item.A_quiz1) == "number")) {
+        is_A_quiz1_Violation = true
+        violation_A_quiz1_ExcelRows.push(item.siraNo)
+      }
 
       // validateEmail = context.functions.execute("validateEmail", item.mail);
       // if(!validateEmail) {
@@ -291,14 +291,14 @@ exports = async function (request, response) {
     
     
 
-    // let satirNumaralariArray = []
-    // let currentCondition = ""
+    let satirNumaralariArray = []
+    let currentCondition = ""
     
-    // if (is_A_quiz1_Violation) {
-    //   satirNumaralariArray = violation_A_quiz1_ExcelRows
-    //   satirNumaralariArray.length > 1 ? currentCondition = "kayıtlardaki" : currentCondition = "kayıttaki"
-    //   return ({hata:true,hataYeri:"FONK // noteSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + " \"ogrenci numarası\" kontrol edilmeli."});
-    // }
+    if (is_A_quiz1_Violation) {
+      satirNumaralariArray = violation_A_quiz1_ExcelRows
+      satirNumaralariArray.length > 1 ? currentCondition = "kayıtlardaki" : currentCondition = "kayıttaki"
+      return ({hata:true,hataYeri:"FONK // noteSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + " \"Güz Dönemi - Quiz-1\" notu kontrol edilmeli."});
+    }
 
     
     
