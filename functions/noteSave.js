@@ -276,9 +276,6 @@ exports = async function (request, response) {
     });
     
     
-    return cameItems_Add
-    
-    
 
     let satirNumaralariArray = []
     let currentCondition = ""
@@ -333,6 +330,9 @@ exports = async function (request, response) {
     
     
     
+            // update: { $set: { "lessons.$[fullName]" :item.studentLessonObject } }, // içeriği yukarıda ayarlandı
+            
+            // update: { $set : { "degrees.$[degree].gradcampaign" : 1 } },
     
     
     
@@ -344,8 +344,8 @@ exports = async function (request, response) {
         bulk.push({
           updateOne: {
             filter: { ogrenciNo : item.ogrenciNo },
-            update: { $set: { "lessons.$[fullName]" :item.studentLessonObject } }, // içeriği yukarıda ayarlandı
-            upsert: true
+            update: { $addToSet : { "lessons.${fullName}" : item.studentLessonObject } },
+            // upsert: true //addtoSet de yok galiba
           }
         });
       });
