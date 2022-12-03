@@ -344,7 +344,7 @@ exports = async function (request, response) {
         bulk.push({
           updateOne: {
             filter: { ogrenciNo : item.ogrenciNo },
-            update: { $set: { "lessons.$[elem].fullName": item.studentLessonObject }  },
+            update: { $set: { "lessons.$[elem]": item.studentLessonObject }  },
             arrayFilters : [{"elem.fullName" : fullName }]
             // upsert: true //addtoSet de yok galiba
           }
