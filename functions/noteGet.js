@@ -20,7 +20,7 @@ exports = async function (request, response) {
   const collectionLessons = context.services.get("mongodb-atlas").db("studentExamScore").collection("lessons")
   
   
-  let isLesson = false
+  let isLesson = null
   
 
   // MONGO-1 - Gelen Sorgu
@@ -45,7 +45,7 @@ exports = async function (request, response) {
     hataText = "gelen istekteki \"ders\" sistemde bulunamadı"
     if(!isLesson) return ({hata:true,hataYeri:"FONK // noteGet",hataMesaj:"Program yöneticisi ile iletişime geçmeniz gerekmektedir, (" + hataText +")"})
     
-    return islesson
+    return isLesson
     
     hataText = "\"gelen istekte \"şube adı\" bulunamadı\""
     if(!objHeader.hasOwnProperty('Branch')) return ({hata:true,hataYeri:"FONK // noteGet",hataMesaj:"Program yöneticisi ile iletişime geçmeniz gerekmektedir, (" + hataText +")"})
