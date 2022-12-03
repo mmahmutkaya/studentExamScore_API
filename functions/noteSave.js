@@ -341,7 +341,7 @@ exports = async function (request, response) {
       await cameItems_Add.map(item =>{
         bulk.push({
           updateOne: {
-            filter: { "lessons.fullName" : fullName},
+            filter: { ogrenciNo : item.ogrenciNo },
             update: { $set: { "lessons.$[fullName]" :item.studentLessonObject } }, // içeriği yukarıda ayarlandı
             upsert: true
           }
