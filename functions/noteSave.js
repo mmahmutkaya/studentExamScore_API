@@ -169,7 +169,7 @@ exports = async function (request, response) {
     await cameItems.map(item => {
       
       
-      if(isNaN(parseFloat(item.A_quiz1) == "number")) {
+      if(isNaN(parseFloat(item.A_quiz1))) {
         is_A_quiz1_Violation = true
         violation_A_quiz1_ExcelRows.push(item.siraNo)
       }
