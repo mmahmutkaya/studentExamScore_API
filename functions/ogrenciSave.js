@@ -144,7 +144,8 @@ exports = async function (request, response) {
 
   
   let cameItems_Add = []
-  let yearBranchs = []
+  let studentLessonArray = []
+  let studentLessons = []
   let geciciUser = null
 
   
@@ -218,8 +219,58 @@ exports = async function (request, response) {
         absent_branch_ExcelRows.push(item.siraNo)
       }
 
+      studentLessons = []
+      lessonArray.map ( les => {
       
-      // gecici_lessonArray = lessonArray.filter({x=> x.year == item.year && x.branch == item.branch })
+        if (les.year == item.year && les.branchName == item.branch) {
+          studentLessons.push({
+            
+            year:les.year,
+            branchName:les.branchName,
+            fullName:les.fullName,
+            
+            A_quiz1 : 0,
+            A_quiz2 : 0,
+            A_quiz3 : 0,
+            A_ara1 : 0,
+            A_yazili : 0,
+            A_sozlu : 0,
+            A_ara2 : 0,
+            A_odev : 0,
+            A_sinifici : 0,
+            A_ortalama : 0,
+    
+            B_quiz1 : 0,
+            B_quiz2 : 0,
+            B_quiz3 : 0,
+            B_ara1 : 0,
+            B_yazili : 0,
+            B_sozlu : 0,
+            B_ara2 : 0,
+            B_odev : 0,
+            B_sinifici : 0,
+            B_ortalama : 0,
+    
+            AB_ort : 0,
+            AB_sonuc : 0,
+            AB_final : 0,
+    
+            G_ort : 0,
+            G_sonuc : 0,
+            G_but : 0,
+            G_ort2 : 0,
+            G_sonuc2 : 0,
+    
+            isDeleted:false,
+            createdAt:zaman,
+            createdBy:user.kullaniciMail     
+            
+          })
+        }
+        
+      })
+      
+
 
       cameItems_Add.push({
         
@@ -231,6 +282,9 @@ exports = async function (request, response) {
         branch:item.branch,
         year:item.year,
         isOgrenci:true,
+        
+        lessons:studentLessons,
+        
         sifre:"degisecek_gecici",
         mailTeyitKod:"degisecek_gecici",
         mailTeyit:false,
@@ -248,10 +302,6 @@ exports = async function (request, response) {
 
       })
       
-      
-      if(!yearBranchs.find(x=> x.year = item.year && x.branch == item.branch)) {
-        yearbranchs.push()
-      }
 
     });
     
