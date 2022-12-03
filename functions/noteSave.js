@@ -9,6 +9,8 @@ exports = async function (request, response) {
   let kullaniciMail;
   let geciciKey;
   
+  let year;
+  let branch;
   let fullName;
 
   let projeData
@@ -42,6 +44,14 @@ exports = async function (request, response) {
     isLesson = await collectionLessons.findOne({fullName})
     hataText = "\"gelen istekteki \"ders\" sistemde bulunamadı\""
     if(!isLesson) return ({hata:true,hataYeri:"FONK // noteGet",hataMesaj:"Program yöneticisi ile iletişime geçmeniz gerekmektedir, (" + hataText +")"})
+
+    hataText = "\"gelen istekte \"şube adı\" bulunamadı\""
+    if(!objHeader.hasOwnProperty('Branch')) return ({hata:true,hataYeri:"FONK // noteGet",hataMesaj:"Program yöneticisi ile iletişime geçmeniz gerekmektedir, (" + hataText +")"})
+    branch = objHeader["Branch"][0];
+    
+    hataText = "\"gelen istekte \"sene\" bilgisi bulunamadı\""
+    if(!objHeader.hasOwnProperty('Year')) return ({hata:true,hataYeri:"FONK // noteGet",hataMesaj:"Program yöneticisi ile iletişime geçmeniz gerekmektedir, (" + hataText +")"})
+    year = objHeader["Year"][0];
     
   } catch (err){
     return ({hata:true,hataYeri:"FONK // noteSave // MONGO-1",hataMesaj:err.message})
@@ -225,6 +235,10 @@ exports = async function (request, response) {
       // }
 
       studentLessonObject = {
+        
+        year,
+        branch,
+        fullName,
 
         A_quiz1 : item.A_quiz1,
         A_quiz2 : item.A_quiz2,
@@ -355,7 +369,7 @@ exports = async function (request, response) {
         bulk.push({
           updateOne: {
             filter: { ogrenciNo : item.ogrenciNo },
-            update: { $addToSet: { "lessons.$[elem]": item.studentLessonObject }  },
+            update: { $set: { "lessons.$[elem]": item.studentLessonObject }  },
             arrayFilters : [{"elem.fullName" : fullName }],
           }
         });
