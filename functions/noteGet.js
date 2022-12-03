@@ -17,6 +17,9 @@ exports = async function (request, response) {
   const collectionUsers = context.services.get("mongodb-atlas").db("studentExamScore").collection("users")
   const userArray = await collectionUsers.find({}).toArray()
   
+  const collectionLessons = context.services.get("mongodb-atlas").db("studentExamScore").collection("lessons")
+  
+  
 
   // MONGO-1 - Gelen Sorgu
   try {
@@ -34,6 +37,8 @@ exports = async function (request, response) {
     
     hataText = "\"gelen istekte \"ders fullName\" bulunamadı\""
     if(!objHeader.hasOwnProperty('Fullname')) return ({hata:true,hataYeri:"FONK // noteGet",hataMesaj:"Program yöneticisi ile iletişime geçmeniz gerekmektedir, (" + hataText +")"})
+    hataText = "gelen istekteki \"ders\" sistemde bulunamadı"
+    if(!collectionLessons.find({fullName})) return ({hata:true,hataYeri:"FONK // noteGet",hataMesaj:"Program yöneticisi ile iletişime geçmeniz gerekmektedir, (" + hataText +")"})
     fullName = objHeader["Fullname"][0];
     
     hataText = "\"gelen istekte \"şube adı\" bulunamadı\""
