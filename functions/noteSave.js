@@ -16,6 +16,8 @@ exports = async function (request, response) {
   const collectionUsers = context.services.get("mongodb-atlas").db("studentExamScore").collection("users")
   const userArray = await collectionUsers.find({isDeleted:false}).toArray()
   
+  const collectionLessons = context.services.get("mongodb-atlas").db("studentExamScore").collection("lessons")
+
   
   // MONGO-1 - Gelen Sorgu
   try {
