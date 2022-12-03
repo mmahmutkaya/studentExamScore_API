@@ -41,7 +41,7 @@ exports = async function (request, response) {
     if(!objHeader.hasOwnProperty('Fullname')) return ({hata:true,hataYeri:"FONK // noteGet",hataMesaj:"Program yöneticisi ile iletişime geçmeniz gerekmektedir, (" + hataText +")"})
     fullName = objHeader["Fullname"][0];
     ///
-    isLesson = collectionLessons.findOne({fullName})
+    isLesson = await collectionLessons.findOne({fullName})
     hataText = "gelen istekteki \"ders\" sistemde bulunamadı"
     if(!isLesson) return ({hata:true,hataYeri:"FONK // noteGet",hataMesaj:"Program yöneticisi ile iletişime geçmeniz gerekmektedir, (" + hataText +")"})
     
