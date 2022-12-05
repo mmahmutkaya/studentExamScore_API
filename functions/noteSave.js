@@ -262,157 +262,168 @@ exports = async function (request, response) {
     await cameItems.map(item => {
       
   
-      if(isNaN(parseFloat(item.A_quiz1))) {
-        is_A_quiz1_Violation = true
+
+      if(isNaN(parseFloat(item.A_quiz1)) && item.A_quiz1.length !== 0) {
+        _isA_quiz1_Violation = true
         violation_A_quiz1_ExcelRows.push(item.siraNo)
       }
-      
-      if(isNaN(parseFloat(item.A_quiz2))) {
-        is_A_quiz2_Violation = true
+
+      if(isNaN(parseFloat(item.A_quiz2)) && item.A_quiz2.length !== 0) {
+        _isA_quiz2_Violation = true
         violation_A_quiz2_ExcelRows.push(item.siraNo)
       }
-      
-      if(isNaN(parseFloat(item.A_quiz3))) {
-        is_A_quiz3_Violation = true
+
+      if(isNaN(parseFloat(item.A_quiz3)) && item.A_quiz3.length !== 0) {
+        _isA_quiz3_Violation = true
         violation_A_quiz3_ExcelRows.push(item.siraNo)
       }
-      
-      if(isNaN(parseFloat(item.A_ara1))) {
-        is_A_ara1_Violation = true
+
+      if(isNaN(parseFloat(item.A_ara1)) && item.A_ara1.length !== 0) {
+        _isA_ara1_Violation = true
         violation_A_ara1_ExcelRows.push(item.siraNo)
       }
-      
-      // if(isNaN(parseFloat(item.A_yazili))) {
-      //   is_A_yazili_Violation = true
+
+      // if(isNaN(parseFloat(item.A_yazili)) && item.A_yazili.length !== 0) {
+      //   _isA_yazili_Violation = true
       //   violation_A_yazili_ExcelRows.push(item.siraNo)
       // }
-      
-      // if(isNaN(parseFloat(item.A_sozlu))) {
-      //   is_A_sozlu_Violation = true
+
+      // if(isNaN(parseFloat(item.A_sozlu)) && item.A_sozlu.length !== 0) {
+      //   _isA_sozlu_Violation = true
       //   violation_A_sozlu_ExcelRows.push(item.siraNo)
       // }
-      
-      if(isNaN(parseFloat(item.A_ara2))) {
-        is_A_ara2_Violation = true
+
+      if(isNaN(parseFloat(item.A_ara2)) && item.A_ara2.length !== 0) {
+        _isA_ara2_Violation = true
         violation_A_ara2_ExcelRows.push(item.siraNo)
       }
-      
-      if(isNaN(parseFloat(item.A_odev))) {
-        is_A_odev_Violation = true
+
+      if(isNaN(parseFloat(item.A_odev)) && item.A_odev.length !== 0) {
+        _isA_odev_Violation = true
         violation_A_odev_ExcelRows.push(item.siraNo)
       }
-      
-      if(isNaN(parseFloat(item.A_sinifici))) {
-        is_A_sinifici_Violation = true
+
+      if(isNaN(parseFloat(item.A_sinifici)) && item.A_sinifici.length !== 0) {
+        _isA_sinifici_Violation = true
         violation_A_sinifici_ExcelRows.push(item.siraNo)
       }
-      
-      if(isNaN(parseFloat(item.A_ortalama))) {
-        is_A_ortalama_Violation = true
+
+      if(isNaN(parseFloat(item.A_ortalama)) && item.A_ortalama.length !== 0) {
+        _isA_ortalama_Violation = true
         violation_A_ortalama_ExcelRows.push(item.siraNo)
       }
-      
 
 
-      
-      if(isNaN(parseFloat(item.B_quiz1))) {
-        is_B_quiz1_Violation = true
+
+      if(isNaN(parseFloat(item.B_quiz1)) && item.B_quiz1.length !== 0) {
+        _isB_quiz1_Violation = true
         violation_B_quiz1_ExcelRows.push(item.siraNo)
       }
-      
-      if(isNaN(parseFloat(item.B_quiz2))) {
-        is_B_quiz2_Violation = true
+
+      if(isNaN(parseFloat(item.B_quiz2)) && item.B_quiz2.length !== 0) {
+        _isB_quiz2_Violation = true
         violation_B_quiz2_ExcelRows.push(item.siraNo)
       }
-      
-      if(isNaN(parseFloat(item.B_quiz3))) {
-        is_B_quiz3_Violation = true
+
+      if(isNaN(parseFloat(item.B_quiz3)) && item.B_quiz3.length !== 0) {
+        _isB_quiz3_Violation = true
         violation_B_quiz3_ExcelRows.push(item.siraNo)
       }
-      
-      if(isNaN(parseFloat(item.B_ara1))) {
-        is_B_ara1_Violation = true
+
+      if(isNaN(parseFloat(item.B_ara1)) && item.B_ara1.length !== 0) {
+        _isB_ara1_Violation = true
         violation_B_ara1_ExcelRows.push(item.siraNo)
       }
-      
-      // if(isNaN(parseFloat(item.B_yazili))) {
-      //   is_B_yazili_Violation = true
+
+      // if(isNaN(parseFloat(item.B_yazili)) && item.B_yazili.length !== 0) {
+      //   _isB_yazili_Violation = true
       //   violation_B_yazili_ExcelRows.push(item.siraNo)
       // }
-      
-      // if(isNaN(parseFloat(item.B_sozlu))) {
-      //   is_B_sozlu_Violation = true
+
+      // if(isNaN(parseFloat(item.B_sozlu)) && item.B_sozlu.length !== 0) {
+      //   _isB_sozlu_Violation = true
       //   violation_B_sozlu_ExcelRows.push(item.siraNo)
       // }
-      
-      
-      if(isNaN(parseFloat(item.B_ara2))) {
-        is_B_ara2_Violation = true
+
+      if(isNaN(parseFloat(item.B_ara2)) && item.B_ara2.length !== 0) {
+        _isB_ara2_Violation = true
         violation_B_ara2_ExcelRows.push(item.siraNo)
       }
-      
-      if(isNaN(parseFloat(item.B_odev))) {
-        is_B_odev_Violation = true
+
+      if(isNaN(parseFloat(item.B_odev)) && item.B_odev.length !== 0) {
+        _isB_odev_Violation = true
         violation_B_odev_ExcelRows.push(item.siraNo)
       }
-      
-      if(isNaN(parseFloat(item.B_sinifici))) {
-        is_B_sinifici_Violation = true
+
+      if(isNaN(parseFloat(item.B_sinifici)) && item.B_sinifici.length !== 0) {
+        _isB_sinifici_Violation = true
         violation_B_sinifici_ExcelRows.push(item.siraNo)
       }
-      
-      if(isNaN(parseFloat(item.B_ortalama))) {
-        is_B_ortalama_Violation = true
+
+      if(isNaN(parseFloat(item.B_ortalama)) && item.B_ortalama.length !== 0) {
+        _isB_ortalama_Violation = true
         violation_B_ortalama_ExcelRows.push(item.siraNo)
       }
-      
-      //
-      
-      if(isNaN(parseFloat(item.AB_ort))) {
-        is_AB_ort_Violation = true
+
+
+
+
+      if(isNaN(parseFloat(item.AB_ort)) && item.AB_ort.length !== 0) {
+        _isAB_ort_Violation = true
         violation_AB_ort_ExcelRows.push(item.siraNo)
       }
-      
-      if(typeof item.AB_sonuc !== "string") {
-        is_AB_sonuc_Violation = true
-        violation_AB_sonuc_ExcelRows.push(item.siraNo)
-      }
-      
-      
-      
-      
-      
-      if(isNaN(parseFloat(item.AB_final))) {
-        is_AB_final_Violation = true
-        violation_AB_final_ExcelRows.push(item.siraNo)
-      }
-      
-      if(isNaN(parseFloat(item.G_ort))) {
-        is_G_ort_Violation = true
-        violation_G_ort_ExcelRows.push(item.siraNo)
-      }
-      
-      if(typeof item.G_sonuc !== "string") {
-        is_G_sonuc_Violation = true
-        violation_G_sonuc_ExcelRows.push(item.siraNo)
-      }
-      
-      
-      
-      if(isNaN(parseFloat(item.G_but))) {
-        is_G_but_Violation = true
-        violation_G_but_ExcelRows.push(item.siraNo)
-      }
-      
-      if(isNaN(parseFloat(item.G_ort2))) {
-        is_G_ort2_Violation = true
-        violation_G_ort2_ExcelRows.push(item.siraNo)
-      }
-      
-      if(typeof item.G_sonuc2 !== "string") {
-        is_G_sonuc2_Violation = true
+
+      if(typeof item.AB_sonuc !== "string" && item.AB_sonuc.length !== 0) {
+        _isG_sonuc2_Violation = true
         violation_G_sonuc2_ExcelRows.push(item.siraNo)
       }
+
+      
+      
+
+      if(isNaN(parseFloat(item.AB_final)) && item.AB_final.length !== 0) {
+        _isAB_final_Violation = true
+        violation_AB_final_ExcelRows.push(item.siraNo)
+      }
+
+      if(isNaN(parseFloat(item.G_ort)) && item.G_ort.length !== 0) {
+        _isG_ort_Violation = true
+        violation_G_ort_ExcelRows.push(item.siraNo)
+      }
+
+      if(typeof item.G_sonuc !== "string" && item.G_sonuc.length !== 0) {
+        _isG_sonuc2_Violation = true
+        violation_G_sonuc2_ExcelRows.push(item.siraNo)
+      }
+
+      
+      
+
+      if(isNaN(parseFloat(item.G_but)) && item.G_but.length !== 0) {
+        _isG_but_Violation = true
+        violation_G_but_ExcelRows.push(item.siraNo)
+      }
+
+      if(isNaN(parseFloat(item.G_ort2)) && item.G_ort2.length !== 0) {
+        _isG_ort2_Violation = true
+        violation_G_ort2_ExcelRows.push(item.siraNo)
+      }
+
+      if(typeof item.G_sonuc2 !== "string" && item.G_sonuc2.length !== 0) {
+        _isG_sonuc2_Violation = true
+        violation_G_sonuc2_ExcelRows.push(item.siraNo)
+      }
+
+
+
+
+
+      // if(typeof item.G_sonuc2 !== "string" && item.G_sonuc2.length !== 0) {
+      //   _isG_sonuc2_Violation = true
+      //   violation_G_sonuc2_ExcelRows.push(item.siraNo)
+      // }
+
+
 
 
 
