@@ -373,7 +373,7 @@ exports = async function (request, response) {
         violation_AB_ort_ExcelRows.push(item.siraNo)
       }
       
-      if(isNaN(parseFloat(item.AB_sonuc))) {
+      if(typeof item.AB_sonuc !== "string") {
         is_AB_sonuc_Violation = true
         violation_AB_sonuc_ExcelRows.push(item.siraNo)
       }
@@ -392,7 +392,7 @@ exports = async function (request, response) {
         violation_G_ort_ExcelRows.push(item.siraNo)
       }
       
-      if(isNaN(parseFloat(item.G_sonuc))) {
+      if(typeof item.G_sonuc !== "string") {
         is_G_sonuc_Violation = true
         violation_G_sonuc_ExcelRows.push(item.siraNo)
       }
@@ -409,7 +409,7 @@ exports = async function (request, response) {
         violation_G_ort2_ExcelRows.push(item.siraNo)
       }
       
-      if(isNaN(parseFloat(item.G_sonuc2))) {
+      if(typeof item.G_sonuc2 !== "string") {
         is_G_sonuc2_Violation = true
         violation_G_sonuc2_ExcelRows.push(item.siraNo)
       }
@@ -668,13 +668,13 @@ exports = async function (request, response) {
     if (is_AB_ort_Violation) {
       satirNumaralariArray = violation_AB_ort_ExcelRows
       satirNumaralariArray.length > 1 ? currentCondition = "kayıtlardaki" : currentCondition = "kayıttaki"
-      return ({hata:true,hataYeri:"FONK // noteSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + " \"Güz Dönemi - Quiz-1\" notu kontrol edilmeli."});
+      return ({hata:true,hataYeri:"FONK // noteSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + " \"Güz / Bahar Ortalama\" notu kontrol edilmeli."});
     }
 
     if (is_AB_sonuc_Violation) {
       satirNumaralariArray = violation_AB_sonuc_ExcelRows
       satirNumaralariArray.length > 1 ? currentCondition = "kayıtlardaki" : currentCondition = "kayıttaki"
-      return ({hata:true,hataYeri:"FONK // noteSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + " \"Güz Dönemi - Quiz-1\" notu kontrol edilmeli."});
+      return ({hata:true,hataYeri:"FONK // noteSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + " \"Güz / Bahar Sonuç\" bilgisi kontrol edilmeli."});
     }
     
     
@@ -683,19 +683,19 @@ exports = async function (request, response) {
     if (is_AB_final_Violation) {
       satirNumaralariArray = violation_AB_final_ExcelRows
       satirNumaralariArray.length > 1 ? currentCondition = "kayıtlardaki" : currentCondition = "kayıttaki"
-      return ({hata:true,hataYeri:"FONK // noteSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + " \"Güz Dönemi - Quiz-1\" notu kontrol edilmeli."});
+      return ({hata:true,hataYeri:"FONK // noteSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + " \"Yaz Okulu Final\" notu kontrol edilmeli."});
     }
     
     if (is_G_ort_Violation) {
       satirNumaralariArray = violation_G_ort_ExcelRows
       satirNumaralariArray.length > 1 ? currentCondition = "kayıtlardaki" : currentCondition = "kayıttaki"
-      return ({hata:true,hataYeri:"FONK // noteSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + " \"Güz Dönemi - Quiz-1\" notu kontrol edilmeli."});
+      return ({hata:true,hataYeri:"FONK // noteSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + " \"Yaz Okulu Ortalama\" notu kontrol edilmeli."});
     }
 
     if (is_G_sonuc_Violation) {
       satirNumaralariArray = violation_G_sonuc_ExcelRows
       satirNumaralariArray.length > 1 ? currentCondition = "kayıtlardaki" : currentCondition = "kayıttaki"
-      return ({hata:true,hataYeri:"FONK // noteSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + " \"Güz Dönemi - Quiz-1\" notu kontrol edilmeli."});
+      return ({hata:true,hataYeri:"FONK // noteSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + " \"Yaz Okulu Sonuç\" bilgisi kontrol edilmeli."});
     }
 
 
@@ -704,19 +704,19 @@ exports = async function (request, response) {
     if (is_G_but_Violation) {
       satirNumaralariArray = violation_G_but_ExcelRows
       satirNumaralariArray.length > 1 ? currentCondition = "kayıtlardaki" : currentCondition = "kayıttaki"
-      return ({hata:true,hataYeri:"FONK // noteSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + " \"Güz Dönemi - Quiz-1\" notu kontrol edilmeli."});
+      return ({hata:true,hataYeri:"FONK // noteSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + " \"Bütünleme\" notu kontrol edilmeli."});
     }
 
     if (is_G_ort2_Violation) {
       satirNumaralariArray = violation_G_ort2_ExcelRows
       satirNumaralariArray.length > 1 ? currentCondition = "kayıtlardaki" : currentCondition = "kayıttaki"
-      return ({hata:true,hataYeri:"FONK // noteSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + " \"Güz Dönemi - Quiz-1\" notu kontrol edilmeli."});
+      return ({hata:true,hataYeri:"FONK // noteSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + " \"Bütünleme Ortalama\" notu kontrol edilmeli."});
     }
 
     if (is_G_sonuc2_Violation) {
       satirNumaralariArray = violation_G_sonuc2_ExcelRows
       satirNumaralariArray.length > 1 ? currentCondition = "kayıtlardaki" : currentCondition = "kayıttaki"
-      return ({hata:true,hataYeri:"FONK // noteSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + " \"Güz Dönemi - Quiz-1\" notu kontrol edilmeli."});
+      return ({hata:true,hataYeri:"FONK // noteSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + " \"Bütünleme Sonuç\" bilgisi kontrol edilmeli."});
     }
 
 
