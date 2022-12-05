@@ -128,6 +128,99 @@ exports = async function (request, response) {
   let is_A_quiz1_Violation = false
   let violation_A_quiz1_ExcelRows = []
   
+  let is_A_quiz2_Violation = false
+  let violation_A_quiz2_ExcelRows = []
+  
+  let is_A_quiz3_Violation = false
+  let violation_A_quiz3_ExcelRows = []
+  
+  let is_A_ara1_Violation = false
+  let violation_A_ara1_ExcelRows = []
+  
+  // let is_A_yazili_Violation = false
+  // let violation_A_yazili_ExcelRows = []
+  
+  // let is_A_sozlu_Violation = false
+  // let violation_A_sozlu_ExcelRows = []
+  
+  let is_A_ara2_Violation = false
+  let violation_A_ara2_ExcelRows = []
+  
+  let is_A_odev_Violation = false
+  let violation_A_odev_ExcelRows = []
+  
+  let is_A_sinifici_Violation = false
+  let violation_A_sinifici_ExcelRows = []
+  
+  let is_A_ortalama_Violation = false
+  let violation_A_ortalama_ExcelRows = []
+  
+
+
+  
+  let is_B_quiz1_Violation = false
+  let violation_B_quiz1_ExcelRows = []
+  
+  let is_B_quiz2_Violation = false
+  let violation_B_quiz2_ExcelRows = []
+  
+  let is_B_quiz3_Violation = false
+  let violation_B_quiz3_ExcelRows = []
+  
+  let is_B_ara1_Violation = false
+  let violation_B_ara1_ExcelRows = []
+  
+  // let is_B_yazili_Violation = false
+  // let violation_B_yazili_ExcelRows = []
+  
+  // let is_B_sozlu_Violation = false
+  // let violation_B_sozlu_ExcelRows = []
+  
+  let is_B_ara2_Violation = false
+  let violation_B_ara2_ExcelRows = []
+  
+  let is_B_odev_Violation = false
+  let violation_B_odev_ExcelRows = []
+  
+  let is_B_sinifici_Violation = false
+  let violation_B_sinifici_ExcelRows = []
+  
+  let is_B_ortalama_Violation = false
+  let violation_B_ortalama_ExcelRows = []
+  
+  ///
+  
+  let is_AB_ort_Violation = false
+  let violation_AB_ort_ExcelRows = []
+  
+  let is_AB_sonuc_Violation = false
+  let violation_AB_sonuc_ExcelRows = []
+  
+  
+  
+  
+  let is_AB_final_Violation = false
+  let violation_AB_final_ExcelRows = []
+  
+  let is_G_ort_Violation = false
+  let violation_G_ort_ExcelRows = []
+  
+  let is_G_sonuc_Violation = false
+  let violation_G_sonuc_ExcelRows = []
+  
+  
+  
+  let is_G_but_Violation = false
+  let violation_G_but_ExcelRows = []
+  
+  let is_G_ort2_Violation = false
+  let violation_G_ort2_ExcelRows = []
+  
+  let is_G_sonuc2_Violation = false
+  let violation_G_sonuc2_ExcelRows = []
+
+
+
   // let is_mail_Violation = false
   // let violation_mail_ExcelRows = []
   
@@ -168,11 +261,160 @@ exports = async function (request, response) {
     
     await cameItems.map(item => {
       
-      
+  
       if(isNaN(parseFloat(item.A_quiz1))) {
         is_A_quiz1_Violation = true
         violation_A_quiz1_ExcelRows.push(item.siraNo)
       }
+      
+      if(isNaN(parseFloat(item.A_quiz2))) {
+        is_A_quiz2_Violation = true
+        violation_A_quiz2_ExcelRows.push(item.siraNo)
+      }
+      
+      if(isNaN(parseFloat(item.A_quiz3))) {
+        is_A_quiz3_Violation = true
+        violation_A_quiz3_ExcelRows.push(item.siraNo)
+      }
+      
+      if(isNaN(parseFloat(item.A_ara1))) {
+        is_A_ara1_Violation = true
+        violation_A_ara1_ExcelRows.push(item.siraNo)
+      }
+      
+      // if(isNaN(parseFloat(item.A_yazili))) {
+      //   is_A_yazili_Violation = true
+      //   violation_A_yazili_ExcelRows.push(item.siraNo)
+      // }
+      
+      // if(isNaN(parseFloat(item.A_sozlu))) {
+      //   is_A_sozlu_Violation = true
+      //   violation_A_sozlu_ExcelRows.push(item.siraNo)
+      // }
+      
+      if(isNaN(parseFloat(item.A_ara2))) {
+        is_A_ara2_Violation = true
+        violation_A_ara2_ExcelRows.push(item.siraNo)
+      }
+      
+      if(isNaN(parseFloat(item.A_odev))) {
+        is_A_odev_Violation = true
+        violation_A_odev_ExcelRows.push(item.siraNo)
+      }
+      
+      if(isNaN(parseFloat(item.A_sinifici))) {
+        is_A_sinifici_Violation = true
+        violation_A_sinifici_ExcelRows.push(item.siraNo)
+      }
+      
+      if(isNaN(parseFloat(item.A_ortalama))) {
+        is_A_ortalama_Violation = true
+        violation_A_ortalama_ExcelRows.push(item.siraNo)
+      }
+      
+
+
+      
+      if(isNaN(parseFloat(item.B_quiz1))) {
+        is_B_quiz1_Violation = true
+        violation_B_quiz1_ExcelRows.push(item.siraNo)
+      }
+      
+      if(isNaN(parseFloat(item.B_quiz2))) {
+        is_B_quiz2_Violation = true
+        violation_B_quiz2_ExcelRows.push(item.siraNo)
+      }
+      
+      if(isNaN(parseFloat(item.B_quiz3))) {
+        is_B_quiz3_Violation = true
+        violation_B_quiz3_ExcelRows.push(item.siraNo)
+      }
+      
+      if(isNaN(parseFloat(item.B_ara1))) {
+        is_B_ara1_Violation = true
+        violation_B_ara1_ExcelRows.push(item.siraNo)
+      }
+      
+      // if(isNaN(parseFloat(item.B_yazili))) {
+      //   is_B_yazili_Violation = true
+      //   violation_B_yazili_ExcelRows.push(item.siraNo)
+      // }
+      
+      // if(isNaN(parseFloat(item.B_sozlu))) {
+      //   is_B_sozlu_Violation = true
+      //   violation_B_sozlu_ExcelRows.push(item.siraNo)
+      // }
+      
+      
+      if(isNaN(parseFloat(item.B_ara2))) {
+        is_B_ara2_Violation = true
+        violation_B_ara2_ExcelRows.push(item.siraNo)
+      }
+      
+      if(isNaN(parseFloat(item.B_odev))) {
+        is_B_odev_Violation = true
+        violation_B_odev_ExcelRows.push(item.siraNo)
+      }
+      
+      if(isNaN(parseFloat(item.B_sinifici))) {
+        is_B_sinifici_Violation = true
+        violation_B_sinifici_ExcelRows.push(item.siraNo)
+      }
+      
+      if(isNaN(parseFloat(item.B_ortalama))) {
+        is_B_ortalama_Violation = true
+        violation_B_ortalama_ExcelRows.push(item.siraNo)
+      }
+      
+      //
+      
+      if(isNaN(parseFloat(item.AB_ort))) {
+        is_AB_ort_Violation = true
+        violation_AB_ort_ExcelRows.push(item.siraNo)
+      }
+      
+      if(isNaN(parseFloat(item.AB_sonuc))) {
+        is_AB_sonuc_Violation = true
+        violation_AB_sonuc_ExcelRows.push(item.siraNo)
+      }
+      
+      
+      
+      
+      
+      if(isNaN(parseFloat(item.AB_final))) {
+        is_AB_final_Violation = true
+        violation_AB_final_ExcelRows.push(item.siraNo)
+      }
+      
+      if(isNaN(parseFloat(item.G_ort))) {
+        is_G_ort_Violation = true
+        violation_G_ort_ExcelRows.push(item.siraNo)
+      }
+      
+      if(isNaN(parseFloat(item.G_sonuc))) {
+        is_G_sonuc_Violation = true
+        violation_G_sonuc_ExcelRows.push(item.siraNo)
+      }
+      
+      
+      
+      if(isNaN(parseFloat(item.G_but))) {
+        is_G_but_Violation = true
+        violation_G_but_ExcelRows.push(item.siraNo)
+      }
+      
+      if(isNaN(parseFloat(item.G_ort2))) {
+        is_G_ort2_Violation = true
+        violation_G_ort2_ExcelRows.push(item.siraNo)
+      }
+      
+      if(isNaN(parseFloat(item.G_sonuc2))) {
+        is_G_sonuc2_Violation = true
+        violation_G_sonuc2_ExcelRows.push(item.siraNo)
+      }
+
+
 
       // validateEmail = context.functions.execute("validateEmail", item.mail);
       // if(!validateEmail) {
@@ -244,8 +486,8 @@ exports = async function (request, response) {
         A_quiz2 : item.A_quiz2,
         A_quiz3 : item.A_quiz3,
         A_ara1 : item.A_ara1,
-        A_yazili : item.A_yazili,
-        A_sozlu : item.A_sozlu,
+        // A_yazili : item.A_yazili,
+        // A_sozlu : item.A_sozlu,
         A_ara2 : item.A_ara2,
         A_odev : item.A_odev,
         A_sinifici : item.A_sinifici,
@@ -255,19 +497,21 @@ exports = async function (request, response) {
         B_quiz2 : item.B_quiz2,
         B_quiz3 : item.B_quiz3,
         B_ara1 : item.B_ara1,
-        B_yazili : item.B_yazili,
-        B_sozlu : item.B_sozlu,
+        // B_yazili : item.B_yazili,
+        // B_sozlu : item.B_sozlu,
         B_ara2 : item.B_ara2,
         B_odev : item.B_odev,
         B_sinifici : item.B_sinifici,
         B_ortalama : item.B_ortalama,
-
+        //
         AB_ort : item.AB_ort,
         AB_sonuc : item.AB_sonuc,
+        
+        
         AB_final : item.AB_final,
-
         G_ort : item.G_ort,
         G_sonuc : item.G_sonuc,
+        
         G_but : item.G_but,
         G_ort2 : item.G_ort2,
         G_sonuc2 : item.G_sonuc2,
@@ -294,13 +538,256 @@ exports = async function (request, response) {
     let satirNumaralariArray = []
     let currentCondition = ""
     
+
     if (is_A_quiz1_Violation) {
       satirNumaralariArray = violation_A_quiz1_ExcelRows
+      satirNumaralariArray.length > 1 ? currentCondition = "kayıtlardaki" : currentCondition = "kayıttaki"
+      return ({hata:true,hataYeri:"FONK // noteSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + " \"Bahar Dönemi - Quiz-1\" notu kontrol edilmeli."});
+    }
+
+    if (is_A_quiz2_Violation) {
+      satirNumaralariArray = violation_A_quiz2_ExcelRows
+      satirNumaralariArray.length > 1 ? currentCondition = "kayıtlardaki" : currentCondition = "kayıttaki"
+      return ({hata:true,hataYeri:"FONK // noteSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + " \"Bahar Dönemi - Quiz-2\" notu kontrol edilmeli."});
+    }
+
+    if (is_A_quiz3_Violation) {
+      satirNumaralariArray = violation_A_quiz3_ExcelRows
+      satirNumaralariArray.length > 1 ? currentCondition = "kayıtlardaki" : currentCondition = "kayıttaki"
+      return ({hata:true,hataYeri:"FONK // noteSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + " \"Bahar Dönemi - Quiz-3\" notu kontrol edilmeli."});
+    }
+
+    if (is_A_ara1_Violation) {
+      satirNumaralariArray = violation_A_ara1_ExcelRows
+      satirNumaralariArray.length > 1 ? currentCondition = "kayıtlardaki" : currentCondition = "kayıttaki"
+      return ({hata:true,hataYeri:"FONK // noteSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + " \"Bahar Dönemi - Ara 1\" notu kontrol edilmeli."});
+    }
+
+    if (is_A_yazili_Violation) {
+      satirNumaralariArray = violation_A_yazili_ExcelRows
+      satirNumaralariArray.length > 1 ? currentCondition = "kayıtlardaki" : currentCondition = "kayıttaki"
+      return ({hata:true,hataYeri:"FONK // noteSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + " \"Bahar Dönemi - Yazılı 1\" notu kontrol edilmeli."});
+    }
+
+    if (is_A_sozlu_Violation) {
+      satirNumaralariArray = violation_A_sozlu_ExcelRows
+      satirNumaralariArray.length > 1 ? currentCondition = "kayıtlardaki" : currentCondition = "kayıttaki"
+      return ({hata:true,hataYeri:"FONK // noteSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + " \"Bahar Dönemi - Sözlü\" notu kontrol edilmeli."});
+    }
+
+    if (is_A_ara2_Violation) {
+      satirNumaralariArray = violation_A_ara2_ExcelRows
+      satirNumaralariArray.length > 1 ? currentCondition = "kayıtlardaki" : currentCondition = "kayıttaki"
+      return ({hata:true,hataYeri:"FONK // noteSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + " \"Bahar Dönemi - Ara 2\" notu kontrol edilmeli."});
+    }
+
+    if (is_A_odev_Violation) {
+      satirNumaralariArray = violation_A_odev_ExcelRows
+      satirNumaralariArray.length > 1 ? currentCondition = "kayıtlardaki" : currentCondition = "kayıttaki"
+      return ({hata:true,hataYeri:"FONK // noteSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + " \"Bahar Dönemi - Ödev\" notu kontrol edilmeli."});
+    }
+
+    if (is_A_sinifici_Violation) {
+      satirNumaralariArray = violation_A_sinifici_ExcelRows
+      satirNumaralariArray.length > 1 ? currentCondition = "kayıtlardaki" : currentCondition = "kayıttaki"
+      return ({hata:true,hataYeri:"FONK // noteSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + " \"Bahar Dönemi - Sınıf İçi\" notu kontrol edilmeli."});
+    }
+
+    if (is_A_ortalama_Violation) {
+      satirNumaralariArray = violation_A_ortalama_ExcelRows
+      satirNumaralariArray.length > 1 ? currentCondition = "kayıtlardaki" : currentCondition = "kayıttaki"
+      return ({hata:true,hataYeri:"FONK // noteSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + " \"Bahar Dönemi - Ortalama\" notu kontrol edilmeli."});
+    }
+
+
+
+
+
+
+    if (is_A_quiz1_Violation) {
+      satirNumaralariArray = violation_A_quiz1_ExcelRows
+      satirNumaralariArray.length > 1 ? currentCondition = "kayıtlardaki" : currentCondition = "kayıttaki"
+      return ({hata:true,hataYeri:"FONK // noteSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + " \"Bahar Dönemi - Quiz-1\" notu kontrol edilmeli."});
+    }
+
+    if (is_A_quiz2_Violation) {
+      satirNumaralariArray = violation_A_quiz2_ExcelRows
+      satirNumaralariArray.length > 1 ? currentCondition = "kayıtlardaki" : currentCondition = "kayıttaki"
+      return ({hata:true,hataYeri:"FONK // noteSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + " \"Bahar Dönemi - Quiz-2\" notu kontrol edilmeli."});
+    }
+
+    if (is_A_quiz3_Violation) {
+      satirNumaralariArray = violation_A_quiz3_ExcelRows
+      satirNumaralariArray.length > 1 ? currentCondition = "kayıtlardaki" : currentCondition = "kayıttaki"
+      return ({hata:true,hataYeri:"FONK // noteSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + " \"Bahar Dönemi - Quiz-3\" notu kontrol edilmeli."});
+    }
+
+    if (is_A_ara1_Violation) {
+      satirNumaralariArray = violation_A_ara1_ExcelRows
+      satirNumaralariArray.length > 1 ? currentCondition = "kayıtlardaki" : currentCondition = "kayıttaki"
+      return ({hata:true,hataYeri:"FONK // noteSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + " \"Bahar Dönemi - Ara 1\" notu kontrol edilmeli."});
+    }
+
+    if (is_A_yazili_Violation) {
+      satirNumaralariArray = violation_A_yazili_ExcelRows
+      satirNumaralariArray.length > 1 ? currentCondition = "kayıtlardaki" : currentCondition = "kayıttaki"
+      return ({hata:true,hataYeri:"FONK // noteSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + " \"Bahar Dönemi - Yazılı 1\" notu kontrol edilmeli."});
+    }
+
+    if (is_A_sozlu_Violation) {
+      satirNumaralariArray = violation_A_sozlu_ExcelRows
+      satirNumaralariArray.length > 1 ? currentCondition = "kayıtlardaki" : currentCondition = "kayıttaki"
+      return ({hata:true,hataYeri:"FONK // noteSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + " \"Bahar Dönemi - Sözlü\" notu kontrol edilmeli."});
+    }
+
+    if (is_A_ara2_Violation) {
+      satirNumaralariArray = violation_A_ara2_ExcelRows
+      satirNumaralariArray.length > 1 ? currentCondition = "kayıtlardaki" : currentCondition = "kayıttaki"
+      return ({hata:true,hataYeri:"FONK // noteSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + " \"Bahar Dönemi - Ara 2\" notu kontrol edilmeli."});
+    }
+
+    if (is_A_odev_Violation) {
+      satirNumaralariArray = violation_A_odev_ExcelRows
+      satirNumaralariArray.length > 1 ? currentCondition = "kayıtlardaki" : currentCondition = "kayıttaki"
+      return ({hata:true,hataYeri:"FONK // noteSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + " \"Bahar Dönemi - Ödev\" notu kontrol edilmeli."});
+    }
+
+    if (is_A_sinifici_Violation) {
+      satirNumaralariArray = violation_A_sinifici_ExcelRows
+      satirNumaralariArray.length > 1 ? currentCondition = "kayıtlardaki" : currentCondition = "kayıttaki"
+      return ({hata:true,hataYeri:"FONK // noteSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + " \"Bahar Dönemi - Sınıf İçi\" notu kontrol edilmeli."});
+    }
+
+    if (is_A_ortalama_Violation) {
+      satirNumaralariArray = violation_A_ortalama_ExcelRows
+      satirNumaralariArray.length > 1 ? currentCondition = "kayıtlardaki" : currentCondition = "kayıttaki"
+      return ({hata:true,hataYeri:"FONK // noteSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + " \"Bahar Dönemi - Ortalama\" notu kontrol edilmeli."});
+    }
+
+
+
+
+
+
+
+    if (is_B_quiz1_Violation) {
+      satirNumaralariArray = violation_B_quiz1_ExcelRows
+      satirNumaralariArray.length > 1 ? currentCondition = "kayıtlardaki" : currentCondition = "kayıttaki"
+      return ({hata:true,hataYeri:"FONK // noteSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + " \"Bahar Dönemi - Quiz-1\" notu kontrol edilmeli."});
+    }
+
+    if (is_B_quiz2_Violation) {
+      satirNumaralariArray = violation_B_quiz2_ExcelRows
+      satirNumaralariArray.length > 1 ? currentCondition = "kayıtlardaki" : currentCondition = "kayıttaki"
+      return ({hata:true,hataYeri:"FONK // noteSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + " \"Bahar Dönemi - Quiz-2\" notu kontrol edilmeli."});
+    }
+
+    if (is_B_quiz3_Violation) {
+      satirNumaralariArray = violation_B_quiz3_ExcelRows
+      satirNumaralariArray.length > 1 ? currentCondition = "kayıtlardaki" : currentCondition = "kayıttaki"
+      return ({hata:true,hataYeri:"FONK // noteSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + " \"Bahar Dönemi - Quiz-3\" notu kontrol edilmeli."});
+    }
+
+    if (is_B_ara1_Violation) {
+      satirNumaralariArray = violation_B_ara1_ExcelRows
+      satirNumaralariArray.length > 1 ? currentCondition = "kayıtlardaki" : currentCondition = "kayıttaki"
+      return ({hata:true,hataYeri:"FONK // noteSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + " \"Bahar Dönemi - Ara 1\" notu kontrol edilmeli."});
+    }
+
+    if (is_B_yazili_Violation) {
+      satirNumaralariArray = violation_B_yazili_ExcelRows
+      satirNumaralariArray.length > 1 ? currentCondition = "kayıtlardaki" : currentCondition = "kayıttaki"
+      return ({hata:true,hataYeri:"FONK // noteSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + " \"Bahar Dönemi - Yazılı 1\" notu kontrol edilmeli."});
+    }
+
+    if (is_B_sozlu_Violation) {
+      satirNumaralariArray = violation_B_sozlu_ExcelRows
+      satirNumaralariArray.length > 1 ? currentCondition = "kayıtlardaki" : currentCondition = "kayıttaki"
+      return ({hata:true,hataYeri:"FONK // noteSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + " \"Bahar Dönemi - Sözlü\" notu kontrol edilmeli."});
+    }
+
+    if (is_B_ara2_Violation) {
+      satirNumaralariArray = violation_B_ara2_ExcelRows
+      satirNumaralariArray.length > 1 ? currentCondition = "kayıtlardaki" : currentCondition = "kayıttaki"
+      return ({hata:true,hataYeri:"FONK // noteSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + " \"Bahar Dönemi - Ara 2\" notu kontrol edilmeli."});
+    }
+
+    if (is_B_odev_Violation) {
+      satirNumaralariArray = violation_B_odev_ExcelRows
+      satirNumaralariArray.length > 1 ? currentCondition = "kayıtlardaki" : currentCondition = "kayıttaki"
+      return ({hata:true,hataYeri:"FONK // noteSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + " \"Bahar Dönemi - Ödev\" notu kontrol edilmeli."});
+    }
+
+    if (is_B_sinifici_Violation) {
+      satirNumaralariArray = violation_B_sinifici_ExcelRows
+      satirNumaralariArray.length > 1 ? currentCondition = "kayıtlardaki" : currentCondition = "kayıttaki"
+      return ({hata:true,hataYeri:"FONK // noteSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + " \"Bahar Dönemi - Sınıf İçi\" notu kontrol edilmeli."});
+    }
+
+    if (is_B_ortalama_Violation) {
+      satirNumaralariArray = violation_B_ortalama_ExcelRows
+      satirNumaralariArray.length > 1 ? currentCondition = "kayıtlardaki" : currentCondition = "kayıttaki"
+      return ({hata:true,hataYeri:"FONK // noteSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + " \"Bahar Dönemi - Ortalama\" notu kontrol edilmeli."});
+    }
+    
+    ///
+    
+    if (is_AB_ort_Violation) {
+      satirNumaralariArray = violation_AB_ort_ExcelRows
       satirNumaralariArray.length > 1 ? currentCondition = "kayıtlardaki" : currentCondition = "kayıttaki"
       return ({hata:true,hataYeri:"FONK // noteSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + " \"Güz Dönemi - Quiz-1\" notu kontrol edilmeli."});
     }
 
+    if (is_AB_sonuc_Violation) {
+      satirNumaralariArray = violation_AB_sonuc_ExcelRows
+      satirNumaralariArray.length > 1 ? currentCondition = "kayıtlardaki" : currentCondition = "kayıttaki"
+      return ({hata:true,hataYeri:"FONK // noteSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + " \"Güz Dönemi - Quiz-1\" notu kontrol edilmeli."});
+    }
     
+    
+    
+
+    if (is_AB_final_Violation) {
+      satirNumaralariArray = violation_AB_final_ExcelRows
+      satirNumaralariArray.length > 1 ? currentCondition = "kayıtlardaki" : currentCondition = "kayıttaki"
+      return ({hata:true,hataYeri:"FONK // noteSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + " \"Güz Dönemi - Quiz-1\" notu kontrol edilmeli."});
+    }
+    
+    if (is_G_ort_Violation) {
+      satirNumaralariArray = violation_G_ort_ExcelRows
+      satirNumaralariArray.length > 1 ? currentCondition = "kayıtlardaki" : currentCondition = "kayıttaki"
+      return ({hata:true,hataYeri:"FONK // noteSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + " \"Güz Dönemi - Quiz-1\" notu kontrol edilmeli."});
+    }
+
+    if (is_G_sonuc_Violation) {
+      satirNumaralariArray = violation_G_sonuc_ExcelRows
+      satirNumaralariArray.length > 1 ? currentCondition = "kayıtlardaki" : currentCondition = "kayıttaki"
+      return ({hata:true,hataYeri:"FONK // noteSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + " \"Güz Dönemi - Quiz-1\" notu kontrol edilmeli."});
+    }
+
+
+
+
+    if (is_G_but_Violation) {
+      satirNumaralariArray = violation_G_but_ExcelRows
+      satirNumaralariArray.length > 1 ? currentCondition = "kayıtlardaki" : currentCondition = "kayıttaki"
+      return ({hata:true,hataYeri:"FONK // noteSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + " \"Güz Dönemi - Quiz-1\" notu kontrol edilmeli."});
+    }
+
+    if (is_G_ort2_Violation) {
+      satirNumaralariArray = violation_G_ort2_ExcelRows
+      satirNumaralariArray.length > 1 ? currentCondition = "kayıtlardaki" : currentCondition = "kayıttaki"
+      return ({hata:true,hataYeri:"FONK // noteSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + " \"Güz Dönemi - Quiz-1\" notu kontrol edilmeli."});
+    }
+
+    if (is_G_sonuc2_Violation) {
+      satirNumaralariArray = violation_G_sonuc2_ExcelRows
+      satirNumaralariArray.length > 1 ? currentCondition = "kayıtlardaki" : currentCondition = "kayıttaki"
+      return ({hata:true,hataYeri:"FONK // noteSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + " \"Güz Dönemi - Quiz-1\" notu kontrol edilmeli."});
+    }
+
+
+
     
     // if (is_ogrenciNo_Exist) {
     //   satirNumaralariArray = exist_ogrenciNo_ExcelRows
