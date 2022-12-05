@@ -372,7 +372,7 @@ exports = async function (request, response) {
         violation_AB_ort_ExcelRows.push(item.siraNo)
       }
 
-      if(typeof item.AB_sonuc !== "string" && item.AB_sonuc.length !== 0 || typeof parseFloat(item.AB_sonuc) == "number" && item.AB_sonuc.length !== 0  ) {
+      if( (typeof item.AB_sonuc !== "string" && item.AB_sonuc.length !== 0) ||  (typeof parseFloat(item.AB_sonuc) == "number" && item.AB_sonuc.length !== 0)  ) {
         is_AB_sonuc_Violation = true
         violation_AB_sonuc_ExcelRows.push(item.siraNo)
       }
@@ -390,7 +390,7 @@ exports = async function (request, response) {
         violation_G_ort_ExcelRows.push(item.siraNo)
       }
 
-      if(typeof item.G_sonuc !== "string" && item.G_sonuc.length !== 0 || typeof parseFloat(item.G_sonuc) == "number" && item.G_sonuc.length !== 0  ) {
+      if( (typeof item.G_sonuc !== "string" && item.G_sonuc.length !== 0) ||  (typeof parseFloat(item.G_sonuc) == "number" && item.G_sonuc.length !== 0)  ) {
         is_G_sonuc_Violation = true
         violation_G_sonuc_ExcelRows.push(item.siraNo)
       }
@@ -408,7 +408,7 @@ exports = async function (request, response) {
         violation_G_ort2_ExcelRows.push(item.siraNo)
       }
 
-      if(typeof item.G_sonuc2 !== "string" && item.G_sonuc2.length !== 0 || typeof parseFloat(item.G_sonuc2) == "number" && item.G_sonuc2.length !== 0  ) {
+      if( (typeof item.G_sonuc2 !== "string" && item.G_sonuc2.length !== 0) ||  (typeof parseFloat(item.G_sonuc2) == "number" && item.G_sonuc2.length !== 0)  ) {
         is_G_sonuc2_Violation = true
         violation_G_sonuc2_ExcelRows.push(item.siraNo)
       }
