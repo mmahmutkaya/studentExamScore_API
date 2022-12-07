@@ -112,7 +112,7 @@ exports = async function (request, response) {
     // const objArray = await collectionUsers.find({ "lessons.fullName" : fullName } ,{_id: 0, ogrenciNo:1, name:1, surname:1, lessons: {$elemMatch: { fullName: fullName }} } ).toArray()
     const objArray = await userArray.map(x=>{
       
-      isNote = x.lessons.find(y=>y.fullName == fullName)
+      isNote = x.lessons.find(y=>y.fullName =="2022-2023-almanca-A:101-mmahmutkaya@gmail.com")
       
       if (isNote) {
         return {
