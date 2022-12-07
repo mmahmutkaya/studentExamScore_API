@@ -102,41 +102,41 @@ exports = async function (request, response) {
   }
   
   
-  
-  
-  // MONGO-3 - GET DATA FROM DB
-  try {
-    
     return userArray
+  
+  // // MONGO-3 - GET DATA FROM DB
+  // try {
     
-    let isNote
-    // yukarıda bitmezsse burda bitecek - tüm dersler göderilecek
-    // const objArray = await collectionUsers.find({ "lessons.fullName" : fullName } ,{_id: 0, ogrenciNo:1, name:1, surname:1, lessons: {$elemMatch: { fullName: fullName }} } ).toArray()
-    const objArray = await userArray.map(x=>{
+  //   return userArray
+    
+  //   let isNote
+  //   // yukarıda bitmezsse burda bitecek - tüm dersler göderilecek
+  //   // const objArray = await collectionUsers.find({ "lessons.fullName" : fullName } ,{_id: 0, ogrenciNo:1, name:1, surname:1, lessons: {$elemMatch: { fullName: fullName }} } ).toArray()
+  //   const objArray = await userArray.map(x=>{
       
-      if(x.hasOwnProperty("lessons")) {
+  //     if(x.hasOwnProperty("lessons")) {
       
-        isNote = x.lessons.find(y=>y.fullName == "2022-2023-almanca-A:101-mmahmutkaya@gmail.com")
+  //       isNote = x.lessons.find(y=>y.fullName == "2022-2023-almanca-A:101-mmahmutkaya@gmail.com")
         
-        if (isNote) {
-          return {
-            ogrenciNo:x.ogrenciNo,
-            name:x.name,
-            surname:x.surname,
-            notes:isNote
-          }
-        }
+  //       if (isNote) {
+  //         return {
+  //           ogrenciNo:x.ogrenciNo,
+  //           name:x.name,
+  //           surname:x.surname,
+  //           notes:isNote
+  //         }
+  //       }
         
-      }
+  //     }
       
-    }) 
+  //   }) 
     
     
-    return ({ok:true,mesaj:'Veriler alındı.',data:objArray})
+  //   return ({ok:true,mesaj:'Veriler alındı.',data:objArray})
 
-  } catch(err) {
-    return ({hata:true,hataYeri:"FONK // noteGet // MONGO-3",hataMesaj:err.message}) 
-  }      
+  // } catch(err) {
+  //   return ({hata:true,hataYeri:"FONK // noteGet // MONGO-3",hataMesaj:err.message}) 
+  // }      
   
 
  
