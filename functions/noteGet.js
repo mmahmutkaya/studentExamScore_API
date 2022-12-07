@@ -115,7 +115,7 @@ exports = async function (request, response) {
           ogrenciNo:x.ogrenciNo,
           name:x.name,
           surname:x.surname,
-          lessons:x.lessons.find(y=>y.fullName == fullName)
+          // lessons:x.lessons.find(y=>y.fullName == fullName)
         }
       }
     })
