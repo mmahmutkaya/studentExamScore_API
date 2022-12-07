@@ -107,6 +107,8 @@ exports = async function (request, response) {
   // MONGO-3 - GET DATA FROM DB
   try {
     
+    return userArray
+    
     let isNote
     // yukarıda bitmezsse burda bitecek - tüm dersler göderilecek
     // const objArray = await collectionUsers.find({ "lessons.fullName" : fullName } ,{_id: 0, ogrenciNo:1, name:1, surname:1, lessons: {$elemMatch: { fullName: fullName }} } ).toArray()
