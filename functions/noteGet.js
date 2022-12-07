@@ -102,16 +102,26 @@ exports = async function (request, response) {
   }
   
   
+  
+  
   // MONGO-3 - GET DATA FROM DB
   try {
     
-
     // yukarıda bitmezsse burda bitecek - tüm dersler göderilecek
-    // const objArray = await collectionUsers.find({ "lessons.fullName": fullName } ,{_id: 0, ogrenciNo:1, name:1, surname:1, lessons: {$elemMatch: { fullName: fullName }} } ).toArray()
-    const objArray = await collectionUsers.find({ "lessons.fullName" : fullName } ,{_id: 0, ogrenciNo:1, name:1, surname:1, lessons: {$elemMatch: { fullName: fullName }} } ).toArray()
-    return ({ok:true,mesaj:'Veriler alındı.',data:objArray})
-
+    // const objArray = await collectionUsers.find({ "lessons.fullName" : fullName } ,{_id: 0, ogrenciNo:1, name:1, surname:1, lessons: {$elemMatch: { fullName: fullName }} } ).toArray()
+    const objArray = await userArray.map(x=>{
+      if (x.lessons.fullName == fullName) {
+        return {
+          ogrenciNo:x.ogrenciNo,
+          name:x.name,
+          surname:x.surname,
+          lessons:x.lessons.find(y=>y.fullName == fullName)
+        }
+      }
+    })
     
+    
+    return ({ok:true,mesaj:'Veriler alındı.',data:objArray})
 
   } catch(err) {
     return ({hata:true,hataYeri:"FONK // noteGet // MONGO-3",hataMesaj:err.message}) 
