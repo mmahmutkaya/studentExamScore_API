@@ -127,7 +127,7 @@ exports = async function (request, response) {
         
       }
       
-    })
+    }) 
     
     
     return ({ok:true,mesaj:'Veriler alındı.',data:objArray})
