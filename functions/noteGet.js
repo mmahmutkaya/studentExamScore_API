@@ -102,12 +102,12 @@ exports = async function (request, response) {
   }
   
   
+  return ({ok:true,mesaj:'Veriler alındı.',data:userArray})
+  
   
   
   // // MONGO-3 - GET DATA FROM DB
   // try {
-    
-    return ("userArray")
     
   //   let isNote
   //   // yukarıda bitmezsse burda bitecek - tüm dersler göderilecek
