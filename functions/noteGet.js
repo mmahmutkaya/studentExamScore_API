@@ -102,12 +102,12 @@ exports = async function (request, response) {
   }
   
   
-    return userArray
+  
   
   // // MONGO-3 - GET DATA FROM DB
   // try {
     
-  //   return userArray
+    return (userArray)
     
   //   let isNote
   //   // yukarıda bitmezsse burda bitecek - tüm dersler göderilecek
@@ -139,6 +139,4 @@ exports = async function (request, response) {
   // }      
   
 
- 
-    
 };
