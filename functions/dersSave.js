@@ -273,47 +273,47 @@ exports = async function (request, response) {
         
       })
 
-      lessonsToStudents.push({
-        year:item.year,
-        branchName:item.branchName,
-        fullName:itemFullName,
+      // lessonsToStudents.push({
+      //   year:item.year,
+      //   branchName:item.branchName,
+      //   fullName:itemFullName,
         
-        A_quiz1 : 0,
-        A_quiz2 : 0,
-        A_quiz3 : 0,
-        A_ara1 : 0,
-        A_yazili : 0,
-        A_sozlu : 0,
-        A_ara2 : 0,
-        A_odev : 0,
-        A_sinifici : 0,
-        A_ortalama : 0,
+      //   A_quiz1 : 0,
+      //   A_quiz2 : 0,
+      //   A_quiz3 : 0,
+      //   A_ara1 : 0,
+      //   A_yazili : 0,
+      //   A_sozlu : 0,
+      //   A_ara2 : 0,
+      //   A_odev : 0,
+      //   A_sinifici : 0,
+      //   A_ortalama : 0,
 
-        B_quiz1 : 0,
-        B_quiz2 : 0,
-        B_quiz3 : 0,
-        B_ara1 : 0,
-        B_yazili : 0,
-        B_sozlu : 0,
-        B_ara2 : 0,
-        B_odev : 0,
-        B_sinifici : 0,
-        B_ortalama : 0,
+      //   B_quiz1 : 0,
+      //   B_quiz2 : 0,
+      //   B_quiz3 : 0,
+      //   B_ara1 : 0,
+      //   B_yazili : 0,
+      //   B_sozlu : 0,
+      //   B_ara2 : 0,
+      //   B_odev : 0,
+      //   B_sinifici : 0,
+      //   B_ortalama : 0,
 
-        AB_ort : 0,
-        AB_sonuc : 0,
-        AB_final : 0,
+      //   AB_ort : 0,
+      //   AB_sonuc : 0,
+      //   AB_final : 0,
 
-        G_ort : 0,
-        G_sonuc : 0,
-        G_but : 0,
-        G_ort2 : 0,
-        G_sonuc2 : 0,
+      //   G_ort : 0,
+      //   G_sonuc : 0,
+      //   G_but : 0,
+      //   G_ort2 : 0,
+      //   G_sonuc2 : 0,
 
-        isDeleted:false,
-        createdAt:zaman,
-        createdBy:user.kullaniciMail
-      })
+      //   isDeleted:false,
+      //   createdAt:zaman,
+      //   createdBy:user.kullaniciMail
+      // })
 
     });
     
