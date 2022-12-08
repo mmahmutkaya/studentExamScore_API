@@ -120,8 +120,8 @@ exports = async function (request, response) {
   let is_surname_Violation = false
   let violation_surname_ExcelRows = []
 
-  let is_year_Violation = false
-  let violation_year_ExcelRows = []
+  // let is_year_Violation = false
+  // let violation_year_ExcelRows = []
 
 
 
@@ -175,10 +175,10 @@ exports = async function (request, response) {
         violation_surname_ExcelRows.push(item.siraNo)
       }
       
-      if(item.year.length !== 9) {
-        is_year_Violation = true
-        violation_year_ExcelRows.push(item.siraNo)
-      }
+      // if(item.year.length !== 9) {
+      //   is_year_Violation = true
+      //   violation_year_ExcelRows.push(item.siraNo)
+      // }
       
 
 
@@ -225,7 +225,6 @@ exports = async function (request, response) {
         if (les.year == item.year && les.branchName == item.branch) {
           studentLessons.push({
             
-            year:les.year,
             branchName:les.branchName,
             fullName:les.fullName,
             
@@ -364,11 +363,11 @@ exports = async function (request, response) {
       return ({hata:true,hataYeri:"FONK // ogrenciSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + " \"soyisim\" bilgisi kontrol edilmeli."});
     }
     //
-    if (is_year_Violation) {
-      satirNumaralariArray = violation_year_ExcelRows
-      satirNumaralariArray.length > 1 ? currentCondition = "kayıtlardaki" : currentCondition = "kayıttaki"
-      return ({hata:true,hataYeri:"FONK // ogrenciSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + " \"sene\" bilgisi kontrol edilmeli."});
-    }
+    // if (is_year_Violation) {
+    //   satirNumaralariArray = violation_year_ExcelRows
+    //   satirNumaralariArray.length > 1 ? currentCondition = "kayıtlardaki" : currentCondition = "kayıttaki"
+    //   return ({hata:true,hataYeri:"FONK // ogrenciSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + " \"sene\" bilgisi kontrol edilmeli."});
+    // }
     
     
     
