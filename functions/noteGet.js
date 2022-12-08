@@ -133,11 +133,8 @@ exports = async function (request, response) {
     }) 
     
     // boş object leri kaldırma
-    objArray2 = objArray.filter( x=> {
-      if (x.hasOwnProperty("ogrencNo")) return true
-    }
-      
-    );
+    objArray2 = objArray.filter( x => Object.entries(x).length > 0 )
+
             
     return ({ok:true,mesaj:'Veriler alındı.',data:objArray2})
 
