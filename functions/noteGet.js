@@ -86,8 +86,7 @@ exports = async function (request, response) {
       if(user.isOgretmen) break AUTH_CHECK
     }
     
-    return ({ok:true,mesaj:'Veriler alındı.',data:userArray})
-    
+ 
     return ({hata:true,hataYeri:"FONK // noteGet",hataMesaj:"Talep ettiğiniz derse ait notları görmeye yetkiniz bulunmuyor."})
     
     // kontroller
@@ -104,7 +103,8 @@ exports = async function (request, response) {
   }
   
   
-    
+  return ({ok:true,mesaj:'Veriler alındı.',data:userArray})
+   
   
   
   
