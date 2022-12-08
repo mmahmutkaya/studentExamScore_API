@@ -16,7 +16,7 @@ exports = async function (request, response) {
   const ogretmenArray = await userArray.filter(x=> x.isOgretmen == true)
   
   const collectionLessons = context.services.get("mongodb-atlas").db("studentExamScore").collection("lessons")
-  const lessonArray = await collectionLessons.find({isDeleted:false},{fullName:1,_id:false}).toArray()
+  const lessonArray = await collectionLessons.find({isDeleted:false},{dersNo:1,_id:false}).toArray()
   
   const collectionBranchs = context.services.get("mongodb-atlas").db("studentExamScore").collection("branchs")
   const branchArray = await collectionBranchs.find({isDeleted:false},{name:1,_id:false}).toArray()
