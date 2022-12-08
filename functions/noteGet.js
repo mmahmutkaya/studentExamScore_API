@@ -14,12 +14,12 @@ exports = async function (request, response) {
 
   let projeData
   
-  const collectionUsers = context.services.get("mongodb-atlas").db("studentExamScore").collection("lessons")
+  const collectionUsers = context.services.get("mongodb-atlas").db("studentExamScore").collection("users")
   const userArray = await collectionUsers.find({}).toArray()
   
-  // let deneme = typeof userArray
-  return userArray
-  // return ({ok:true,mesaj:'Veriler alındı.',data:userArray})
+  let userArrayClone = JSON.parse(JSON.stringify(userArray));
+
+  return ({ok:true,mesaj:'Veriler alındı.',data:userArrayClone})
    
   
   const collectionLessons = context.services.get("mongodb-atlas").db("studentExamScore").collection("lessons")
