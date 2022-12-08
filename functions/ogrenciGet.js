@@ -83,9 +83,26 @@ exports = async function (request, response) {
   // MONGO-3 - GET DATA FROM DB
   try {
     
-    const objArray = await collectionUsers.find({isOgrenci:true, isDeleted:false}).toArray()
-    return ({ok:true,mesaj:'Veriler alındı.',data:objArray})
+    // const objArray = await collectionUsers.find({isOgrenci:true, isDeleted:false}).toArray()
+    
+    var userArrayClone = JSON.parse(JSON.stringify(userArray));
+    
+    const objArray = await userArrayClone.filter(x=> x.isOgrenci && !x.isDeleted)
+      
 
+    // boş object leri kaldırma
+    objArray2 = objArray.filter( x => {
+      if (x !== null && x !== undefined) {
+        if (Object.entries(x).length > 0) {
+          return true
+        } else {
+          false
+        }
+      }
+    })
+            
+    return ({ok:true,mesaj:'Veriler alındı.',data:objArray2})
+    
   } catch(err) {
     return ({hata:true,hataYeri:"FONK // ogrenciGet // MONGO-3",hataMesaj:err.message})
   }      
