@@ -132,8 +132,9 @@ exports = async function (request, response) {
       
     }) 
     
+    var objArray2 = objArray.filter(value => Object.keys(value).length !== 0);
     
-    return ({ok:true,mesaj:'Veriler alındı.',data:objArray})
+    return ({ok:true,mesaj:'Veriler alındı.',data:objArray2})
 
   } catch(err) {
     return ({hata:true,hataYeri:"FONK // noteGet // MONGO-3",hataMesaj:err.message}) 
