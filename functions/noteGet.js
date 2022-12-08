@@ -130,11 +130,21 @@ exports = async function (request, response) {
         } 
       }
       
-    }) 
+    })  
+    
+    
+    
     
     // boş object leri kaldırma
-    objArray2 = objArray.filter( x => Object.entries(x).length > 0 )
-
+    objArray2 = objArray.filter( x => {
+      if (x !== null && x !== undefined) {
+        if (Object.entries(x).length > 0) {
+          return true
+        } else {
+          false
+        }
+      }
+    })
             
     return ({ok:true,mesaj:'Veriler alındı.',data:objArray2})
 
