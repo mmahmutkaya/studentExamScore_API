@@ -134,7 +134,7 @@ exports = async function (request, response) {
     
     // boş object leri kaldırma
     objArray2 = objArray.filter( x=> {
-      if (x.hasOwnProperty("ogrencNo")) true
+      if (x.hasOwnProperty("ogrencNo")) return true
     }
       
     );
