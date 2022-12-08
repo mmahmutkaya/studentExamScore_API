@@ -132,7 +132,7 @@ exports = async function (request, response) {
       
     }) 
     
-    var objArray2 = await objArray.filter(value => Object.keys(value).length !== 0);
+    var objArray2 = await objArray.filter(value => JSON.stringify(value) !== '{}');
     
     return ({ok:true,mesaj:'Veriler alındı.',data:objArray2})
 
