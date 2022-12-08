@@ -129,8 +129,8 @@ exports = async function (request, response) {
   
   // EXIST - IN DB
   
-  let is_fullName_Exist = false
-  let exist_fullName_ExcelRows = []
+  // let is_fullName_Exist = false
+  // let exist_fullName_ExcelRows = []
   
   let is_dersNo_Exist = false
   let exist_dersNo_ExcelRows = []
@@ -139,8 +139,8 @@ exports = async function (request, response) {
 
   // EXIST - IN CAME
   
-  let is_fullName_Exist_inCame = false
-  let exist_fullName_ExcelRows_inCame = []
+  // let is_fullName_Exist_inCame = false
+  // let exist_fullName_ExcelRows_inCame = []
   
   let is_dersNo_Exist_inCame = false
   let exist_dersNo_ExcelRows_inCame = []
@@ -159,8 +159,8 @@ exports = async function (request, response) {
 
 
   let cameItems_Add = [] 
-  let lessonsToStudents = []
-  let itemFullName = null
+  // let lessonsToStudents = []
+  // let itemFullName = null
   let loopObj = null
   
   
@@ -200,11 +200,11 @@ exports = async function (request, response) {
       
       // EXIST - IN DB
       
-      itemFullName = item.year + "-" + item.name + "-" + item.branchName + "-" + item.ogretmenMail
-      if(lessonArray.find(x=> x.fullName == itemFullName)) {
-        is_fullName_Exist = true
-        exist_fullName_ExcelRows.push(item.siraNo)
-      }
+      // itemFullName = item.year + "-" + item.name + "-" + item.branchName + "-" + item.ogretmenMail
+      // if(lessonArray.find(x=> x.fullName == itemFullName)) {
+      //   is_fullName_Exist = true
+      //   exist_fullName_ExcelRows.push(item.siraNo)
+      // }
 
       if(lessonArray.find(x=> x.dersNo == item.dersNo)) {
         is_dersNo_Exist = true
@@ -217,14 +217,14 @@ exports = async function (request, response) {
       
       // EXIST - IN CAME
       
-      loopObj = null
-      loopObj = cameItems_Add.find(x=> x.fullName == itemFullName) // item fullName yukarıda belirlendi
-      if(loopObj) {
-        is_fullName_Exist_inCame = true
-        exist_fullName_ExcelRows_inCame.push(loopObj.siraNo)
-        exist_fullName_ExcelRows_inCame.push(item.siraNo)
-        exist_fullName_ExcelRows_inCame.push("---")
-      }
+      // loopObj = null
+      // loopObj = cameItems_Add.find(x=> x.fullName == itemFullName) // item fullName yukarıda belirlendi
+      // if(loopObj) {
+      //   is_fullName_Exist_inCame = true
+      //   exist_fullName_ExcelRows_inCame.push(loopObj.siraNo)
+      //   exist_fullName_ExcelRows_inCame.push(item.siraNo)
+      //   exist_fullName_ExcelRows_inCame.push("---")
+      // }
       
       loopObj = null
       loopObj = cameItems_Add.find(x=> x.dersNo == item.dersNo) 
@@ -259,7 +259,7 @@ exports = async function (request, response) {
         
         siraNo:item.siraNo,
         
-        fullName:itemFullName,
+        // fullName:itemFullName,
         
         dersNo:item.dersNo,
         year:item.year,
@@ -352,11 +352,11 @@ exports = async function (request, response) {
     
     // EXIST - IN DB 
     
-    if (is_fullName_Exist) {
-      satirNumaralariArray = exist_fullName_ExcelRows
-      satirNumaralariArray.length > 1 ? currentCondition = "kayıtlardaki" : currentCondition = "kayıttaki"
-      return ({hata:true,hataYeri:"FONK // dersSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + " \"ders\" sistemde mevcut."});
-    }
+    // if (is_fullName_Exist) {
+    //   satirNumaralariArray = exist_fullName_ExcelRows
+    //   satirNumaralariArray.length > 1 ? currentCondition = "kayıtlardaki" : currentCondition = "kayıttaki"
+    //   return ({hata:true,hataYeri:"FONK // dersSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + " \"ders\" sistemde mevcut."});
+    // }
     
     if (is_dersNo_Exist) {
       satirNumaralariArray = exist_dersNo_ExcelRows
@@ -369,11 +369,11 @@ exports = async function (request, response) {
 
     // EXIST - IN CAME
     
-    if (is_fullName_Exist_inCame) {
-      satirNumaralariArray = exist_fullName_ExcelRows_inCame
-      satirNumaralariArray.length > 1 ? currentCondition = "kayıtlardaki" : currentCondition = "kayıttaki"
-      return ({hata:true,hataYeri:"FONK // dersSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + " \"ders\" bilgilerinde mükerrerlik var, kontrol ediniz."});
-    }
+    // if (is_fullName_Exist_inCame) {
+    //   satirNumaralariArray = exist_fullName_ExcelRows_inCame
+    //   satirNumaralariArray.length > 1 ? currentCondition = "kayıtlardaki" : currentCondition = "kayıttaki"
+    //   return ({hata:true,hataYeri:"FONK // dersSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + " \"ders\" bilgilerinde mükerrerlik var, kontrol ediniz."});
+    // }
     
     if (is_dersNo_Exist_inCame) {
       satirNumaralariArray = exist_dersNo_ExcelRows_inCame
@@ -407,7 +407,7 @@ exports = async function (request, response) {
       await cameItems_Add.map(item =>{
         bulk.push({
           updateOne: {
-            filter: {fullName:item.fullName},
+            filter: {dersNo:item.dersNo},
             update: { $set: {...item}}, // içeriği yukarıda ayarlandı
             upsert: true
           }
@@ -417,24 +417,25 @@ exports = async function (request, response) {
     
     await collectionLessons.bulkWrite(bulk, { ordered: false });
     
-    bulk2 = []
+    // öğrencinin ilgili ders kaydı olmasa bile, ilk kayıtta olacak
+    // bulk2 = []
     
-    // update: { $push: { lessons: {...item} }}, // içeriği yukarıda ayarlandı
+    // // update: { $push: { lessons: {...item} }}, // içeriği yukarıda ayarlandı
             
-    if (lessonsToStudents.length) {
-      await lessonsToStudents.map(item =>{
-        bulk2.push({
-          updateMany: {
-            filter: {year:item.year,isOgrenci:true,branch:item.branchName},
-            // update: {  $set:  { [`lessons.${item.fullName}`] : {...item}  }}, // içeriği yukarıda ayarlandı
-            update: { $push: { lessons: {...item} }}, // içeriği yukarıda ayarlandı
-            upsert: false
-          }
-        });
-      });
-    }
+    // if (lessonsToStudents.length) {
+    //   await lessonsToStudents.map(item =>{
+    //     bulk2.push({
+    //       updateMany: {
+    //         filter: {year:item.year,isOgrenci:true,branch:item.branchName},
+    //         // update: {  $set:  { [`lessons.${item.fullName}`] : {...item}  }}, // içeriği yukarıda ayarlandı
+    //         update: { $push: { lessons: {...item} }}, // içeriği yukarıda ayarlandı
+    //         upsert: false
+    //       }
+    //     });
+    //   });
+    // }
     
-    await collectionUsers.bulkWrite(bulk2, { ordered: false });
+    // await collectionUsers.bulkWrite(bulk2, { ordered: false });
     
     
     return ({ok:true,mesaj:'Dersler sisteme kaydedildi.'})
