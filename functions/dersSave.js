@@ -119,6 +119,9 @@ exports = async function (request, response) {
   let is_year_Violation = false
   let violation_year_ExcelRows = []
 
+  let is_dersNo_Violation = false
+  let violation_dersNo_ExcelRows = []
+
   let is_name_Violation = false
   let violation_name_ExcelRows = []
 
@@ -178,6 +181,11 @@ exports = async function (request, response) {
       if(item.year.length !== 9) {
         is_year_Violation = true
         violation_year_ExcelRows.push(item.siraNo)
+      }
+
+      if(isNaN(parseFloat(item.dersNo))) {
+        is_dersNo_Violation = true
+        violation_dersNo_ExcelRows.push(item.siraNo)
       }
 
       if(item.name.length < 2) {
@@ -325,6 +333,12 @@ exports = async function (request, response) {
       satirNumaralariArray = violation_year_ExcelRows
       satirNumaralariArray.length > 1 ? currentCondition = "kayıtlardaki" : currentCondition = "kayıttaki"
       return ({hata:true,hataYeri:"FONK // dersSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + " \"yıl\" bilgisi kontrol edilmeli, örn: \"2022-2023\""});
+    }
+
+    if (is_dersNo_Violation) {
+      satirNumaralariArray = violation_dersNo_ExcelRows
+      satirNumaralariArray.length > 1 ? currentCondition = "kayıtlardaki" : currentCondition = "kayıttaki"
+      return ({hata:true,hataYeri:"FONK // dersSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + " \"ders no\" bilgisi kontrol edilmeli, örn: \"2022-2023\""});
     }
 
     if (is_name_Violation) {
