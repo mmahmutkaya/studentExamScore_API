@@ -17,13 +17,7 @@ exports = async function (request, response) {
   const collectionUsers = context.services.get("mongodb-atlas").db("studentExamScore").collection("users")
   const userArray = await collectionUsers.find({}).toArray()
   
-  let userArrayClone = JSON.parse(JSON.stringify(userArray));
-
-  return ({ok:true,mesaj:'Veriler alındı.',data:userArrayClone})
-   
-  
   const collectionLessons = context.services.get("mongodb-atlas").db("studentExamScore").collection("lessons")
-  
   
   let isLessonExist = null
   
@@ -108,42 +102,43 @@ exports = async function (request, response) {
   }
   
   
-  return ({ok:true,mesaj:'Veriler alındı.',data:userArray})
+  
    
   
-  
-  
-  // // MONGO-3 - GET DATA FROM DB
-  // try {
+  // MONGO-3 - GET DATA FROM DB
+  try {
     
-  //   let isNote
-  //   // yukarıda bitmezsse burda bitecek - tüm dersler göderilecek
-  //   // const objArray = await collectionUsers.find({ "lessons.fullName" : fullName } ,{_id: 0, ogrenciNo:1, name:1, surname:1, lessons: {$elemMatch: { fullName: fullName }} } ).toArray()
-  //   const objArray = await userArray.map(x=>{
+    let isNote
+    // yukarıda bitmezsse burda bitecek - tüm dersler göderilecek
+    // const objArray = await collectionUsers.find({ "lessons.fullName" : fullName } ,{_id: 0, ogrenciNo:1, name:1, surname:1, lessons: {$elemMatch: { fullName: fullName }} } ).toArray()
+    
+    var userArrayClone = JSON.parse(JSON.stringify(userArray));
+    
+    const objArray = await userArrayClone.map(x=>{
       
-  //     if(x.hasOwnProperty("lessons")) {
+      if(x.hasOwnProperty("lessons")) {
       
-  //       isNote = x.lessons.find(y=>y.fullName == "2022-2023-almanca-A:101-mmahmutkaya@gmail.com")
+        isNote = x.lessons.find(y=>y.fullName == "2022-2023-almanca-A:101-mmahmutkaya@gmail.com")
         
-  //       if (isNote) {
-  //         return {
-  //           ogrenciNo:x.ogrenciNo,
-  //           name:x.name,
-  //           surname:x.surname,
-  //           notes:isNote
-  //         }
-  //       }
+        if (isNote) {
+          return {
+            ogrenciNo:x.ogrenciNo,
+            name:x.name,
+            surname:x.surname,
+            notes:isNote
+          }
+        }
         
-  //     }
+      }
       
-  //   }) 
+    }) 
     
     
-  //   return ({ok:true,mesaj:'Veriler alındı.',data:objArray})
+    return ({ok:true,mesaj:'Veriler alındı.',data:objArray})
 
-  // } catch(err) {
-  //   return ({hata:true,hataYeri:"FONK // noteGet // MONGO-3",hataMesaj:err.message}) 
-  // }      
+  } catch(err) {
+    return ({hata:true,hataYeri:"FONK // noteGet // MONGO-3",hataMesaj:err.message}) 
+  }      
   
 
 };
