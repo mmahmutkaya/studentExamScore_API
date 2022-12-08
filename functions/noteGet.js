@@ -127,6 +127,8 @@ exports = async function (request, response) {
             surname:x.surname,
             notes:isNote
           }
+        } else {
+          return null
         }
         
       }
