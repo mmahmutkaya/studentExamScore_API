@@ -129,12 +129,18 @@ exports = async function (request, response) {
   let is_fullName_Exist = false
   let exist_fullName_ExcelRows = []
   
+  let is_dersNo_Exist = false
+  let exist_dersNo_ExcelRows = []
+  
 
 
   // EXIST - IN CAME
   
   let is_fullName_Exist_inCame = false
   let exist_fullName_ExcelRows_inCame = []
+  
+  let is_dersNo_Exist_inCame = false
+  let exist_dersNo_ExcelRows_inCame = []
   
   
   
@@ -192,6 +198,11 @@ exports = async function (request, response) {
         exist_fullName_ExcelRows.push(item.siraNo)
       }
 
+      if(lessonArray.find(x=> x.dersNo == item.dersNo)) {
+        is_dersNo_Exist = true
+        exist_dersNo_ExcelRows.push(item.siraNo)
+      }
+
 
 
       
@@ -205,6 +216,15 @@ exports = async function (request, response) {
         exist_fullName_ExcelRows_inCame.push(loopObj.siraNo)
         exist_fullName_ExcelRows_inCame.push(item.siraNo)
         exist_fullName_ExcelRows_inCame.push("---")
+      }
+      
+      loopObj = null
+      loopObj = cameItems_Add.find(x=> x.dersNo == item.dersNo) 
+      if(loopObj) {
+        is_dersNo_Exist_inCame = true
+        exist_dersNo_ExcelRows_inCame.push(loopObj.siraNo)
+        exist_dersNo_ExcelRows_inCame.push(item.siraNo)
+        exist_dersNo_ExcelRows_inCame.push("---")
       }
       
       
@@ -323,6 +343,12 @@ exports = async function (request, response) {
       return ({hata:true,hataYeri:"FONK // dersSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + " \"ders\" sistemde mevcut."});
     }
     
+    if (is_dersNo_Exist) {
+      satirNumaralariArray = exist_dersNo_ExcelRows
+      satirNumaralariArray.length > 1 ? currentCondition = "kayıtlardaki" : currentCondition = "kayıttaki"
+      return ({hata:true,hataYeri:"FONK // dersSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + " \"ders no\" sistemde mevcut."});
+    }
+    
     
     
 
@@ -332,6 +358,12 @@ exports = async function (request, response) {
       satirNumaralariArray = exist_fullName_ExcelRows_inCame
       satirNumaralariArray.length > 1 ? currentCondition = "kayıtlardaki" : currentCondition = "kayıttaki"
       return ({hata:true,hataYeri:"FONK // dersSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + " \"ders\" bilgilerinde mükerrerlik var, kontrol ediniz."});
+    }
+    
+    if (is_dersNo_Exist_inCame) {
+      satirNumaralariArray = exist_dersNo_ExcelRows_inCame
+      satirNumaralariArray.length > 1 ? currentCondition = "kayıtlardaki" : currentCondition = "kayıttaki"
+      return ({hata:true,hataYeri:"FONK // dersSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + " \"ders no\" bilgilerinde mükerrerlik var, kontrol ediniz."});
     }
     
     
