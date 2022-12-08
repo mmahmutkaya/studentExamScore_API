@@ -133,7 +133,7 @@ exports = async function (request, response) {
     }) 
     
     // boş object leri kaldırma
-    const objArray2 = objArray.filter(element => {
+    const objArray2 = await objArray.filter(element => {
       if (Object.keys(element).length !== 0) {
         return true;
       }
