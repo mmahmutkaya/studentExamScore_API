@@ -338,7 +338,7 @@ exports = async function (request, response) {
     if (is_dersNo_Violation) {
       satirNumaralariArray = violation_dersNo_ExcelRows
       satirNumaralariArray.length > 1 ? currentCondition = "kayıtlardaki" : currentCondition = "kayıttaki"
-      return ({hata:true,hataYeri:"FONK // dersSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + " \"ders no\" bilgisi kontrol edilmeli. (ders no bilgisi yanlızca rakamlardan oluşmalı)"});
+      return ({hata:true,hataYeri:"FONK // dersSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + " \"ders no\" bilgisi kontrol edilmeli. (ders no bilgisi yanlızca rakamlardan oluşabilir.)"});
     }
 
     if (is_name_Violation) {
@@ -350,7 +350,7 @@ exports = async function (request, response) {
     
     
     
-    // EXIST - IN DB
+    // EXIST - IN DB 
     
     if (is_fullName_Exist) {
       satirNumaralariArray = exist_fullName_ExcelRows
