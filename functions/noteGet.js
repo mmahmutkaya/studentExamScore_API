@@ -17,7 +17,8 @@ exports = async function (request, response) {
   const collectionUsers = context.services.get("mongodb-atlas").db("studentExamScore").collection("users")
   const userArray = await collectionUsers.find({}).toArray()
   
-  return typeof userArray
+  let deneme = typeof userArray
+  return userArray
   
   
   return ({ok:true,mesaj:'Veriler alındı.',data:userArray})
