@@ -118,7 +118,7 @@ exports = async function (request, response) {
       
       if(x.hasOwnProperty("lessons")) {
       
-        isNote = x.lessons.find(y=>y.fullName == "2022-2023-almanca-A:101-mmahmutkaya@gmail.com")
+        isNote = x.lessons.find(y=>y.fullName == fullName)
         
         if (isNote) {
           return {
