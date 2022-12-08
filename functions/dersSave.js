@@ -338,7 +338,7 @@ exports = async function (request, response) {
     if (is_dersNo_Violation) {
       satirNumaralariArray = violation_dersNo_ExcelRows
       satirNumaralariArray.length > 1 ? currentCondition = "kayıtlardaki" : currentCondition = "kayıttaki"
-      return ({hata:true,hataYeri:"FONK // dersSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + " \"ders no\" bilgisi kontrol edilmeli, örn: \"2022-2023\""});
+      return ({hata:true,hataYeri:"FONK // dersSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + " \"ders no\" bilgisi yanlızca rakamlardan oluşmalı."});
     }
 
     if (is_name_Violation) {
