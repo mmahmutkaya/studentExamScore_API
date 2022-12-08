@@ -133,8 +133,13 @@ exports = async function (request, response) {
     }) 
     
     // boş object leri kaldırma
-    var objArray2 = objArray.filter(x=> x.length > 0)
-    
+    const objArray2 = objArray.filter(element => {
+      if (Object.keys(element).length !== 0) {
+        return true;
+      }
+      return false;
+    });
+        
     return ({ok:true,mesaj:'Veriler alındı.',data:objArray2})
 
   } catch(err) {
