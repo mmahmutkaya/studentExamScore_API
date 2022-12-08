@@ -253,6 +253,7 @@ exports = async function (request, response) {
         
         fullName:itemFullName,
         
+        dersNo:item.dersNo,
         year:item.year,
         name:item.name,
         ogretmenMail:item.ogretmenMail,
