@@ -132,6 +132,7 @@ exports = async function (request, response) {
       
     }) 
     
+    // boş object leri kaldırma
     var objArray2 = await objArray.filter(value => JSON.stringify(value) !== '{}');
     
     return ({ok:true,mesaj:'Veriler alındı.',data:objArray2})
