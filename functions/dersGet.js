@@ -91,6 +91,8 @@ exports = async function (request, response) {
   // MONGO-3 - GET DATA FROM DB
   try {
     
+    let ogretmenler = {}
+    
     var userArrayClone = JSON.parse(JSON.stringify(userArray));
     
     const ogretmenlerA = await userArrayClone.map(x=>{
@@ -99,12 +101,14 @@ exports = async function (request, response) {
       
         isOgretmen = x.isOgretmen
         
-        if (isOgretmen) {
+        if (isOgretmen && !ogretmenler.hasOwnProperty(x.kullaniciMail)) {
+
           return {
             no:x.ogretmenNo,
             name:x.name,
             surname:x.surname,
           }
+          
         } 
       }
       
