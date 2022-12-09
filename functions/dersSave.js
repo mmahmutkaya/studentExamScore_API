@@ -153,8 +153,8 @@ exports = async function (request, response) {
   let is_branchName_Absent = false
   let absent_branchName_ExcelRows = []
 
-  let is_ogretmenMail_Absent = false
-  let absent_ogretmenMail_ExcelRows = []
+  let is_ogretmenNo_Absent = false
+  let absent_ogretmenNo_ExcelRows = []
 
 
 
@@ -246,9 +246,9 @@ exports = async function (request, response) {
         absent_branchName_ExcelRows.push(item.siraNo)
       }
       
-      if(!ogretmenArray.find(x=> x.kullaniciMail == item.ogretmenMail)) {
-        is_ogretmenMail_Absent = true
-        absent_ogretmenMail_ExcelRows.push(item.siraNo)
+      if(!ogretmenArray.find(x=> x.ogretmenNo == item.ogretmenNo)) {
+        is_ogretmenNo_Absent = true
+        absent_ogretmenNo_ExcelRows.push(item.siraNo)
       }
       
       
@@ -264,7 +264,7 @@ exports = async function (request, response) {
         dersNo:item.dersNo,
         year:item.year,
         name:item.name,
-        ogretmenMail:item.ogretmenMail,
+        ogretmenNo:item.ogretmenNo,
         branchName:item.branchName,
         
         isDeleted:false,
@@ -393,8 +393,8 @@ exports = async function (request, response) {
       return ({hata:true,hataYeri:"FONK // dersSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + " \"şube\" bilgisi sistemde bulunamadı."});
     }
 
-    if (is_ogretmenMail_Absent) {
-      satirNumaralariArray = absent_ogretmenMail_ExcelRows
+    if (is_ogretmenNo_Absent) {
+      satirNumaralariArray = absent_ogretmenNo_ExcelRows
       satirNumaralariArray.length > 1 ? currentCondition = "kayıtlardaki" : currentCondition = "kayıttaki"
       return ({hata:true,hataYeri:"FONK // dersSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + " \"öğretmen mail\" bilgisi sistemde bulunamadı."});
     }
