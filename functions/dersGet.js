@@ -128,7 +128,7 @@ exports = async function (request, response) {
 
     // burda da bitebilir
     if (isDerslerim) {
-      const objArray = await collectionLessons.find({isDeleted:false, ogretmenMail:kullaniciMail}).toArray()
+      const objArray = await collectionLessons.find({isDeleted:false, ogretmenNo:user.ogretmenNo}).toArray()
       return ({ok:true,mesaj:'Veriler alındı.',data:objArray, ogretmenler})
     }
     
