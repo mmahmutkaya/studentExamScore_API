@@ -8,7 +8,7 @@ exports = async function (request, response) {
   // 1 - Gelen HEADER bilgilerinin analizi yapılıyor
   let kullaniciMail;
   let geciciKey;
-  let fullName;
+  let dersNo;
   let branch;
   let year;
 
@@ -36,11 +36,11 @@ exports = async function (request, response) {
     if(!objHeader.hasOwnProperty('Gecici-Key')) return ({hata:true,hataYeri:"FONK // noteGet",hataMesaj:"Tekrar giriş yapmanız gerekiyor, (" + hataText +")"})
     geciciKey = objHeader["Gecici-Key"][0];
     
-    hataText = "\"gelen istekte \"ders fullName\" bulunamadı\""
-    if(!objHeader.hasOwnProperty('Fullname')) return ({hata:true,hataYeri:"FONK // noteGet",hataMesaj:"Program yöneticisi ile iletişime geçmeniz gerekmektedir, (" + hataText +")"})
-    fullName = objHeader["Fullname"][0];
+    hataText = "\"gelen istekte \"ders no\" bulunamadı\""
+    if(!objHeader.hasOwnProperty('Dersno')) return ({hata:true,hataYeri:"FONK // noteGet",hataMesaj:"Program yöneticisi ile iletişime geçmeniz gerekmektedir, (" + hataText +")"})
+    dersNo = objHeader["Dersno"][0];
     ///
-    isLessonExist = await collectionLessons.findOne({fullName})
+    isLessonExist = await collectionLessons.findOne({dersNo})
     hataText = "\"gelen istekteki \"ders\" sistemde bulunamadı\""
     if(!isLessonExist) return ({hata:true,hataYeri:"FONK // noteGet",hataMesaj:"Program yöneticisi ile iletişime geçmeniz gerekmektedir, (" + hataText +")"})
     
@@ -110,7 +110,7 @@ exports = async function (request, response) {
     
     let isNote
     // yukarıda bitmezsse burda bitecek - tüm dersler göderilecek
-    // const objArray = await collectionUsers.find({ "lessons.fullName" : fullName } ,{_id: 0, ogrenciNo:1, name:1, surname:1, lessons: {$elemMatch: { fullName: fullName }} } ).toArray()
+    // const objArray = await collectionUsers.find({ "lessons.dersNo" : dersNo } ,{_id: 0, ogrenciNo:1, name:1, surname:1, lessons: {$elemMatch: { dersNo: dersNo }} } ).toArray()
     
     var userArrayClone = JSON.parse(JSON.stringify(userArray));
     
@@ -118,7 +118,7 @@ exports = async function (request, response) {
       
       if(x.hasOwnProperty("lessons")) {
       
-        isNote = x.lessons.find(y=>y.fullName == fullName)
+        isNote = x.lessons.find(y=>y.dersNo == dersNo)
         
         if (isNote) {
           return {
