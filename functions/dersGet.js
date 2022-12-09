@@ -91,15 +91,46 @@ exports = async function (request, response) {
   // MONGO-3 - GET DATA FROM DB
   try {
     
+    var userArrayClone = JSON.parse(JSON.stringify(userArray));
+    
+    const ogretmenlerA = await userArrayClone.map(x=>{
+      
+      if(x.hasOwnProperty("isOgretmen")) {
+      
+        isOgretmen = x.isOgretmen
+        
+        if (isOgretmen) {
+          return {
+            no:x.ogretmenNo,
+            name:x.name,
+            surname:x.surname,
+          }
+        } 
+      }
+      
+    })  
+    
+    // boş object leri kaldırma
+    ogretmenler = ogretmenlerA.filter( x => {
+      if (x !== null && x !== undefined) {
+        if (Object.entries(x).length > 0) {
+          return true
+        } else {
+          false
+        }
+      }
+    })
+            
+
     // burda da bitebilir
     if (isDerslerim) {
       const objArray = await collectionLessons.find({isDeleted:false, ogretmenMail:kullaniciMail}).toArray()
-      return ({ok:true,mesaj:'Veriler alındı.',data:objArray})
+      return ({ok:true,mesaj:'Veriler alındı.',data:objArray, ogretmenler})
     }
     
     // yukarıda bitmezsse, yani   derslerim değilse buraya gelecek, burad bitecek - tüm dersler göderilecek
     const objArray = await collectionLessons.find({isDeleted:false}).toArray()
-    return ({ok:true,mesaj:'Veriler alındı.',data:objArray})
+    return ({ok:true,mesaj:'Veriler alındı.',data:objArray,ogretmenler})
 
     
 
