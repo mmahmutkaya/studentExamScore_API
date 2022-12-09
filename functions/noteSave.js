@@ -11,7 +11,7 @@ exports = async function (request, response) {
   
   let year;
   let branch;
-  let fullName;
+  let dersNo;
 
   let projeData
   
@@ -37,11 +37,11 @@ exports = async function (request, response) {
     geciciKey = objHeader["Gecici-Key"][0];
     
     
-    hataText = "\"gelen istekte \"ders fullName\" bulunamadı\""
-    if(!objHeader.hasOwnProperty('Fullname')) return ({hata:true,hataYeri:"FONK // noteSave",hataMesaj:"Program yöneticisi ile iletişime geçmeniz gerekmektedir, (" + hataText +")"})
-    fullName = objHeader["Fullname"][0];
+    hataText = "\"gelen istekte \"ders no\" bulunamadı\""
+    if(!objHeader.hasOwnProperty('Dersno')) return ({hata:true,hataYeri:"FONK // noteSave",hataMesaj:"Program yöneticisi ile iletişime geçmeniz gerekmektedir, (" + hataText +")"})
+    dersNo = objHeader["Dersno"][0];
     ///
-    isLesson = await collectionLessons.findOne({fullName})
+    isLesson = await collectionLessons.findOne({dersNo})
     hataText = "\"gelen istekteki \"ders\" sistemde bulunamadı\""
     if(!isLesson) return ({hata:true,hataYeri:"FONK // noteSave",hataMesaj:"Program yöneticisi ile iletişime geçmeniz gerekmektedir, (" + hataText +")"})
 
@@ -487,7 +487,7 @@ exports = async function (request, response) {
         
         year,
         branch,
-        fullName,
+        dersNo,
 
         A_quiz1 : parseFloat(item.A_quiz1),
         A_quiz2 : item.A_quiz2,
@@ -776,7 +776,7 @@ exports = async function (request, response) {
           updateOne: {
             filter: { ogrenciNo : item.ogrenciNo },
             update: { $set: { "lessons.$[elem]": item.studentLessonObject }  },
-            arrayFilters : [{"elem.fullName" : fullName }],
+            arrayFilters : [{"elem.dersNo" : dersNo }],
           }
         });
       });
