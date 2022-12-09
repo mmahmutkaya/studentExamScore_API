@@ -246,7 +246,7 @@ exports = async function (request, response) {
         absent_branchName_ExcelRows.push(item.siraNo)
       }
       
-      if(!ogretmenArray.find(x=> x.ogretmenNo == item.ogretmenNo)) {
+      if(!userArray.find(x=> x.ogretmenNo == item.ogretmenNo)) {
         is_ogretmenNo_Absent = true
         absent_ogretmenNo_ExcelRows.push(item.siraNo)
       }
@@ -396,7 +396,7 @@ exports = async function (request, response) {
     if (is_ogretmenNo_Absent) {
       satirNumaralariArray = absent_ogretmenNo_ExcelRows
       satirNumaralariArray.length > 1 ? currentCondition = "kayıtlardaki" : currentCondition = "kayıttaki"
-      return ({hata:true,hataYeri:"FONK // dersSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + " \"öğretmen mail\" bilgisi sistemde bulunamadı."});
+      return ({hata:true,hataYeri:"FONK // dersSave // MONGO-5",hataMesaj: satirNumaralariArray +  " numaralı " + currentCondition + " \"öğretmen no\" bilgisi sistemde bulunamadı."});
     }
 
 
