@@ -110,25 +110,28 @@ exports = async function (request, response) {
     
     const objArrayA = await userArrayClone.map(x=>{
       
-      if (x.kullaniciMail == x.kullaniciMail) {
-        
-        isNote = x.lessons.find(y=>y.dersNo == dersNo)
-        
-        if (isNote) {
-          return {
-            dersNo:isNote.dersNo,
-            notes:isNote
-          }
-          
-        } else {
-          return {
-            dersNo:isNote.dersNo,
-            notes: {dersNo:"yok"}
-          }
-          
-        }
-      }
+      if (x.hasOwnProperty("lessons")) {
       
+        if (x.kullaniciMail == x.kullaniciMail) {
+          
+          isNote = x.lessons.find(y=>y.dersNo == dersNo)
+          
+          if (isNote) {
+            return {
+              dersNo:isNote.dersNo,
+              notes:isNote
+            }
+            
+          } else {
+            return {
+              dersNo:isNote.dersNo,
+              notes: {dersNo:"yok"}
+            }
+            
+          }
+        }
+        
+      }
       
     })  
     
