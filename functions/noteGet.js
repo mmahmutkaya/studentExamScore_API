@@ -114,9 +114,6 @@ exports = async function (request, response) {
     
     var userArrayClone = JSON.parse(JSON.stringify(userArray));
     
-    // const objArray = await userArrayClone.filter(x=> x.isOgrenci == true && x.branch == branch)  
-    
-    
     const objArrayA = await userArrayClone.map(x=>{
       
       if (x.isOgrenci == true && x.branch == branch) {
@@ -144,9 +141,6 @@ exports = async function (request, response) {
       
       
     })  
-    
-    
-    
     
     // boş object leri kaldırma
     objArray = objArrayA.filter( x => {
