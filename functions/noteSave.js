@@ -770,19 +770,30 @@ exports = async function (request, response) {
     
     let bulk = []
     
+    // if (cameItems_Add.length) {
+    //   await cameItems_Add.map(item =>{
+    //     bulk.push({
+    //       updateOne: {
+    //         filter: { ogrenciNo : item.ogrenciNo },
+    //         update: { $set: { "lessons.$[elem]": item.studentLessonObject }  },
+    //         arrayFilters : [{"elem.dersNo" : dersNo }],
+    //       }
+    //     });
+    //   });
+    // }
+    
     if (cameItems_Add.length) {
       await cameItems_Add.map(item =>{
         bulk.push({
           updateOne: {
             filter: { ogrenciNo : item.ogrenciNo },
-            update: { $set: { "lessons.$[elem]": item.studentLessonObject }  },
-            arrayFilters : [{"elem.dersNo" : dersNo }],
+            update: { $set: { "lessons.$[dersNo]": item.studentLessonObject }  },
           }
         });
       });
     }
     
-    var cameItems_Add2 = JSON.parse(JSON.stringify(cameItems_Add));
+    // var cameItems_Add2 = JSON.parse(JSON.stringify(cameItems_Add));
     
     return ({ok:true,data:cameItems_Add2, mesaj:'Notlar sisteme kaydedildi.'})
     
