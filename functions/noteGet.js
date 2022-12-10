@@ -114,7 +114,7 @@ exports = async function (request, response) {
     
     var userArrayClone = JSON.parse(JSON.stringify(userArray));
     
-    const objArray = await userArrayClone.filter(x=> x.isOgrenci)  
+    const objArray = await userArrayClone.filter(x=> x.isOgrenci && x.branch == branch)  
     
     
     // const objArray = await userArrayClone.map(x=>{
