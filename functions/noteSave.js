@@ -782,6 +782,9 @@ exports = async function (request, response) {
     //   });
     // }
     
+    // var cameItems_Add2 = JSON.parse(JSON.stringify(cameItems_Add));
+    // return ({ok:true,data:cameItems_Add2, mesaj:'Notlar sisteme kaydedildi.'})
+
     if (cameItems_Add.length) {
       await cameItems_Add.map(item =>{
         bulk.push({
@@ -793,9 +796,7 @@ exports = async function (request, response) {
       });
     }
     
-    // var cameItems_Add2 = JSON.parse(JSON.stringify(cameItems_Add));
     
-    return ({ok:true,data:cameItems_Add2, mesaj:'Notlar sisteme kaydedildi.'})
     
     await collectionUsers.bulkWrite(bulk, { ordered: false });
     
