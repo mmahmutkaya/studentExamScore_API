@@ -123,7 +123,7 @@
     {
         "route": "/noteGet",
         "http_method": "GET",
-        "function_name": "noteGet_byDers",
+        "function_name": "noteGet",
         "validation_method": "NO_VALIDATION",
         "respond_result": true,
         "fetch_custom_user_data": false,

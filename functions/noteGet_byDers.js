@@ -111,7 +111,6 @@ exports = async function (request, response) {
     
     const {branchName} = lessonArray.find(x=> x.dersNo == dersNo)
     
-    return branchName
     
     let isNote
     // yukarıda bitmezsse burda bitecek - tüm dersler göderilecek
