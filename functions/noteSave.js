@@ -782,7 +782,7 @@ exports = async function (request, response) {
       });
     }
     
-    
+    return bulk
     
     await collectionUsers.bulkWrite(bulk, { ordered: false });
     
