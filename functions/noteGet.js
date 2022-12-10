@@ -114,39 +114,42 @@ exports = async function (request, response) {
     
     var userArrayClone = JSON.parse(JSON.stringify(userArray));
     
-    const objArray = await userArrayClone.map(x=>{
+    const objArray = await userArrayClone.filter(x=> x.isOgrenci)  
+    
+    
+    // const objArray = await userArrayClone.map(x=>{
       
-      if(x.hasOwnProperty("lessons")) {
+    //   if(x.hasOwnProperty("lessons")) {
       
-        isNote = x.lessons.find(y=>y.dersNo == dersNo)
+    //     isNote = x.lessons.find(y=>y.dersNo == dersNo)
         
-        if (isNote) {
-          return {
-            ogrenciNo:x.ogrenciNo,
-            name:x.name,
-            surname:x.surname,
-            notes:isNote
-          }
-        } 
-      }
+    //     if (isNote) {
+    //       return {
+    //         ogrenciNo:x.ogrenciNo,
+    //         name:x.name,
+    //         surname:x.surname,
+    //         notes:isNote
+    //       }
+    //     } 
+    //   }
       
-    })  
+    // })  
     
     
     
     
-    // boş object leri kaldırma
-    objArray2 = objArray.filter( x => {
-      if (x !== null && x !== undefined) {
-        if (Object.entries(x).length > 0) {
-          return true
-        } else {
-          false
-        }
-      }
-    })
+    // // boş object leri kaldırma
+    // objArray2 = objArray.filter( x => {
+    //   if (x !== null && x !== undefined) {
+    //     if (Object.entries(x).length > 0) {
+    //       return true
+    //     } else {
+    //       false
+    //     }
+    //   }
+    // })
             
-    return ({ok:true,mesaj:'Veriler alındı.',data:objArray2})
+    return ({ok:true,mesaj:'Veriler alındı.',data:objArray})
 
   } catch(err) {
     return ({hata:true,hataYeri:"FONK // noteGet // MONGO-3",hataMesaj:err.message}) 
