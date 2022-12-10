@@ -89,5 +89,10 @@
         "name": "noteSave",
         "private": false,
         "disable_arg_logs": true
+    },
+    {
+        "name": "noteGet_Student",
+        "private": false,
+        "disable_arg_logs": true
     }
 ]
