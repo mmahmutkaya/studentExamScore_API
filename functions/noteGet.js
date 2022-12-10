@@ -133,7 +133,7 @@ exports = async function (request, response) {
             ogrenciNo:x.ogrenciNo,
             name:x.name,
             surname:x.surname,
-            notes:"yok"
+            "notes.dersNo":"yok"
           }
           
         }
