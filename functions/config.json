@@ -94,5 +94,15 @@
         "name": "noteGet_Student",
         "private": false,
         "disable_arg_logs": true
+    },
+    {
+        "name": "noteSave2",
+        "private": false,
+        "disable_arg_logs": true
+    },
+    {
+        "name": "noteGet_byDers",
+        "private": false,
+        "disable_arg_logs": true
     }
 ]
