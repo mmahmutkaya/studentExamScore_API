@@ -1,0 +1,15 @@
+{
+    "collection": "notes",
+    "database": "studentExamScore",
+    "roles": [
+        {
+            "name": "readAndWriteAll",
+            "apply_when": {},
+            "read": true,
+            "write": true,
+            "insert": true,
+            "delete": true,
+            "search": true
+        }
+    ]
+}
