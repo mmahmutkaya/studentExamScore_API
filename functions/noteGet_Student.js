@@ -9,6 +9,7 @@ exports = async function (request, response) {
   let kullaniciMail;
   let geciciKey;
   let year;
+  let dersNo;
 
   let projeData
   
@@ -38,9 +39,9 @@ exports = async function (request, response) {
     // hataText = "\"gelen istekteki \"ders\" sistemde bulunamadı\""
     // if(!isLessonExist) return ({hata:true,hataYeri:"FONK // noteGet",hataMesaj:"Program yöneticisi ile iletişime geçmeniz gerekmektedir, (" + hataText +")"})
     
-    // hataText = "\"gelen istekte \"şube adı\" bulunamadı\""
-    // if(!objHeader.hasOwnProperty('Branch')) return ({hata:true,hataYeri:"FONK // noteGet",hataMesaj:"Program yöneticisi ile iletişime geçmeniz gerekmektedir, (" + hataText +")"})
-    // branch = objHeader["Branch"][0];
+    hataText = "\"gelen istekte \"ders no\" bulunamadı\""
+    if(!objHeader.hasOwnProperty('Dersno')) return ({hata:true,hataYeri:"FONK // noteGet",hataMesaj:"Program yöneticisi ile iletişime geçmeniz gerekmektedir, (" + hataText +")"})
+    branch = objHeader["Dersno"][0];
     
     hataText = "\"gelen istekte \"sene\" bilgisi bulunamadı\""
     if(!objHeader.hasOwnProperty('Year')) return ({hata:true,hataYeri:"FONK // noteGet",hataMesaj:"Program yöneticisi ile iletişime geçmeniz gerekmektedir, (" + hataText +")"})
