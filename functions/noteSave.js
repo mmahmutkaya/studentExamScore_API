@@ -766,10 +766,10 @@ exports = async function (request, response) {
     
     
     
-
     
-    let bulk = []
     
+    
+    // let bulk = []
     // if (cameItems_Add.length) {
     //   await cameItems_Add.map(item =>{
     //     bulk.push({
@@ -781,25 +781,39 @@ exports = async function (request, response) {
     //     });
     //   });
     // }
-    
-    // var cameItems_Add2 = JSON.parse(JSON.stringify(cameItems_Add));
-    // return ({ok:true,data:cameItems_Add2, mesaj:'Notlar sisteme kaydedildi.'})
 
+    
+    let bulkA = []
+    
     if (cameItems_Add.length) {
       await cameItems_Add.map(item =>{
-        bulk.push({
+        bulkA.push({
           updateOne: {
-            filter: { ogrenciNo : item.ogrenciNo , lessons: { $elemMatch: {dersNo: dersNo} }},
-            update: { $set: { "lessons.$.": item.studentLessonObject }  },
-            upsert : true
+            filter: { ogrenciNo : item.ogrenciNo },
+            update: { $pull: { "lessons": {dersNo : dersNo} }  },
           }
         });
       });
     }
+    await collectionUsers.bulkWrite(bulkA, { ordered: false });
     
     
+    let bulkB = []
+    if (cameItems_Add.length) {
+      await cameItems_Add.map(item =>{
+        bulkB.push({
+          updateOne: {
+            filter: { ogrenciNo : item.ogrenciNo },
+            update: { $push: { "lessons": item.studentLessonObject  }  },
+          }
+        });
+      });
+    }
+    await collectionUsers.bulkWrite(bulkB, { ordered: false });
     
-    await collectionUsers.bulkWrite(bulk, { ordered: false });
+    // var cameItems_Add2 = JSON.parse(JSON.stringify(cameItems_Add));
+    // return ({ok:true,data:cameItems_Add2, mesaj:'Notlar sisteme kaydedildi.'})
+
     
     
     return ({ok:true,mesaj:'Notlar sisteme kaydedildi.'})
