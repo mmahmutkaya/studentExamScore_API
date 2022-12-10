@@ -114,7 +114,7 @@ exports = async function (request, response) {
     
     var userArrayClone = JSON.parse(JSON.stringify(userArray));
     
-    const objArray = await userArrayClone.filter(x=> x.isOgrenci && x.branch == branch)  
+    const objArray = await userArrayClone.filter(x=> x.isOgrenci == true && x.branch == branch)  
     
     
     // const objArray = await userArrayClone.map(x=>{
@@ -149,7 +149,7 @@ exports = async function (request, response) {
     //   }
     // })
             
-    return ({ok:true,mesaj:'Veriler alındı.',data:userArrayClone})
+    return ({ok:true,mesaj:'Veriler alındı.',data:objArray})
 
   } catch(err) {
     return ({hata:true,hataYeri:"FONK // noteGet // MONGO-3",hataMesaj:err.message}) 
