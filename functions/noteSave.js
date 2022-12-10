@@ -790,7 +790,9 @@ exports = async function (request, response) {
         bulk.push({
           updateOne: {
             filter: { ogrenciNo : item.ogrenciNo },
-            update: { $set: { "lessons.$[dersNo]": item.studentLessonObject }  },
+            update: { $set: { "lessons.$[elem]": item.studentLessonObject }  },
+            arrayFilters : [{"elem.dersNo" : dersNo }],
+            upsert : true
           }
         });
       });
