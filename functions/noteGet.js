@@ -114,26 +114,35 @@ exports = async function (request, response) {
     
     var userArrayClone = JSON.parse(JSON.stringify(userArray));
     
-    const objArray = await userArrayClone.filter(x=> x.isOgrenci == true && x.branch == branch)  
+    // const objArray = await userArrayClone.filter(x=> x.isOgrenci == true && x.branch == branch)  
     
     
-    // const objArray = await userArrayClone.map(x=>{
+    const objArrayA = await userArrayClone.map(x=>{
       
-    //   if(x.hasOwnProperty("lessons")) {
-      
-    //     isNote = x.lessons.find(y=>y.dersNo == dersNo)
+      if (x.isOgrenci == true && x.branch == branch) {
         
-    //     if (isNote) {
-    //       return {
-    //         ogrenciNo:x.ogrenciNo,
-    //         name:x.name,
-    //         surname:x.surname,
-    //         notes:isNote
-    //       }
-    //     } 
-    //   }
+        isNote = x.lessons.find(y=>y.dersNo == dersNo)
+        
+        if (isNote) {
+          return {
+            ogrenciNo:x.ogrenciNo,
+            name:x.name,
+            surname:x.surname,
+            notes:isNote
+          }
+          
+        } else {
+          return {
+            ogrenciNo:x.ogrenciNo,
+            name:x.name,
+            surname:x.surname,
+          }
+          
+        }
+      }
       
-    // })  
+      
+    })  
     
     
     
