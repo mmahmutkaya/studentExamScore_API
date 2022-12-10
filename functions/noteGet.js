@@ -149,7 +149,7 @@ exports = async function (request, response) {
     //   }
     // })
             
-    return ({ok:true,mesaj:'Veriler alındı.',data:objArray})
+    return ({ok:true,mesaj:'Veriler alındı.',data:userArrayClone})
 
   } catch(err) {
     return ({hata:true,hataYeri:"FONK // noteGet // MONGO-3",hataMesaj:err.message}) 
