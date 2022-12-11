@@ -13,6 +13,7 @@ exports = async function (request, response) {
   
   const collectionUsers = context.services.get("mongodb-atlas").db("studentExamScore").collection("users")
   const userArray = await collectionUsers.find({}).toArray()
+  const ogretmenler = await userArray.filter(isOgretmen == true)
   
   const collectionLessons = context.services.get("mongodb-atlas").db("studentExamScore").collection("lessons")
   const lessonArray = await collectionLessons.find({}).toArray()
@@ -59,8 +60,8 @@ exports = async function (request, response) {
   
   // MONGO-2 - AUTH_CHECK
   let user = {};
-  let userLessons = [];
-  let userBranchs = [];
+  let userBranch;
+  let branchLessons = [];
 
   AUTH_CHECK: try {
     
@@ -77,11 +78,11 @@ exports = async function (request, response) {
     
     if(!user.isOgrenci) return ({hata:true,hataTanim:"geciciKod",hataYeri:"FONK // noteGet // MONGO-2",hataMesaj:"Öğrenci olarak gözükmüyorsunuz."})
   
-    userBranchs = branchArray.find(x=> x.name == user.branch)
-    if(!userBranchs) return ({hata:true,hataTanim:"geciciKod",hataYeri:"FONK // noteGet // MONGO-2",hataMesaj:"Şubeniz sistemde tespit edilemedi."})
+    userBranch = branchArray.find(x=> x.name == user.branch)
+    if(!userBranch) return ({hata:true,hataTanim:"geciciKod",hataYeri:"FONK // noteGet // MONGO-2",hataMesaj:"Şubeniz sistemde tespit edilemedi."})
  
-    userLessons = lessonArray.filter(x=> x.branchName == user.branch)
-    if(!userLessons) return ({hata:true,hataTanim:"geciciKod",hataYeri:"FONK // noteGet // MONGO-2",hataMesaj:"Şubenize kayıtlı bir ders bulunamadı."})
+    branchLessons = lessonArray.filter(x=> x.branchName == userBranch)
+    if(!branchLessons) return ({hata:true,hataTanim:"geciciKod",hataYeri:"FONK // noteGet // MONGO-2",hataMesaj:"Şubenize kayıtlı bir ders bulunamadı."})
  
 
     
@@ -104,11 +105,25 @@ exports = async function (request, response) {
   
   // MONGO-3 - GET DATA FROM DB
   try {
+
+    const userNotes = user.lessons
+    let note
     
-    // var lessonArray2 = JSON.parse(JSON.stringify(lessonArray));
-    // return lessonArray
-    return userLessons
+    const userLessons2 = branchLessons.map(les=>{
+      
+      note = userNotes.find(not=>not.dersNo == les.dersNo)
+      if (note) {
+        return {
+          dersName : les.name,
+          ogretmenName : ogretmenler.find(ogt=>ogt.ogretmenNo == les.ogretmenNo).name,
+          note
+        }
+      }
+      
+    })
   
+    return userLessons2
+    
     
     let isNote
     // yukarıda bitmezsse burda bitecek - tüm dersler göderilecek
@@ -122,7 +137,7 @@ exports = async function (request, response) {
       
         if (x.kullaniciMail == x.kullaniciMail) {
           
-          isNote = x.lessons.find(y=>y.dersNo == dersNo)
+          isNote = x.lessonArray.find(y=>y.dersNo == dersNo)
           
           if (isNote) {
             return {
