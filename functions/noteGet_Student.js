@@ -77,7 +77,7 @@ exports = async function (request, response) {
     
     if(!user.isOgrenci) return ({hata:true,hataTanim:"geciciKod",hataYeri:"FONK // noteGet // MONGO-2",hataMesaj:"Öğrenci olarak gözükmüyorsunuz."})
   
-    userBranchs = branchArray.filter(x=> x.name == user.branch)
+    userBranchs = branchArray.find(x=> x.name == user.branch)
     if(!userBranchs) return ({hata:true,hataTanim:"geciciKod",hataYeri:"FONK // noteGet // MONGO-2",hataMesaj:"Şubeniz sistemde tespit edilemedi."})
  
     userLessons = lessonArray.filter(x=> x.branchName == user.branch)
@@ -106,8 +106,7 @@ exports = async function (request, response) {
   try {
     
     return userLessons
-    
-    userLessons
+  
     
     let isNote
     // yukarıda bitmezsse burda bitecek - tüm dersler göderilecek
