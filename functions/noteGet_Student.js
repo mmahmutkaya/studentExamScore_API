@@ -106,12 +106,11 @@ exports = async function (request, response) {
   // MONGO-3 - GET DATA FROM DB
   try {
 
-    const userNotes = user.lessons
     let note
     
     const userLessons2 = branchLessons.map(les=>{
       
-      note = userNotes.find(not=>not.dersNo == les.dersNo)
+      note = user.lessons.find(not=>not.dersNo == les.dersNo)
       if (note) {
         return {
           dersName : les.name,
@@ -127,55 +126,56 @@ exports = async function (request, response) {
       }
       
     })
-  
+    
+    return branchLessons
     return userLessons2
     
     
-    let isNote
-    // yukarıda bitmezsse burda bitecek - tüm dersler göderilecek
-    // const objArray = await collectionUsers.find({ "lessons.dersNo" : dersNo } ,{_id: 0, ogrenciNo:1, name:1, surname:1, lessons: {$elemMatch: { dersNo: dersNo }} } ).toArray()
+    // let isNote
+    // // yukarıda bitmezsse burda bitecek - tüm dersler göderilecek
+    // // const objArray = await collectionUsers.find({ "lessons.dersNo" : dersNo } ,{_id: 0, ogrenciNo:1, name:1, surname:1, lessons: {$elemMatch: { dersNo: dersNo }} } ).toArray()
     
-    var userArrayClone = JSON.parse(JSON.stringify(userArray));
+    // var userArrayClone = JSON.parse(JSON.stringify(userArray));
     
-    const objArrayA = await userArrayClone.map(x=>{
+    // const objArrayA = await userArrayClone.map(x=>{
       
-      if (x.hasOwnProperty("lessons")) {
+    //   if (x.hasOwnProperty("lessons")) {
       
-        if (x.kullaniciMail == x.kullaniciMail) {
+    //     if (x.kullaniciMail == x.kullaniciMail) {
           
-          isNote = x.lessonArray.find(y=>y.dersNo == dersNo)
+    //       isNote = x.lessonArray.find(y=>y.dersNo == dersNo)
           
-          if (isNote) {
-            return {
-              dersNo:isNote.dersNo,
-              notes:isNote
-            }
+    //       if (isNote) {
+    //         return {
+    //           dersNo:isNote.dersNo,
+    //           notes:isNote
+    //         }
             
-          } else {
-            return {
-              dersNo:isNote.dersNo,
-              notes: {dersNo:"yok"}
-            }
+    //       } else {
+    //         return {
+    //           dersNo:isNote.dersNo,
+    //           notes: {dersNo:"yok"}
+    //         }
             
-          }
-        }
+    //       }
+    //     }
         
-      }
+    //   }
       
-    })  
+    // })  
     
-    // boş object leri kaldırma
-    objArray = objArrayA.filter( x => {
-      if (x !== null && x !== undefined) {
-        if (Object.entries(x).length > 0) {
-          return true
-        } else {
-          false
-        }
-      }
-    })
+    // // boş object leri kaldırma
+    // objArray = objArrayA.filter( x => {
+    //   if (x !== null && x !== undefined) {
+    //     if (Object.entries(x).length > 0) {
+    //       return true
+    //     } else {
+    //       false
+    //     }
+    //   }
+    // })
             
-    return ({ok:true,mesaj:'Veriler alındı.',data:objArray})
+    // return ({ok:true,mesaj:'Veriler alındı.',data:objArray})
 
   } catch(err) {
     return ({hata:true,hataYeri:"FONK // noteGet // MONGO-3",hataMesaj:err.message}) 
