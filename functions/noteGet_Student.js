@@ -14,7 +14,7 @@ exports = async function (request, response) {
   const collectionUsers = context.services.get("mongodb-atlas").db("studentExamScore").collection("users")
   const userArray = await collectionUsers.find({}).toArray()
   
-  const collectionLessons = context.services.get("mongodb-atlas").db("studentExamScore").collection("users")
+  const collectionLessons = context.services.get("mongodb-atlas").db("studentExamScore").collection("lessons")
   const lessonArray = await collectionLessons.find({}).toArray()
   
   const collectionBranchs = context.services.get("mongodb-atlas").db("studentExamScore").collection("branchs")
@@ -105,8 +105,8 @@ exports = async function (request, response) {
   // MONGO-3 - GET DATA FROM DB
   try {
     
-    var lessonArray2 = JSON.parse(JSON.stringify(lessonArray));
-    return lessonArray2
+    // var lessonArray2 = JSON.parse(JSON.stringify(lessonArray));
+    // return lessonArray
     return userLessons
   
     
