@@ -105,6 +105,7 @@ exports = async function (request, response) {
   // MONGO-3 - GET DATA FROM DB
   try {
     
+    return lessonArray
     return userLessons
   
     
