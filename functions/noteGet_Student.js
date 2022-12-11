@@ -111,14 +111,14 @@ exports = async function (request, response) {
     
     const notesA = branchLessons.map(les=>{
       
-      note = user.lessons.find(not=>not.dersNo == les.dersNo)
+      userNote = user.lessons.find(not=>not.dersNo == les.dersNo)
       ogretmen = ogretmenler.find(ogt=>ogt.ogretmenNo == les.ogretmenNo)
       
-      if (note) {
+      if (userNote) {
         return {
           dersName : les.name,
           ogretmenName : ogretmen.name + " " + ogretmen.surname,
-          notes:note
+          notes:userNote
         }
       } else {
         return {
