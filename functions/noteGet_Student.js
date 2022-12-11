@@ -118,6 +118,12 @@ exports = async function (request, response) {
           ogretmenName : ogretmenler.find(ogt=>ogt.ogretmenNo == les.ogretmenNo).name,
           note
         }
+      } else {
+        return {
+          dersName : les.name,
+          ogretmenName : ogretmenler.find(ogt=>ogt.ogretmenNo == les.ogretmenNo).name,
+          note :{dersNo:"yok"}
+        }
       }
       
     })
