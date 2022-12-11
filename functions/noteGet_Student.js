@@ -9,12 +9,13 @@ exports = async function (request, response) {
   let kullaniciMail;
   let geciciKey;
   let year;
-  let dersNo;
 
-  let projeData
   
   const collectionUsers = context.services.get("mongodb-atlas").db("studentExamScore").collection("users")
   const userArray = await collectionUsers.find({}).toArray()
+  
+  const collectionLessons = context.services.get("mongodb-atlas").db("studentExamScore").collection("users")
+  const lessonArray = await collectionLessons.find({}).toArray()
   
   
   // MONGO-1 - Gelen Sorgu
@@ -39,10 +40,7 @@ exports = async function (request, response) {
     // hataText = "\"gelen istekteki \"ders\" sistemde bulunamadı\""
     // if(!isLessonExist) return ({hata:true,hataYeri:"FONK // noteGet",hataMesaj:"Program yöneticisi ile iletişime geçmeniz gerekmektedir, (" + hataText +")"})
     
-    hataText = "\"gelen istekte \"ders no\" bulunamadı\""
-    if(!objHeader.hasOwnProperty('Dersno')) return ({hata:true,hataYeri:"FONK // noteGet",hataMesaj:"Program yöneticisi ile iletişime geçmeniz gerekmektedir, (" + hataText +")"})
-    branch = objHeader["Dersno"][0];
-    
+
     hataText = "\"gelen istekte \"sene\" bilgisi bulunamadı\""
     if(!objHeader.hasOwnProperty('Year')) return ({hata:true,hataYeri:"FONK // noteGet",hataMesaj:"Program yöneticisi ile iletişime geçmeniz gerekmektedir, (" + hataText +")"})
     year = objHeader["Year"][0];
@@ -57,7 +55,8 @@ exports = async function (request, response) {
   
   
   // MONGO-2 - AUTH_CHECK
-  let user;
+  let user = {};
+  let userLessons = [];
 
   AUTH_CHECK: try {
     
@@ -72,16 +71,21 @@ exports = async function (request, response) {
     hataText = "gelen istekteki geciciKey sistemdeki ile eşleşmiyor"
     if(geciciKey !== user.geciciKey.toString()) return ({hata:true,hataTanim:"geciciKod",hataYeri:"FONK // noteGet",hataMesaj:"Tekrar giriş yapmanız gerekiyor, (" + hataText +")"})
     
+    if(!user.isOgrenci) return ({hata:true,hataTanim:"geciciKod",hataYeri:"FONK // noteGet",hataMesaj:"Öğrenci olarak gözükmüyorsunuz."})
+    
+    userLessons = lessonArray.filter(x=> x.branchName == user.branch)
+    if(!userLessons) return ({hata:true,hataTanim:"geciciKod",hataYeri:"FONK // noteGet",hataMesaj:"Şubenize kayıtlı herhangi bir ders gözükmüyor."})
+    
     // if(user.hasOwnProperty("isAdmin")) {
     //   if(user.isAdmin) break AUTH_CHECK
     // }
     
-    if(user.hasOwnProperty("isOgrenci")) {
-      if(user.isOgrenci) break AUTH_CHECK
-    }
+    // if(user.hasOwnProperty("isOgrenci")) {
+    //   if(user.isOgrenci) break AUTH_CHECK
+    // }
     
  
-    return ({hata:true,hataYeri:"FONK // noteGet",hataMesaj:"Talep ettiğiniz kişiye ait notları görmeye yetkiniz bulunmuyor."})
+    return ({hata:true,hataYeri:"FONK // noteGet",hataMesaj:"Notları görmeye yetkiniz bulunmuyor."})
     
     // kontroller
     // if(tur == "tanimla" && !projeData.yetkiler.ihaleler[ihaleId].fonksiyonlar.defineMetrajNodes["okuma"].includes(kullaniciMail)) return ({hata:true,hataTanim:"yetki",hataYeri:"FONK // noteGet",hataMesaj:"İlgili ihalenin mahal-poz eşleşmelerini görmeye yetkiniz bulunmuyor, ekranda veri varsa güncel olmayabilir."})
@@ -102,6 +106,8 @@ exports = async function (request, response) {
   
   // MONGO-3 - GET DATA FROM DB
   try {
+    
+    return userLessons
     
     let isNote
     // yukarıda bitmezsse burda bitecek - tüm dersler göderilecek
