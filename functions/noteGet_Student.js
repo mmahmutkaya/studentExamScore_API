@@ -17,6 +17,9 @@ exports = async function (request, response) {
   const collectionLessons = context.services.get("mongodb-atlas").db("studentExamScore").collection("users")
   const lessonArray = await collectionLessons.find({}).toArray()
   
+  const collectionBranchs = context.services.get("mongodb-atlas").db("studentExamScore").collection("branchs")
+  const branchArray = await collectionBranchs.find({}).toArray()
+  
   
   // MONGO-1 - Gelen Sorgu
   try {
@@ -57,6 +60,7 @@ exports = async function (request, response) {
   // MONGO-2 - AUTH_CHECK
   let user = {};
   let userLessons = [];
+  let userBranchs = [];
 
   AUTH_CHECK: try {
     
@@ -72,20 +76,14 @@ exports = async function (request, response) {
     if(geciciKey !== user.geciciKey.toString()) return ({hata:true,hataTanim:"geciciKod",hataYeri:"FONK // noteGet // MONGO-2",hataMesaj:"Tekrar giriş yapmanız gerekiyor, (" + hataText +")"})
     
     if(!user.isOgrenci) return ({hata:true,hataTanim:"geciciKod",hataYeri:"FONK // noteGet // MONGO-2",hataMesaj:"Öğrenci olarak gözükmüyorsunuz."})
-    
-    userLessons = lessonArray.filter(x=> x.branchName == user.branch)
-    if(!userLessons) return ({hata:true,hataTanim:"geciciKod",hataYeri:"FONK // noteGet // MONGO-2",hataMesaj:"Şubenize kayıtlı herhangi bir ders gözükmüyor."})
-    
-    // if(user.hasOwnProperty("isAdmin")) {
-    //   if(user.isAdmin) break AUTH_CHECK
-    // }
-    
-    // if(user.hasOwnProperty("isOgrenci")) {
-    //   if(user.isOgrenci) break AUTH_CHECK
-    // }
-    
+  
+    userBranchs = branchArray.filter(x=> x.name == user.branch)
+    if(!userBranchs) return ({hata:true,hataTanim:"geciciKod",hataYeri:"FONK // noteGet // MONGO-2",hataMesaj:"Şubeniz sistemde tespit edilemedi."})
  
-    return ({hata:true,hataYeri:"FONK // noteGet // MONGO-2",hataMesaj:"Notları görmeye yetkiniz bulunmuyor."})
+    userLessons = lessonArray.filter(x=> x.branchName == user.branch)
+    if(!userLessons) return ({hata:true,hataTanim:"geciciKod",hataYeri:"FONK // noteGet // MONGO-2",hataMesaj:"Şubenize kayıtlı bir ders bulunamadı."})
+ 
+
     
     // kontroller
     // if(tur == "tanimla" && !projeData.yetkiler.ihaleler[ihaleId].fonksiyonlar.defineMetrajNodes["okuma"].includes(kullaniciMail)) return ({hata:true,hataTanim:"yetki",hataYeri:"FONK // noteGet",hataMesaj:"İlgili ihalenin mahal-poz eşleşmelerini görmeye yetkiniz bulunmuyor, ekranda veri varsa güncel olmayabilir."})
