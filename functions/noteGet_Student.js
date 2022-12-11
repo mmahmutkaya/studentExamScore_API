@@ -128,7 +128,8 @@ exports = async function (request, response) {
     })
     
     // return branchLessons
-    return userLessons2
+    var userLessons3 = JSON.parse(JSON.stringify(userLessons2));
+    return userLessons3
     
     
     // let isNote
