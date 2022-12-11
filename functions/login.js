@@ -76,7 +76,7 @@ exports = async function (request, response) {
     }
     
     let branchName = false
-    if (user.hasOwnProperty("branch")) {
+    if (isOgrenci) {
       branchName = user.branch
     }
     
