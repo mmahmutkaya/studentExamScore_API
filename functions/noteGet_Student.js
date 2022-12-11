@@ -22,27 +22,27 @@ exports = async function (request, response) {
   try {
     
     hataText = "\"gelen istekte mail adresi bulunamadı\""
-    if(!objHeader.hasOwnProperty('Kullanici-Mail')) return ({hata:true,hataYeri:"FONK // noteGet",hataMesaj:"Tekrar giriş yapmanız gerekiyor, (" + hataText +")"})
+    if(!objHeader.hasOwnProperty('Kullanici-Mail')) return ({hata:true,hataYeri:"FONK // noteGet // MONGO-1",hataMesaj:"Tekrar giriş yapmanız gerekiyor, (" + hataText +")"})
     kullaniciMail = objHeader["Kullanici-Mail"][0];
     validateEmail = context.functions.execute("validateEmail", kullaniciMail);
     hataText = "gelen istekteki mail adresi hatalı"
-    if(validateEmail == null) return ({hata:true,hataYeri:"FONK // noteGet",hataMesaj:"Tekrar giriş yapmanız gerekiyor, (" + hataText +")"})
+    if(validateEmail == null) return ({hata:true,hataYeri:"FONK // noteGet // MONGO-1",hataMesaj:"Tekrar giriş yapmanız gerekiyor, (" + hataText +")"})
     
     hataText = "\"Gelen istekte geciciKey bulunamadı\""
-    if(!objHeader.hasOwnProperty('Gecici-Key')) return ({hata:true,hataYeri:"FONK // noteGet",hataMesaj:"Tekrar giriş yapmanız gerekiyor, (" + hataText +")"})
+    if(!objHeader.hasOwnProperty('Gecici-Key')) return ({hata:true,hataYeri:"FONK // noteGet // MONGO-1",hataMesaj:"Tekrar giriş yapmanız gerekiyor, (" + hataText +")"})
     geciciKey = objHeader["Gecici-Key"][0];
     
     // hataText = "\"gelen istekte \"ders no\" bulunamadı\""
-    // if(!objHeader.hasOwnProperty('Dersno')) return ({hata:true,hataYeri:"FONK // noteGet",hataMesaj:"Program yöneticisi ile iletişime geçmeniz gerekmektedir, (" + hataText +")"})
+    // if(!objHeader.hasOwnProperty('Dersno')) return ({hata:true,hataYeri:"FONK // noteGet // MONGO-1",hataMesaj:"Program yöneticisi ile iletişime geçmeniz gerekmektedir, (" + hataText +")"})
     // dersNo = objHeader["Dersno"][0];
     // ///
     // isLessonExist = await collectionLessons.findOne({dersNo})
     // hataText = "\"gelen istekteki \"ders\" sistemde bulunamadı\""
-    // if(!isLessonExist) return ({hata:true,hataYeri:"FONK // noteGet",hataMesaj:"Program yöneticisi ile iletişime geçmeniz gerekmektedir, (" + hataText +")"})
+    // if(!isLessonExist) return ({hata:true,hataYeri:"FONK // noteGet // MONGO-1",hataMesaj:"Program yöneticisi ile iletişime geçmeniz gerekmektedir, (" + hataText +")"})
     
 
     hataText = "\"gelen istekte \"sene\" bilgisi bulunamadı\""
-    if(!objHeader.hasOwnProperty('Year')) return ({hata:true,hataYeri:"FONK // noteGet",hataMesaj:"Program yöneticisi ile iletişime geçmeniz gerekmektedir, (" + hataText +")"})
+    if(!objHeader.hasOwnProperty('Year')) return ({hata:true,hataYeri:"FONK // noteGet // MONGO-1",hataMesaj:"Program yöneticisi ile iletişime geçmeniz gerekmektedir, (" + hataText +")"})
     year = objHeader["Year"][0];
     
 
@@ -62,19 +62,19 @@ exports = async function (request, response) {
     
     hataText = "gelen istekteki mail adresi sistemde kayıtlı değil"
     user = await userArray.find(x => x.kullaniciMail == kullaniciMail)
-    if(!user) return ({hata:true,hataYeri:"FONK // noteGet",hataMesaj:"Tekrar giriş yapmanız gerekiyor, (" + hataText +")"})
+    if(!user) return ({hata:true,hataYeri:"FONK // noteGet // MONGO-2",hataMesaj:"Tekrar giriş yapmanız gerekiyor, (" + hataText +")"})
     
-    if(!user.mailTeyit) return ({hata:true,hataTanim:"mailTeyit",hataYeri:"FONK // noteGet",hataMesaj:"Mail adresi henüz doğrulanmamış."})
+    if(!user.mailTeyit) return ({hata:true,hataTanim:"mailTeyit",hataYeri:"FONK // noteGet // MONGO-2",hataMesaj:"Mail adresi henüz doğrulanmamış."})
     
-    if(!user.uyelikOnay) return ({hata:true,hataTanim:"uyelikOnay",hataYeri:"FONK // noteGet",hataMesaj:"Üyeliğiniz onay bekliyor."})
+    if(!user.uyelikOnay) return ({hata:true,hataTanim:"uyelikOnay",hataYeri:"FONK // noteGet // MONGO-2",hataMesaj:"Üyeliğiniz onay bekliyor."})
     
     hataText = "gelen istekteki geciciKey sistemdeki ile eşleşmiyor"
-    if(geciciKey !== user.geciciKey.toString()) return ({hata:true,hataTanim:"geciciKod",hataYeri:"FONK // noteGet",hataMesaj:"Tekrar giriş yapmanız gerekiyor, (" + hataText +")"})
+    if(geciciKey !== user.geciciKey.toString()) return ({hata:true,hataTanim:"geciciKod",hataYeri:"FONK // noteGet // MONGO-2",hataMesaj:"Tekrar giriş yapmanız gerekiyor, (" + hataText +")"})
     
-    if(!user.isOgrenci) return ({hata:true,hataTanim:"geciciKod",hataYeri:"FONK // noteGet",hataMesaj:"Öğrenci olarak gözükmüyorsunuz."})
+    if(!user.isOgrenci) return ({hata:true,hataTanim:"geciciKod",hataYeri:"FONK // noteGet // MONGO-2",hataMesaj:"Öğrenci olarak gözükmüyorsunuz."})
     
     userLessons = lessonArray.filter(x=> x.branchName == user.branch)
-    if(!userLessons) return ({hata:true,hataTanim:"geciciKod",hataYeri:"FONK // noteGet",hataMesaj:"Şubenize kayıtlı herhangi bir ders gözükmüyor."})
+    if(!userLessons) return ({hata:true,hataTanim:"geciciKod",hataYeri:"FONK // noteGet // MONGO-2",hataMesaj:"Şubenize kayıtlı herhangi bir ders gözükmüyor."})
     
     // if(user.hasOwnProperty("isAdmin")) {
     //   if(user.isAdmin) break AUTH_CHECK
@@ -85,7 +85,7 @@ exports = async function (request, response) {
     // }
     
  
-    return ({hata:true,hataYeri:"FONK // noteGet",hataMesaj:"Notları görmeye yetkiniz bulunmuyor."})
+    return ({hata:true,hataYeri:"FONK // noteGet // MONGO-2",hataMesaj:"Notları görmeye yetkiniz bulunmuyor."})
     
     // kontroller
     // if(tur == "tanimla" && !projeData.yetkiler.ihaleler[ihaleId].fonksiyonlar.defineMetrajNodes["okuma"].includes(kullaniciMail)) return ({hata:true,hataTanim:"yetki",hataYeri:"FONK // noteGet",hataMesaj:"İlgili ihalenin mahal-poz eşleşmelerini görmeye yetkiniz bulunmuyor, ekranda veri varsa güncel olmayabilir."})
@@ -108,6 +108,8 @@ exports = async function (request, response) {
   try {
     
     return userLessons
+    
+    userLessons
     
     let isNote
     // yukarıda bitmezsse burda bitecek - tüm dersler göderilecek
