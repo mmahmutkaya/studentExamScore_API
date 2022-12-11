@@ -109,5 +109,10 @@
         "name": "subeGet",
         "private": false,
         "disable_arg_logs": true
+    },
+    {
+        "name": "subeSave",
+        "private": false,
+        "disable_arg_logs": true
     }
 ]
