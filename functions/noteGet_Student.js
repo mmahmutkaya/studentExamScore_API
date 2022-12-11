@@ -118,13 +118,13 @@ exports = async function (request, response) {
         return {
           dersName : les.name,
           ogretmenName : ogretmen.name + " " + ogretmen.surname,
-          note
+          notes:note
         }
       } else {
         return {
           dersName : les.name,
           ogretmenName : ogretmen.name + " " + ogretmen.surname,
-          note :{dersNo:"yok"}
+          notes :{dersNo:"yok"}
         }
       }
       
