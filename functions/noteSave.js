@@ -123,7 +123,7 @@ exports = async function (request, response) {
 
   // MONGO-4 - SAVE DATABASE
 
-  let zaman = Date.now()
+  let zaman = new Date().toISOString()
   
   let is_A_quiz1_Violation = false
   let violation_A_quiz1_ExcelRows = []
