@@ -107,29 +107,31 @@ exports = async function (request, response) {
   try {
 
     let note
+    let ogretmen
     
-    const userLessons2 = branchLessons.map(les=>{
+    const notesA = branchLessons.map(les=>{
       
       note = user.lessons.find(not=>not.dersNo == les.dersNo)
+      ogretmen = ogretmenler.find(ogt=>ogt.ogretmenNo == les.ogretmenNo)
+      
       if (note) {
         return {
           dersName : les.name,
-          ogretmenName : ogretmenler.find(ogt=>ogt.ogretmenNo == les.ogretmenNo).name,
+          ogretmenName : ogretmen.name + " " + ogretmen.surname,
           note
         }
       } else {
         return {
           dersName : les.name,
-          ogretmenName : ogretmenler.find(ogt=>ogt.ogretmenNo == les.ogretmenNo).name,
+          ogretmenName : ogretmen.name + " " + ogretmen.surname,
           note :{dersNo:"yok"}
         }
       }
       
     })
     
-    // return branchLessons
-    var userLessons3 = JSON.parse(JSON.stringify(userLessons2));
-    return userLessons3
+    var notes = JSON.parse(JSON.stringify(notesA));
+    return ({ok:true,mesaj:'Veriler alındı.',data:notes})
     
     
     // let isNote
