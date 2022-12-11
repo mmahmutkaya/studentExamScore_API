@@ -105,7 +105,8 @@ exports = async function (request, response) {
   // MONGO-3 - GET DATA FROM DB
   try {
     
-    return lessonArray
+    var lessonArray2 = JSON.parse(JSON.stringify(lessonArray));
+    return lessonArray2
     return userLessons
   
     
