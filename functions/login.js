@@ -75,9 +75,14 @@ exports = async function (request, response) {
       surname = user.surname
     }
     
+    let branchName = false
+    if (user.hasOwnProperty("branch")) {
+      branchName = user.branch
+    }
+    
     collectionUsers.updateOne({"_id":user._id},{ $set: { geciciKey: geciciKey } })
     
-    return ({ok:true,mesaj:"Giriş yapıldı",geciciKey,isAdmin,isOgretmen,ogretmenNo,isOgrenci,ogrenciNo,name,surname})
+    return ({ok:true,mesaj:"Giriş yapıldı",geciciKey,isAdmin,isOgretmen,ogretmenNo,isOgrenci,ogrenciNo,name,surname,branchName})
     
   } catch(err) {
     return ({hata:true,hataYeri:"FONK // login // MONGO-2",hataMesaj:err.message})
