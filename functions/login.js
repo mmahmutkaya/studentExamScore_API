@@ -76,7 +76,7 @@ exports = async function (request, response) {
     }
     
     let branchName = false
-    if (isOgrenci) {
+    if (user.isOgrenci == true) {
       branchName = user.branch
     }
     
