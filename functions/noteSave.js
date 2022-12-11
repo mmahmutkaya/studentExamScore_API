@@ -488,6 +488,7 @@ exports = async function (request, response) {
         year,
         branch,
         dersNo,
+        zaman,
 
         A_quiz1 : parseFloat(item.A_quiz1),
         A_quiz2 : item.A_quiz2,
