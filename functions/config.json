@@ -104,5 +104,10 @@
         "name": "noteGet_byDers",
         "private": false,
         "disable_arg_logs": true
+    },
+    {
+        "name": "subeGet",
+        "private": false,
+        "disable_arg_logs": true
     }
 ]
