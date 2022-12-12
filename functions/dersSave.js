@@ -160,7 +160,6 @@ exports = async function (request, response) {
 
   let cameItems_Add = [] 
   // let lessonsToStudents = []
-  // let itemFullName = null
   let loopObj = null
   
   
@@ -252,8 +251,6 @@ exports = async function (request, response) {
       }
       
       
-
-      
       
       cameItems_Add.push({
         
@@ -263,9 +260,9 @@ exports = async function (request, response) {
         
         dersNo:item.dersNo,
         year:item.year,
-        name:item.name,
+        name:item.name.toUpperCase(),
         ogretmenNo:item.ogretmenNo,
-        branchName:item.branchName,
+        branchName:item.branchName.toUpperCase(),
         
         isDeleted:false,
         createdAt:zaman,

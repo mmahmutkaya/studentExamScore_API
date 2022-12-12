@@ -247,7 +247,7 @@ exports = async function (request, response) {
       cameItems_Add.push({
         
         siraNo:item.siraNo,
-        branchName:item.branchName,
+        branchName:item.branchName.toUpperCase(),
         
         isDeleted:false,
         createdAt:zaman,

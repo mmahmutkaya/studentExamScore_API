@@ -225,9 +225,9 @@ exports = async function (request, response) {
         siraNo:item.siraNo,
         ogrenciNo:item.ogrenciNo,
         kullaniciMail:item.mail,
-        name:item.name,
-        surname:item.surname,
-        branch:item.branch,
+        name:item.name.toUpperCase(),
+        surname:item.surname.toUpperCase(),
+        branch:item.branch.toUpperCase(),
         year:item.year,
         isOgrenci:true,
         
