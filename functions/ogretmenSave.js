@@ -205,7 +205,6 @@ exports = async function (request, response) {
         kullaniciMail:item.mail,
         name:item.name.toUpperCase(),
         surname:item.surname.toUpperCase(),
-        branch:item.branch.toUpperCase(),
         isOgretmen:true,
         sifre:"degisecek_gecici",
         mailTeyitKod:"degisecek_gecici",
